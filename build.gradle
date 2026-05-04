@@ -89,11 +89,25 @@ repositories {
         name = "Curios"
         url = uri("https://maven.theillusivec4.top/")
     }
+    exclusiveContent {
+        forRepository {
+            //noinspection ForeignDelegate
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
     implementation "thedarkcolour:kotlinforforge-neoforge:${project.kff_version}"
     implementation "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
+
+    runtimeOnly "curse.maven:appleskin-248787:7854456"
+    runtimeOnly "curse.maven:jei-238222:8014757"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

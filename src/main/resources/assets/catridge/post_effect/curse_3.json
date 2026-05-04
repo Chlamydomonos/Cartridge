@@ -1,0 +1,124 @@
+{
+    "targets": {
+        "swap": {}
+    },
+    "passes": [
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/box_blur",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "minecraft:main",
+                    "bilinear": true
+                }
+            ],
+            "output": "swap",
+            "uniforms": {
+                "BlurConfig": [
+                    {
+                        "name": "BlurDir",
+                        "type": "vec2",
+                        "value": [ 1.0, 0.0 ]
+                    },
+                    {
+                        "name": "Radius",
+                        "type": "float",
+                        "value": 6.0
+                    }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/box_blur",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "swap",
+                    "bilinear": true
+                }
+            ],
+            "output": "minecraft:main",
+            "uniforms": {
+                "BlurConfig": [
+                    {
+                        "name": "BlurDir",
+                        "type": "vec2",
+                        "value": [ 0.0, 1.0 ]
+                    },
+                    {
+                        "name": "Radius",
+                        "type": "float",
+                        "value": 6.0
+                    }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "catridge:color",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "minecraft:main"
+                }
+            ],
+            "output": "swap",
+            "uniforms": {
+                "ColorConfig": [
+                    {
+                        "name": "TargetR",
+                        "type": "float",
+                        "value": 1.0
+                    },
+                    {
+                        "name": "TargetG",
+                        "type": "float",
+                        "value": 1.0
+                    },
+                    {
+                        "name": "TargetB",
+                        "type": "float",
+                        "value": 1.0
+                    },
+                    {
+                        "name": "MinAlpha",
+                        "type": "float",
+                        "value": 0.2
+                    },
+                    {
+                        "name": "MaxAlpha",
+                        "type": "float",
+                        "value": 0.6
+                    },
+                    {
+                        "name": "Speed",
+                        "type": "float",
+                        "value": 240
+                    }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/blit",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "swap"
+                }
+            ],
+            "uniforms": {
+                "BlitConfig": [
+                    {
+                        "name": "ColorModulate",
+                        "type": "vec4",
+                        "value": [ 1.0, 1.0, 1.0, 1.0 ]
+                    }
+                ]
+            },
+            "output": "minecraft:main"
+        }
+    ]
+}

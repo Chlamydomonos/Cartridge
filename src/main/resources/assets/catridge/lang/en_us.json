@@ -1,3 +1,5 @@
 {
-    "fml.menu.mods.info.description.catridge": "Add Catridge (and the rising curse) from Made in Abyss to Minecraft"
+    "fml.menu.mods.info.description.catridge": "Add Catridge (and the curse) from Made in Abyss to Minecraft",
+    "effect.catridge.curse": "Curse",
+    "death.attack.catridge.curse": "%1$s died of curse of Abyss"
 }
