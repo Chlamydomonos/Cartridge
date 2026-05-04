@@ -1,2 +1,3 @@
-# Kotlin Modding Skeleton
-Provides an example mod written in Kotlin using Kotlin for Forge.
+# 来自深渊：弹药包
+
+将《来自深渊》中臭名昭著（不）的弹药包（以及上升诅咒系统）加入Minecraft。

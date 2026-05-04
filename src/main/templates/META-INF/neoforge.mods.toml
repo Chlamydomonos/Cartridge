@@ -1,6 +1,4 @@
-# Make sure this is set to "kotlinforforge"
 modLoader="kotlinforforge"
-# Make sure this is set to the appropriate version range
 loaderVersion="${loader_version_range}"
 license='${mod_license}'
 
@@ -11,13 +9,13 @@ displayName="${mod_name}"
 credits="Thanks to thedarkcolour and all the contributors for making Kotlin for Forge"
 authors="${mod_authors}"
 description='''${mod_description}'''
-[[dependencies.${mod_id}]]
+[[dependencies."${mod_id}"]]
     modId="neoforge"
     type="required"
     versionRange="[${neo_version},)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.${mod_id}]]
+[[dependencies."${mod_id}"]]
     modId="minecraft"
     type="required"
     versionRange="${minecraft_version_range}"
