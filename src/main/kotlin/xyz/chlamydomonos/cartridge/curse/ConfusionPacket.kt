@@ -12,7 +12,7 @@ class ConfusionPacket : CustomPacketPayload {
         val INSTANCE = ConfusionPacket()
         val codec = StreamCodec.unit<RegistryFriendlyByteBuf, ConfusionPacket>(INSTANCE)
 
-        fun handle(packet: ConfusionPacket, context: IPayloadContext) {
+        fun handle(@Suppress("unused") packet: ConfusionPacket, context: IPayloadContext) {
             context.enqueueWork {
                 CurseClientHandler.ConfusionHandler.confusionTime = 100
             }

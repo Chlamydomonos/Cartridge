@@ -12,7 +12,7 @@ class IllusionPacket : CustomPacketPayload {
         val INSTANCE = IllusionPacket()
         val codec = StreamCodec.unit<RegistryFriendlyByteBuf, IllusionPacket>(INSTANCE)
 
-        fun handle(packet: IllusionPacket, context: IPayloadContext) {
+        fun handle(@Suppress("unused") packet: IllusionPacket, context: IPayloadContext) {
             context.enqueueWork {
                 IllusionHandler.addGhosts()
             }
