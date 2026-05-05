@@ -4,17 +4,16 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
-import net.minecraft.world.entity.EntitySpawnReason
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
-import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.network.PacketDistributor
+import xyz.chlamydomonos.catridge.hollow.HollowEntity
 import xyz.chlamydomonos.catridge.loaders.EffectLoader
 import xyz.chlamydomonos.catridge.loaders.datagen.DamageTypeLoader
 import xyz.chlamydomonos.catridge.utils.ColorUtil
 import xyz.chlamydomonos.catridge.utils.RLUtil
+import xyz.chlamydomonos.catridge.utils.hollowUUID
 
 class CurseEffect : MobEffect(
     MobEffectCategory.HARMFUL,
@@ -36,6 +35,11 @@ class CurseEffect : MobEffect(
 
     override fun applyEffectTick(serverLevel: ServerLevel, mob: LivingEntity, amplification: Int): Boolean {
         if (mob is ServerPlayer) {
+            if (mob.hollowUUID != null) {
+                mob.removeEffect(EffectLoader.CURSE)
+                return true
+            }
+
             when (amplification + 1) {
                 2 -> {
                     mob.causeFoodExhaustion(8f)
@@ -61,21 +65,21 @@ class CurseEffect : MobEffect(
                     PacketDistributor.sendToPlayer(mob, ConfusionPacket.INSTANCE)
                 }
                 6 -> {
+                    val packet = ExplosionPacket(mob.uuid)
+                    PacketDistributor.sendToPlayersTrackingEntityAndSelf(mob, packet)
                     val level = mob.level()
-                    if (true) { // TODO
+                    if (level.random.nextBoolean()) {
                         mob.hurtServer(
                             level,
                             level.damageSources().source(DamageTypeLoader.CURSE),
                             Float.MAX_VALUE
                         )
-                    } else {
-                        val hollow = EntityType.SHEEP.create(level, EntitySpawnReason.TRIGGERED) ?: return false // TODO
-                        level.addFreshEntity(hollow)
-                        hollow.setPos(mob.position())
-                        mob.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-                        mob.setCamera(hollow)
                         mob.removeEffect(EffectLoader.CURSE)
-                        mob.startRiding(hollow, true, true)
+                    } else {
+                        val hollow = HollowEntity.create(mob)
+                        if (hollow != null) {
+                            mob.removeEffect(EffectLoader.CURSE)
+                        }
                     }
                 }
             }

@@ -1,10 +1,17 @@
 package xyz.chlamydomonos.catridge.curse
 
 import net.minecraft.client.Minecraft
+import net.minecraft.core.particles.ItemParticleOption
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.resources.Identifier
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
+import net.minecraft.world.phys.Vec3
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -115,11 +122,85 @@ object CurseClientHandler {
         }
     }
 
+    object ExplosionHandler {
+
+        private fun spawnItemBurstParticles(entity: Entity, itemStack: ItemStack, count: Int, averageSpeed: Double) {
+            if (itemStack.isEmpty) return
+            val level = entity.level()
+            val random = entity.random
+
+            val particleOption = ItemParticleOption(
+                ParticleTypes.ITEM,
+                ItemStackTemplate.fromNonEmptyStack(itemStack)
+            )
+
+            val centerX = entity.x
+            val centerY = entity.y + (entity.bbHeight / 2.0)
+            val centerZ = entity.z
+            repeat(count) {
+                val spawnX = centerX + (random.nextFloat() - 0.5) * entity.bbWidth
+                val spawnY = centerY + (random.nextFloat() - 0.5) * entity.bbHeight
+                val spawnZ = centerZ + (random.nextFloat() - 0.5) * entity.bbWidth
+
+                val dirX = random.nextFloat() - 0.5
+                val dirY = random.nextFloat() - 0.5
+                val dirZ = random.nextFloat() - 0.5
+
+                var direction = Vec3(dirX, dirY, dirZ)
+
+                direction = if (direction.lengthSqr() > 0) {
+                    direction.normalize()
+                } else {
+                    Vec3(0.0, 1.0, 0.0) // 默认向上
+                }
+
+                val speedMultiplier = averageSpeed * (0.5 + random.nextFloat())
+                val speedX = direction.x * speedMultiplier
+                val speedY = direction.y * speedMultiplier
+                val speedZ = direction.z * speedMultiplier
+
+                level.addParticle(
+                    particleOption,
+                    spawnX, spawnY, spawnZ,
+                    speedX, speedY, speedZ
+                )
+            }
+        }
+
+        val explodingEntities = mutableMapOf<UUID, Int>()
+
+        fun run() {
+            val level = Minecraft.getInstance().level ?: return
+            val iterator = explodingEntities.entries.iterator()
+            while (iterator.hasNext()) {
+                val entry = iterator.next()
+                val entity = level.getEntity(entry.key)
+                if (entity !is Player) {
+                    iterator.remove()
+                    continue
+                }
+
+                spawnItemBurstParticles(entity, ItemStack(Items.PINK_WOOL), 80, 1.0)
+                spawnItemBurstParticles(entity, ItemStack(Items.MAGENTA_WOOL), 50, 1.0)
+                spawnItemBurstParticles(entity, ItemStack(Items.REDSTONE), 50, 1.1)
+                level.playLocalSound(entity, SoundEvents.SLIME_BLOCK_BREAK, SoundSource.PLAYERS, 3f, 1f)
+                level.playLocalSound(entity, SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 3f, 1f)
+                val newValue = entry.value - 1
+                if (newValue <= 0) {
+                    iterator.remove()
+                    continue
+                }
+                entry.setValue(newValue)
+            }
+        }
+    }
+
     @SubscribeEvent
-    fun onClientTick(event: ClientTickEvent.Post) {
+    fun onClientTick(@Suppress("unused") event: ClientTickEvent.Post) {
         PostEffectHandler.run()
         VomitHandler.run()
         BloodHandler.run()
+        ExplosionHandler.run()
     }
 
     @SubscribeEvent

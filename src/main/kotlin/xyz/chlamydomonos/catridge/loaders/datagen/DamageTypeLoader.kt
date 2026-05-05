@@ -23,7 +23,7 @@ object DamageTypeLoader {
                     it.register(CURSE, DamageType(
                         "${Catridge.ID}.curse",
                         DamageScaling.NEVER,
-                        0.1f
+                        0.3f
                     ))
                 }
         )

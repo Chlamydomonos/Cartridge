@@ -1,5 +1,6 @@
 {
     "fml.menu.mods.info.description.catridge": "将《来自深渊》中臭名昭著（不）的弹药包（以及上升诅咒系统）加入Minecraft",
     "effect.catridge.curse": "上升诅咒",
-    "death.attack.catridge.curse": "%1$s死于阿庇斯的诅咒"
+    "death.attack.catridge.curse": "%1$s死于阿庇斯的诅咒",
+    "entity.catridge.hollow": "生骸"
 }

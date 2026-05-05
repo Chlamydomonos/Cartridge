@@ -54,7 +54,7 @@ object IllusionHandler {
 
         val random = level.random
         val ghostCount = random.nextInt(1, 8)
-        for (i in 0..<ghostCount) {
+        repeat(ghostCount) {
             val angle = random.nextDouble() * 2 * PI
             val distance = random.nextDouble() * 8
             val targetX = player.x + cos(angle) * distance
@@ -63,12 +63,12 @@ object IllusionHandler {
 
             val mutablePos = BlockPos.MutableBlockPos(targetX, targetY + 5.0, targetZ)
             var foundGround = false
-            for (dy in 0..12) {
+            repeat(13) {
                 val block = level.getBlockState(mutablePos)
                 if (!block.getCollisionShape(level, mutablePos).isEmpty) {
                     targetY = mutablePos.y + 1.0
                     foundGround = true
-                    break
+                    return@repeat
                 }
                 mutablePos.move(Direction.DOWN)
             }

@@ -1,11 +1,14 @@
 package xyz.chlamydomonos.catridge.loaders
 
 import com.mojang.serialization.Codec
+import net.minecraft.core.UUIDUtil
+import net.minecraft.network.codec.ByteBufCodecs
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.attachment.AttachmentType
 import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import xyz.chlamydomonos.catridge.Catridge
+import java.util.*
 
 object PlayerDataLoader {
     private val registry = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Catridge.ID)
@@ -17,10 +20,11 @@ object PlayerDataLoader {
             .build()
     }
 
-    val IS_HOLLOW = registry.register("is_hollow") { ->
+    val HOLLOW_UUID = registry.register("hollow_uuid") { ->
         AttachmentType
-            .builder { -> false }
-            .serialize(Codec.BOOL.fieldOf("is_hollow"))
+            .builder { -> Optional.empty<UUID>() }
+            .serialize(UUIDUtil.CODEC.optionalFieldOf("hollow_uuid"))
+            .sync(ByteBufCodecs.optional(UUIDUtil.STREAM_CODEC))
             .build()
     }
 
