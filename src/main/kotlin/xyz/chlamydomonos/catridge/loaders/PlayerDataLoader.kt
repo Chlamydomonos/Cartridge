@@ -1,6 +1,7 @@
 package xyz.chlamydomonos.catridge.loaders
 
 import com.mojang.serialization.Codec
+import net.minecraft.core.BlockPos
 import net.minecraft.core.UUIDUtil
 import net.minecraft.network.codec.ByteBufCodecs
 import net.neoforged.bus.api.IEventBus
@@ -26,6 +27,26 @@ object PlayerDataLoader {
             .builder { -> false }
             .serialize(Codec.BOOL.fieldOf("is_dead_hollow"))
             .sync(ByteBufCodecs.BOOL)
+            .build()
+    }
+
+    val LAST_POS = registry.register("last_pos") { ->
+        AttachmentType
+            .builder { -> BlockPos(0, -100000, 0) }
+            .build()
+    }
+
+    val MAX_DEPTH = registry.register("max_depth") { ->
+        AttachmentType
+            .builder { -> Optional.empty<Int>() }
+            .serialize(Codec.INT.optionalFieldOf("max_depth"))
+            .build()
+    }
+
+    val MAX_ABYSS_LEVEL = registry.register("max_abyss_level") { ->
+        AttachmentType
+            .builder { -> 0 }
+            .serialize(Codec.INT.fieldOf("max_abyss_level"))
             .build()
     }
 

@@ -23,3 +23,15 @@ val Player.hollowEntity: HollowEntity?
 var Player.isDeadHollow
     get() = getData(PlayerDataLoader.IS_DEAD_HOLLOW)
     set(value) { setData(PlayerDataLoader.IS_DEAD_HOLLOW, value) }
+
+var Player.lastPos
+    get() = getData(PlayerDataLoader.LAST_POS)
+    set(value) { setData(PlayerDataLoader.LAST_POS, value) }
+
+var Player.maxDepth
+    get() = getData(PlayerDataLoader.MAX_DEPTH).getOrNull()
+    set(value) { setData(PlayerDataLoader.MAX_DEPTH, Optional.ofNullable(value)) }
+
+var Player.maxAbyssLevel
+    get() = getData(PlayerDataLoader.MAX_ABYSS_LEVEL)
+    set(value) { setData(PlayerDataLoader.MAX_ABYSS_LEVEL, value) }

@@ -2,10 +2,7 @@ package xyz.chlamydomonos.catridge
 
 import net.neoforged.fml.common.Mod
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
-import xyz.chlamydomonos.catridge.loaders.EffectLoader
-import xyz.chlamydomonos.catridge.loaders.EntityDataLoader
-import xyz.chlamydomonos.catridge.loaders.EntityLoader
-import xyz.chlamydomonos.catridge.loaders.PlayerDataLoader
+import xyz.chlamydomonos.catridge.loaders.*
 
 @Mod(Catridge.ID)
 object Catridge {
@@ -16,5 +13,7 @@ object Catridge {
         PlayerDataLoader.bootstrap(MOD_BUS)
         EntityLoader.bootstrap(MOD_BUS)
         EntityDataLoader.bootstrap(MOD_BUS)
+        ItemLoader.bootstrap(MOD_BUS)
+        DataComponentLoader.bootstrap(MOD_BUS)
     }
 }

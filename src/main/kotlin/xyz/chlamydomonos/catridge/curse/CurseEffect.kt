@@ -4,6 +4,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
+import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
@@ -19,6 +20,16 @@ class CurseEffect : MobEffect(
     MobEffectCategory.HARMFUL,
     ColorUtil.rgbAsInt(0xf371ff)
 ) {
+    companion object {
+        fun apply(player: ServerPlayer, time: Int, level: Int) {
+            if ((player.getEffect(EffectLoader.CURSE)?.amplifier ?: -1) >= level) {
+                return
+            }
+
+            player.addEffect(MobEffectInstance(EffectLoader.CURSE, time * 100, level - 1))
+        }
+    }
+
     init {
         addAttributeModifier(
             Attributes.MOVEMENT_SPEED,

@@ -3,5 +3,21 @@
     "effect.catridge.curse": "上升诅咒",
     "death.attack.catridge.curse": "%1$s死于阿庇斯的诅咒",
     "death.attack.caatridge.curse.player": "%1$s在试图逃离%2$s时死于阿庇斯的诅咒",
-    "entity.catridge.hollow": "生骸"
+    "entity.catridge.hollow": "生骸",
+    "tab.catridge": "来自深渊：弹药包",
+    "item.catridge.abyss_create_1": "深渊创建工具-等级1",
+    "item.catridge.abyss_remove_1": "深渊删除工具-等级1",
+    "item.catridge.abyss_create_2": "深渊创建工具-等级2",
+    "item.catridge.abyss_remove_2": "深渊删除工具-等级2",
+    "item.catridge.abyss_create_3": "深渊创建工具-等级3",
+    "item.catridge.abyss_remove_3": "深渊删除工具-等级3",
+    "item.catridge.abyss_create_4": "深渊创建工具-等级4",
+    "item.catridge.abyss_remove_4": "深渊删除工具-等级4",
+    "item.catridge.abyss_create_5": "深渊创建工具-等级5",
+    "item.catridge.abyss_remove_5": "深渊删除工具-等级5",
+    "item.catridge.abyss_create_6": "深渊创建工具-等级6",
+    "item.catridge.abyss_remove_6": "深渊删除工具-等级6",
+    "tooltip.catridge.abyss_edit.start": "右击以选取第一点",
+    "tooltip.catridge.abyss_edit.end1": "右击以选取第二点",
+    "tooltip.catridge.abyss_edit.end2": "潜行右击以取消"
 }
