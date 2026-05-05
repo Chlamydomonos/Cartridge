@@ -13,13 +13,6 @@ import java.util.*
 object PlayerDataLoader {
     private val registry = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Catridge.ID)
 
-    val IS_CATRIDGE = registry.register("is_catridge") { ->
-        AttachmentType
-            .builder { -> false }
-            .serialize(Codec.BOOL.fieldOf("is_catridge"))
-            .build()
-    }
-
     val HOLLOW_UUID = registry.register("hollow_uuid") { ->
         AttachmentType
             .builder { -> Optional.empty<UUID>() }
