@@ -19,3 +19,7 @@ val Player.hollowEntity: HollowEntity?
         }
         return null
     }
+
+var Player.isDeadHollow
+    get() = getData(PlayerDataLoader.IS_DEAD_HOLLOW)
+    set(value) { setData(PlayerDataLoader.IS_DEAD_HOLLOW, value) }

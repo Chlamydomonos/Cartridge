@@ -10,6 +10,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import xyz.chlamydomonos.catridge.utils.hollowEntity
 import xyz.chlamydomonos.catridge.utils.hollowUUID
+import xyz.chlamydomonos.catridge.utils.isDeadHollow
 
 @EventBusSubscriber
 object HollowPlayerEventListener {
@@ -54,6 +55,7 @@ object HollowPlayerEventListener {
         }
 
         if (hollowEntity == null) {
+            HollowEntity.create(player)
             return
         }
 
@@ -61,6 +63,10 @@ object HollowPlayerEventListener {
             player.setCamera(hollowEntity)
             player.connection.send(ClientboundSetCameraPacket(player.camera))
             player.startRiding(hollowEntity, true, true)
+        }
+
+        if (player.vehicle != hollowEntity) {
+            hollowEntity.remove(Entity.RemovalReason.DISCARDED)
         }
     }
 
@@ -77,6 +83,17 @@ object HollowPlayerEventListener {
                 return
             }
             event.isCanceled = true
+        }
+    }
+
+    @SubscribeEvent
+    fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+        if (event.isEndConquered) {
+            return
+        }
+        val player = event.entity
+        if (player is ServerPlayer) {
+            player.isDeadHollow = false
         }
     }
 }

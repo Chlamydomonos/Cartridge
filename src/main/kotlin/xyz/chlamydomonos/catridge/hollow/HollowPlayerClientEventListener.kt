@@ -8,6 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.InputEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import xyz.chlamydomonos.catridge.utils.hollowUUID
+import xyz.chlamydomonos.catridge.utils.isDeadHollow
 
 @EventBusSubscriber(value = [Dist.CLIENT])
 object HollowPlayerClientEventListener {
@@ -15,7 +16,7 @@ object HollowPlayerClientEventListener {
     fun onRenderPlayer(event: RenderPlayerEvent.Pre<*>) {
         val playerId = event.renderState.id
         val player = Minecraft.getInstance().level?.getEntity(playerId) ?: return
-        if (player is Player && player.hollowUUID != null) {
+        if (player is Player && (player.hollowUUID != null || player.isDeadHollow)) {
             event.isCanceled = true
         }
     }

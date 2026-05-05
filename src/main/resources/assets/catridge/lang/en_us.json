@@ -2,5 +2,6 @@
     "fml.menu.mods.info.description.catridge": "Add Catridge (and the curse) from Made in Abyss to Minecraft",
     "effect.catridge.curse": "Curse",
     "death.attack.catridge.curse": "%1$s died of curse of Abyss",
+    "death.attack.caatridge.curse.player": "%1$s died of curse of Abyss while trying to escape %2$s",
     "entity.catridge.hollow": "Hollow"
 }

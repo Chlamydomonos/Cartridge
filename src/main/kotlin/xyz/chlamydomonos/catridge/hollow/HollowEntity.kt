@@ -18,6 +18,7 @@ import net.minecraft.world.phys.AABB
 import xyz.chlamydomonos.catridge.loaders.EntityDataLoader
 import xyz.chlamydomonos.catridge.loaders.EntityLoader
 import xyz.chlamydomonos.catridge.utils.hollowUUID
+import xyz.chlamydomonos.catridge.utils.isDeadHollow
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -52,6 +53,8 @@ class HollowEntity(type: EntityType<HollowEntity>, level: Level) : HollowEntityB
             }
 
             player.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            player.abilities.invulnerable = true
+            player.onUpdateAbilities()
 
             return entity
         }
@@ -109,7 +112,10 @@ class HollowEntity(type: EntityType<HollowEntity>, level: Level) : HollowEntityB
             }
 
             val damageSource = lastDamageSource ?: level.damageSources().source(DamageTypes.GENERIC_KILL)
+            player.abilities.invulnerable = false
+            player.onUpdateAbilities()
             player.hurtServer(level as ServerLevel, damageSource, Float.MAX_VALUE)
+            player.isDeadHollow = true
         }
     }
 }

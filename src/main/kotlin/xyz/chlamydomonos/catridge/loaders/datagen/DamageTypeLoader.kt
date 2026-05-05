@@ -1,8 +1,11 @@
 package xyz.chlamydomonos.catridge.loaders.datagen
 
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.tags.DamageTypeTagsProvider
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.DamageTypeTags
 import net.minecraft.world.damagesource.DamageScaling
 import net.minecraft.world.damagesource.DamageType
 import net.neoforged.bus.api.SubscribeEvent
@@ -27,5 +30,15 @@ object DamageTypeLoader {
                     ))
                 }
         )
+
+        event.createProvider { output, lp ->
+            object : DamageTypeTagsProvider(output, lp, Catridge.ID) {
+                override fun addTags(registries: HolderLookup.Provider) {
+                    tag(DamageTypeTags.NO_KNOCKBACK).add(CURSE)
+                    tag(DamageTypeTags.BYPASSES_ARMOR).add(CURSE)
+                    tag(DamageTypeTags.BYPASSES_INVULNERABILITY).add(CURSE)
+                }
+            }
+        }
     }
 }

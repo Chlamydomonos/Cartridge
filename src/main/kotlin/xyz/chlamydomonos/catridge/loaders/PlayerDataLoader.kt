@@ -28,6 +28,14 @@ object PlayerDataLoader {
             .build()
     }
 
+    val IS_DEAD_HOLLOW = registry.register("is_dead_hollow") { ->
+        AttachmentType
+            .builder { -> false }
+            .serialize(Codec.BOOL.fieldOf("is_dead_hollow"))
+            .sync(ByteBufCodecs.BOOL)
+            .build()
+    }
+
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)
     }
