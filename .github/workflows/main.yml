@@ -1,0 +1,68 @@
+name: Generate Data
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history to allow for proper merging
+
+      - name: Get Last Commit Message
+        id: get_commit_message
+        run: echo "LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Switch to generated branch
+        run: |
+          git checkout generated
+          git pull origin generated
+
+      - name: Merge main into generated
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git merge main -s ours
+          git branch temp
+          git reset --hard main
+          git checkout temp -- src/generated
+          git reset --soft temp
+          git commit --amend -m "${{ env.LAST_COMMIT_MESSAGE }}: merge main into generated"
+          git branch -D temp
+          git diff HEAD main
+
+      - name: Run Gradle task
+        run: |
+          chmod +x ./gradlew
+          ./gradlew runData
+
+      - name: Commit changes
+        run: |
+          git add .
+          STATUS_OUTPUT=$(git status --porcelain)
+          STATUS_OUTPUT_LENGTH=${#STATUS_OUTPUT}
+          if [[ $STATUS_OUTPUT_LENGTH -gt 0 ]]; then
+            git commit -m "${{ env.LAST_COMMIT_MESSAGE }}: update generated files from main branch"
+          else
+            echo "No changes to commit."
+          fi
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: generated
