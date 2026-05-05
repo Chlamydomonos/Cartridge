@@ -11,7 +11,7 @@ import net.minecraft.world.damagesource.DamageType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 import xyz.chlamydomonos.catridge.utils.RLUtil
 
 @EventBusSubscriber
@@ -24,7 +24,7 @@ object DamageTypeLoader {
             RegistrySetBuilder()
                 .add(Registries.DAMAGE_TYPE) {
                     it.register(CURSE, DamageType(
-                        "${Catridge.ID}.curse",
+                        "${Cartridge.ID}.curse",
                         DamageScaling.NEVER,
                         0.3f
                     ))
@@ -32,7 +32,7 @@ object DamageTypeLoader {
         )
 
         event.createProvider { output, lp ->
-            object : DamageTypeTagsProvider(output, lp, Catridge.ID) {
+            object : DamageTypeTagsProvider(output, lp, Cartridge.ID) {
                 override fun addTags(registries: HolderLookup.Provider) {
                     tag(DamageTypeTags.NO_KNOCKBACK).add(CURSE)
                     tag(DamageTypeTags.BYPASSES_ARMOR).add(CURSE)

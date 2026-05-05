@@ -8,11 +8,11 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.attachment.AttachmentType
 import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 import java.util.*
 
 object PlayerDataLoader {
-    private val registry = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Catridge.ID)
+    private val registry = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Cartridge.ID)
 
     val HOLLOW_UUID = registry.register("hollow_uuid") { ->
         AttachmentType

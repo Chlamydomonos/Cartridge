@@ -1,14 +1,10 @@
 package xyz.chlamydomonos.catridge.utils
 
 import net.minecraft.resources.Identifier
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 
 object RLUtil {
     fun of(name: String): Identifier {
-        return Identifier.fromNamespaceAndPath(Catridge.ID, name)
-    }
-
-    fun mc(name: String): Identifier {
-        return Identifier.withDefaultNamespace(name)
+        return Identifier.fromNamespaceAndPath(Cartridge.ID, name)
     }
 }

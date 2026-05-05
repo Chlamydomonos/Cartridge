@@ -11,18 +11,18 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.getValue
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 import xyz.chlamydomonos.catridge.abyss.AbyssEditToolItem
 import xyz.chlamydomonos.catridge.utils.RLUtil
 
 object ItemLoader {
-    private val registry = DeferredRegister.createItems(Catridge.ID)
-    private val creativeModeTabRegistry = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Catridge.ID)
+    private val registry = DeferredRegister.createItems(Cartridge.ID)
+    private val creativeModeTabRegistry = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cartridge.ID)
     private val itemsInTab = mutableListOf<DeferredItem<Item>>()
     @Suppress("unused")
     val TAB = creativeModeTabRegistry.register("catridge") { ->
         CreativeModeTab.builder()
-            .title(Component.translatable("tab.${Catridge.ID}"))
+            .title(Component.translatable("tab.${Cartridge.ID}"))
             .displayItems { _, output ->
                 for (holder in itemsInTab) {
                     output.accept(holder)

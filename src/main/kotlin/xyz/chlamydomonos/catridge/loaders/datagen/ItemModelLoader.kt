@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 import xyz.chlamydomonos.catridge.loaders.ItemLoader
 
 @EventBusSubscriber
@@ -16,7 +16,7 @@ object ItemModelLoader {
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
         event.createProvider {
-            object : ModelProvider(it, Catridge.ID) {
+            object : ModelProvider(it, Cartridge.ID) {
                 override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
                     fun simple(item: Item) {
                         itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM)

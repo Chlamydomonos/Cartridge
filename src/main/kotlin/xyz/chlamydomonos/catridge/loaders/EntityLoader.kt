@@ -9,12 +9,12 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent
 import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.getValue
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 import xyz.chlamydomonos.catridge.hollow.HollowEntity
 
 @EventBusSubscriber
 object EntityLoader {
-    private val registry = DeferredRegister.createEntities(Catridge.ID)
+    private val registry = DeferredRegister.createEntities(Cartridge.ID)
 
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)

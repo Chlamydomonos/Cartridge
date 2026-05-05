@@ -7,12 +7,12 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import thedarkcolour.kotlinforforge.neoforge.forge.getValue
-import xyz.chlamydomonos.catridge.Catridge
+import xyz.chlamydomonos.catridge.Cartridge
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 object EntityDataLoader {
-    private val registry = DeferredRegister.create(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS, Catridge.ID)
+    private val registry = DeferredRegister.create(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS, Cartridge.ID)
 
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)
