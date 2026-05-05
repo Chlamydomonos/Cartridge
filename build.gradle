@@ -100,11 +100,22 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    exclusiveContent {
+        forRepository {
+            //noinspection ForeignDelegate
+            maven {
+                name = 'GeckoLib'
+                url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            }
+        }
+        filter { includeGroupAndSubgroups('com.geckolib') }
+    }
 }
 
 dependencies {
     implementation "thedarkcolour:kotlinforforge-neoforge:${project.kff_version}"
     implementation "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
+    implementation "com.geckolib:geckolib-neoforge-${project.minecraft_version}:${project.geckolib_version}"
 
     runtimeOnly "curse.maven:appleskin-248787:7854456"
     runtimeOnly "curse.maven:jei-238222:8014757"
@@ -121,7 +132,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license: mod_license,
             mod_version: mod_version,
             mod_authors: mod_authors,
-            mod_description: mod_description
+            mod_description: mod_description,
+            curios_version: curios_version,
+            geckolib_version: geckolib_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties
