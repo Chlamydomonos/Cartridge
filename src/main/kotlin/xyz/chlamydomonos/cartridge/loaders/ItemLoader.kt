@@ -1,24 +1,28 @@
 package xyz.chlamydomonos.cartridge.loaders
 
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.getValue
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.abyss.AbyssEditToolItem
+import xyz.chlamydomonos.cartridge.cartridge.BackpackItem
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeItem
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 object ItemLoader {
     private val registry = DeferredRegister.createItems(Cartridge.ID)
     private val creativeModeTabRegistry = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cartridge.ID)
-    private val itemsInTab = mutableListOf<DeferredItem<Item>>()
+    private val itemsInTab = mutableListOf<DeferredItem<out Item>>()
     @Suppress("unused")
     val TAB = creativeModeTabRegistry.register("cartridge") { ->
         CreativeModeTab.builder()
@@ -32,12 +36,24 @@ object ItemLoader {
             .build()
     }
 
-    fun register(name: String, factory: (id: ResourceKey<Item>) -> Item): DeferredItem<Item> {
+    fun <T : Item> register(name: String, factory: (id: ResourceKey<Item>) -> T): DeferredItem<T> {
         val holder = registry.register(name) { ->
             factory(ResourceKey.create(Registries.ITEM, RLUtil.of(name)))
         }
         itemsInTab.add(holder)
         return holder
+    }
+
+    fun <T : Block> registerBlock(block: Holder<T>): DeferredItem<BlockItem> {
+        @Suppress("UNCHECKED_CAST")
+        val holder = registry.registerSimpleBlockItem(block as Holder<Block>)
+        itemsInTab.add(holder)
+        return holder
+    }
+
+    fun bootstrap(bus: IEventBus) {
+        registry.register(bus)
+        creativeModeTabRegistry.register(bus)
     }
 
     val ABYSS_CREATE_1 by register("abyss_create_1") { AbyssEditToolItem(it, 1, AbyssEditToolItem.Operation.ADD) }
@@ -54,9 +70,5 @@ object ItemLoader {
     val ABYSS_REMOVE_6 by register("abyss_remove_6") { AbyssEditToolItem(it, 6, AbyssEditToolItem.Operation.REMOVE) }
 
     val CARTRIDGE by register("cartridge") { CartridgeItem(it) }
-
-    fun bootstrap(bus: IEventBus) {
-        registry.register(bus)
-        creativeModeTabRegistry.register(bus)
-    }
+    val BACKPACK by register("backpack") { BackpackItem(it) }
 }

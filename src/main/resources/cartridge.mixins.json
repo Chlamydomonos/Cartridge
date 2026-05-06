@@ -1,6 +1,7 @@
 {
     "package": "xyz.chlamydomonos.cartridge.mixin",
     "mixins": [
-        "EntityMixin"
+        "EntityMixin",
+        "LivingEntityMixin"
     ]
 }

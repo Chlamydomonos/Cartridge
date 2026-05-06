@@ -50,6 +50,13 @@ object PlayerDataLoader {
             .build()
     }
 
+    val SURGERY_TABLE_POS = registry.register("surgery_table_pos") { ->
+        AttachmentType
+            .builder { -> Optional.empty<BlockPos>() }
+            .sync(ByteBufCodecs.optional(BlockPos.STREAM_CODEC))
+            .build()
+    }
+
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)
     }

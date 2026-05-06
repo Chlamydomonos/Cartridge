@@ -15,5 +15,8 @@ object Cartridge {
         EntityDataLoader.bootstrap(MOD_BUS)
         ItemLoader.bootstrap(MOD_BUS)
         DataComponentLoader.bootstrap(MOD_BUS)
+        BlockLoader.bootstrap(MOD_BUS)
+        BlockEntityLoader.bootstrap(MOD_BUS)
+        MenuLoader.bootstrap(MOD_BUS)
     }
 }
