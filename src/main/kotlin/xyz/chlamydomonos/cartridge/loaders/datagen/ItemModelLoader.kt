@@ -36,6 +36,7 @@ object ItemModelLoader {
                     simple(ItemLoader.ABYSS_REMOVE_6)
 
                     itemModels.declareCustomModelItem(ItemLoader.CARTRIDGE)
+                    itemModels.declareCustomModelItem(ItemLoader.BACKPACK)
                 }
             }
         }

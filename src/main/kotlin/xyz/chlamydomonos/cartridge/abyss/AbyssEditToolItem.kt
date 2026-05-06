@@ -13,9 +13,9 @@ import net.minecraft.world.item.context.UseOnContext
 import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import xyz.chlamydomonos.cartridge.utils.ColorUtil
 import xyz.chlamydomonos.cartridge.utils.abyssManager
+import xyz.chlamydomonos.cartridge.utils.optionalBlockPos
 import java.util.*
 import java.util.function.Consumer
-import kotlin.jvm.optionals.getOrNull
 
 class AbyssEditToolItem(
     id: ResourceKey<Item>,
@@ -39,7 +39,7 @@ class AbyssEditToolItem(
         builder: Consumer<Component>,
         tooltipFlag: TooltipFlag
     ) {
-        val data = itemStack.get(DataComponentLoader.OPTIONAL_BLOCK_POS)?.getOrNull()
+        val data = itemStack.optionalBlockPos
         if (data == null) {
             builder.accept(
                 Component
@@ -67,17 +67,17 @@ class AbyssEditToolItem(
 
         val isShift = context.player?.isShiftKeyDown ?: return InteractionResult.PASS
         val stack = context.itemInHand
-        val data = stack.get(DataComponentLoader.OPTIONAL_BLOCK_POS)?.getOrNull()
+        val data = stack.optionalBlockPos
         val pos = context.clickedPos
         val level = context.level
         if (data == null) {
             if (!level.isClientSide) {
-                stack.set(DataComponentLoader.OPTIONAL_BLOCK_POS, Optional.of(pos))
+                stack.optionalBlockPos = pos
             }
             return InteractionResult.SUCCESS
         } else if (isShift) {
             if (!level.isClientSide) {
-                stack.set(DataComponentLoader.OPTIONAL_BLOCK_POS, Optional.empty())
+                stack.optionalBlockPos = null
             }
             return InteractionResult.SUCCESS
         } else {
@@ -88,7 +88,7 @@ class AbyssEditToolItem(
                     Operation.ADD -> abyssManager.setValue(level, data, pos, item.level.toByte())
                     Operation.REMOVE -> abyssManager.replaceValue(level, data, pos, item.level.toByte(), 0)
                 }
-                stack.set(DataComponentLoader.OPTIONAL_BLOCK_POS, Optional.empty())
+                stack.optionalBlockPos = null
             }
             return InteractionResult.SUCCESS
         }

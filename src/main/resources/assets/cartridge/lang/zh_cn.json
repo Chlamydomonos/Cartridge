@@ -20,5 +20,7 @@
     "tooltip.cartridge.abyss_edit.start": "右击以选取第一点",
     "tooltip.cartridge.abyss_edit.end1": "右击以选取第二点",
     "tooltip.cartridge.abyss_edit.end2": "潜行右击以取消",
-    "item.cartridge.cartridge": "弹药包"
+    "item.cartridge.cartridge": "弹药包（空）",
+    "item.cartridge.backpack": "弹药包背包",
+    "item.cartridge.cartridge.dead": "%1$s（已死亡）"
 }

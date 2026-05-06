@@ -16,9 +16,8 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import org.joml.Matrix4fc
-import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import xyz.chlamydomonos.cartridge.utils.ColorUtil
-import kotlin.jvm.optionals.getOrNull
+import xyz.chlamydomonos.cartridge.utils.optionalBlockPos
 import kotlin.math.max
 import kotlin.math.min
 
@@ -126,7 +125,7 @@ object AbyssRenderer {
         renderVoxelShape(abyssShape, cameraPos, event.poseStack, 0xffffff)
         renderTransparentShape(abyssShape, cameraPos, event.poseStack, ColorUtil.rgbaAsInt(0xffffff, 0x80))
 
-        val chosenPos = stack.get(DataComponentLoader.OPTIONAL_BLOCK_POS)?.getOrNull() ?: return
+        val chosenPos = stack.optionalBlockPos ?: return
         val hitResult = Minecraft.getInstance().hitResult ?: return
         if (hitResult.type != HitResult.Type.BLOCK || hitResult !is BlockHitResult) {
             return

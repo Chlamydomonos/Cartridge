@@ -20,5 +20,7 @@
     "tooltip.cartridge.abyss_edit.start": "Right click to choose first point",
     "tooltip.cartridge.abyss_edit.end1": "Right click to choose second point",
     "tooltip.cartridge.abyss_edit.end2": "Shift-right click to cancel",
-    "item.cartridge.cartridge": "Cartridge"
+    "item.cartridge.cartridge": "Cartridge (Empty)",
+    "item.cartridge.backpack": "Cartridge Backpack",
+    "item.cartridge.cartridge.dead": "%1$s (Dead)"
 }
