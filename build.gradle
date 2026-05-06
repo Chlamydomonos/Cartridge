@@ -118,7 +118,6 @@ dependencies {
     implementation "com.geckolib:geckolib-neoforge-${project.minecraft_version}:${project.geckolib_version}"
 
     runtimeOnly "curse.maven:appleskin-248787:7854456"
-    runtimeOnly "curse.maven:jei-238222:8014757"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
