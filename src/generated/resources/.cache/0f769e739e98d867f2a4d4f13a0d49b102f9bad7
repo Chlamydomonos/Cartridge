@@ -1,4 +1,5 @@
-// 26.1.2	2026-05-06T00:41:29.204271744	Model Definitions - cartridge
+// 26.1.2	2026-05-06T23:46:48.67319702	Model Definitions - cartridge
+6b7927a8a864e9f4f8f42c5f79aece63c2ec12fe assets/cartridge/blockstates/surgery_table.json
 2257ed56ae14f0ae8b87e7463f4a8341005d7b99 assets/cartridge/items/abyss_create_1.json
 83c21ad2ae68ee19d6b4af7379e2b312993ed9f2 assets/cartridge/items/abyss_create_2.json
 7e9ed62e97be49beb9d78055571e7b57fbf7ac9c assets/cartridge/items/abyss_create_3.json
@@ -11,7 +12,9 @@ b71eca30e4ad8a946a51d37c21e1503f803efaa0 assets/cartridge/items/abyss_remove_3.j
 d446dc2a1fa2623cdbb6d61b3ef361dcb56afc60 assets/cartridge/items/abyss_remove_4.json
 8bda0902e94c8a2cf13d20615cbdbccf4999e9bd assets/cartridge/items/abyss_remove_5.json
 d6937533a70bdf72343c4a928bd1a9656943885a assets/cartridge/items/abyss_remove_6.json
+ce32dff466d92f338d97a34a3a5ae663d2176d4b assets/cartridge/items/backpack.json
 f83bb48917572b57f050afe06d21bd2c91ef65c9 assets/cartridge/items/cartridge.json
+e1e9f14f75bb19509abfb6ca3b552eb939732c46 assets/cartridge/items/surgery_table.json
 6afecc4fcebd603dba7ba4bc342c05093669a3b9 assets/cartridge/models/item/abyss_create_1.json
 4cb36180be7d67d6bd19555b025fba9a7f8a8b62 assets/cartridge/models/item/abyss_create_2.json
 437cfe40ab8f1389e4edc5a543f195494c18a2f7 assets/cartridge/models/item/abyss_create_3.json
