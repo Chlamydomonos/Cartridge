@@ -9,10 +9,11 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import xyz.chlamydomonos.cartridge.Cartridge
+import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlock
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 
 @EventBusSubscriber
-object ItemModelLoader {
+object ModelLoader {
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
         event.createProvider {
@@ -37,6 +38,7 @@ object ItemModelLoader {
 
                     itemModels.declareCustomModelItem(ItemLoader.CARTRIDGE)
                     itemModels.declareCustomModelItem(ItemLoader.BACKPACK)
+                    SurgeryTableBlock.genModel(blockModels)
                 }
             }
         }

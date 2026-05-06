@@ -10,6 +10,8 @@ logoFile="assets/cartridge/textures/logo.png"
 credits="Thanks to thedarkcolour and all the contributors for making Kotlin for Forge"
 authors="${mod_authors}"
 description='''${mod_description}'''
+[[mixins]]
+config="cartridge.mixins.json"
 [[dependencies."${mod_id}"]]
     modId="neoforge"
     type="required"

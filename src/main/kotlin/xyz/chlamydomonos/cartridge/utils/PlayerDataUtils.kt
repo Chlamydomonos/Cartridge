@@ -35,3 +35,7 @@ var Player.maxDepth
 var Player.maxAbyssLevel
     get() = getData(PlayerDataLoader.MAX_ABYSS_LEVEL)
     set(value) { setData(PlayerDataLoader.MAX_ABYSS_LEVEL, value) }
+
+var Player.surgeryTablePos
+    get() = getData(PlayerDataLoader.SURGERY_TABLE_POS).getOrNull()
+    set(value) { setData(PlayerDataLoader.SURGERY_TABLE_POS, Optional.ofNullable(value)) }

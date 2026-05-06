@@ -1,11 +1,14 @@
 package xyz.chlamydomonos.cartridge.loaders
 
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -41,6 +44,18 @@ object ItemLoader {
         return holder
     }
 
+    fun <T : Block> registerBlock(block: Holder<T>): DeferredItem<BlockItem> {
+        @Suppress("UNCHECKED_CAST")
+        val holder = registry.registerSimpleBlockItem(block as Holder<Block>)
+        itemsInTab.add(holder)
+        return holder
+    }
+
+    fun bootstrap(bus: IEventBus) {
+        registry.register(bus)
+        creativeModeTabRegistry.register(bus)
+    }
+
     val ABYSS_CREATE_1 by register("abyss_create_1") { AbyssEditToolItem(it, 1, AbyssEditToolItem.Operation.ADD) }
     val ABYSS_REMOVE_1 by register("abyss_remove_1") { AbyssEditToolItem(it, 1, AbyssEditToolItem.Operation.REMOVE) }
     val ABYSS_CREATE_2 by register("abyss_create_2") { AbyssEditToolItem(it, 2, AbyssEditToolItem.Operation.ADD) }
@@ -56,9 +71,4 @@ object ItemLoader {
 
     val CARTRIDGE by register("cartridge") { CartridgeItem(it) }
     val BACKPACK by register("backpack") { BackpackItem(it) }
-
-    fun bootstrap(bus: IEventBus) {
-        registry.register(bus)
-        creativeModeTabRegistry.register(bus)
-    }
 }

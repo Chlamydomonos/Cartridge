@@ -22,5 +22,6 @@
     "tooltip.cartridge.abyss_edit.end2": "Shift-right click to cancel",
     "item.cartridge.cartridge": "Cartridge (Empty)",
     "item.cartridge.backpack": "Cartridge Backpack",
-    "item.cartridge.cartridge.dead": "%1$s (Dead)"
+    "item.cartridge.cartridge.dead": "%1$s (Dead)",
+    "block.cartridge.surgery_table": "Surgery Table"
 }

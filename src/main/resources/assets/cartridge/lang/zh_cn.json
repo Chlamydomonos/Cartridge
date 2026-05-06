@@ -22,5 +22,6 @@
     "tooltip.cartridge.abyss_edit.end2": "潜行右击以取消",
     "item.cartridge.cartridge": "弹药包（空）",
     "item.cartridge.backpack": "弹药包背包",
-    "item.cartridge.cartridge.dead": "%1$s（已死亡）"
+    "item.cartridge.cartridge.dead": "%1$s（已死亡）",
+    "block.cartridge.surgery_table": "手术台"
 }
