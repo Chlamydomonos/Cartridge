@@ -34,6 +34,8 @@ object ItemModelLoader {
                     simple(ItemLoader.ABYSS_REMOVE_5)
                     simple(ItemLoader.ABYSS_CREATE_6)
                     simple(ItemLoader.ABYSS_REMOVE_6)
+
+                    itemModels.declareCustomModelItem(ItemLoader.CARTRIDGE)
                 }
             }
         }
