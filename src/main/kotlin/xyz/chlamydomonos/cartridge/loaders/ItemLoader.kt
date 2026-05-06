@@ -6,13 +6,13 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.getValue
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.abyss.AbyssEditToolItem
+import xyz.chlamydomonos.cartridge.cartridge.CartridgeItem
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 object ItemLoader {
@@ -28,7 +28,7 @@ object ItemLoader {
                     output.accept(holder)
                 }
             }
-            .icon { ItemStack(Items.NETHERITE_INGOT) } // TODO: 改为弹药包
+            .icon { ItemStack(CARTRIDGE) }
             .build()
     }
 
@@ -52,6 +52,8 @@ object ItemLoader {
     val ABYSS_REMOVE_5 by register("abyss_remove_5") { AbyssEditToolItem(it, 5, AbyssEditToolItem.Operation.REMOVE) }
     val ABYSS_CREATE_6 by register("abyss_create_6") { AbyssEditToolItem(it, 6, AbyssEditToolItem.Operation.ADD) }
     val ABYSS_REMOVE_6 by register("abyss_remove_6") { AbyssEditToolItem(it, 6, AbyssEditToolItem.Operation.REMOVE) }
+
+    val CARTRIDGE by register("cartridge") { CartridgeItem(it) }
 
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)

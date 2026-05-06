@@ -19,5 +19,6 @@
     "item.cartridge.abyss_remove_6": "深渊删除工具-等级6",
     "tooltip.cartridge.abyss_edit.start": "右击以选取第一点",
     "tooltip.cartridge.abyss_edit.end1": "右击以选取第二点",
-    "tooltip.cartridge.abyss_edit.end2": "潜行右击以取消"
+    "tooltip.cartridge.abyss_edit.end2": "潜行右击以取消",
+    "item.cartridge.cartridge": "弹药包"
 }
