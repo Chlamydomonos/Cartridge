@@ -6,9 +6,11 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.abyss.AbyssInitPacket
 import xyz.chlamydomonos.cartridge.abyss.AbyssUpdatePacket
+import xyz.chlamydomonos.cartridge.cartridge.BecomeCartridgePacket
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeConfirmPacket
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeConfirmRequestPacket
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeCreationRequestPacket
+import xyz.chlamydomonos.cartridge.cartridge.SuicidePacket
 import xyz.chlamydomonos.cartridge.curse.*
 
 @EventBusSubscriber
@@ -26,5 +28,7 @@ object NetworkLoader {
         registrar.playToServer(CartridgeCreationRequestPacket.type, CartridgeCreationRequestPacket.codec, CartridgeCreationRequestPacket::handle)
         registrar.playToClient(CartridgeConfirmRequestPacket.type, CartridgeConfirmRequestPacket.codec, CartridgeConfirmRequestPacket::handle)
         registrar.playToServer(CartridgeConfirmPacket.type, CartridgeConfirmPacket.codec, CartridgeConfirmPacket::handle)
+        registrar.playToClient(BecomeCartridgePacket.type, BecomeCartridgePacket.codec, BecomeCartridgePacket::handle)
+        registrar.playToServer(SuicidePacket.type, SuicidePacket.codec, SuicidePacket::handle)
     }
 }

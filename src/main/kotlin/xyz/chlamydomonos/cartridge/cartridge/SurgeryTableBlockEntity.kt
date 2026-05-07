@@ -6,6 +6,8 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.DataSlot
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.transfer.item.ItemResource
@@ -13,6 +15,11 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler
 import xyz.chlamydomonos.cartridge.loaders.BlockEntityLoader
 import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
+import xyz.chlamydomonos.cartridge.loaders.datagen.DamageTypeLoader
+import xyz.chlamydomonos.cartridge.utils.cartridgeDimension
+import xyz.chlamydomonos.cartridge.utils.cartridgeStatus
+import xyz.chlamydomonos.cartridge.utils.optionalName
+import xyz.chlamydomonos.cartridge.utils.optionalUUID
 import kotlin.jvm.optionals.getOrNull
 
 class SurgeryTableBlockEntity(
@@ -33,6 +40,10 @@ class SurgeryTableBlockEntity(
 
             return resource.get(DataComponentLoader.OPTIONAL_UUID)?.getOrNull() == null
         }
+
+        override fun onContentsChanged(index: Int, previousContents: ItemStack) {
+            blockEntity?.handlingPacket = false
+        }
     }
 
     class OutputItemHandler : ItemStacksResourceHandler(1) {
@@ -48,5 +59,42 @@ class SurgeryTableBlockEntity(
         containerId: Int,
         inventory: Inventory,
         player: Player
-    ) = SurgeryTableMenu(containerId, inventory, inputItem, outputItem)
+    ) = SurgeryTableMenu(
+        containerId,
+        inventory,
+        inputItem,
+        outputItem,
+        object : DataSlot() {
+            override fun get() = if (handlingPacket) 1 else 0
+            override fun set(p0: Int) {}
+        }
+    )
+
+    fun createCartridge() {
+        val target = playerOn
+        val user = playerUsing
+        if (user == null || target == null) {
+            throw RuntimeException("Trying to create cartridge without players")
+        }
+
+        val level = target.level()
+        target.dropAllDeathLoot(level, level.damageSources().source(DamageTypeLoader.CARTRIDGE, user))
+        target.cartridgeStatus = CartridgeManager.CartridgeStatus.FREE
+        target.teleportTo(
+            level.cartridgeDimension,
+            level.random.nextDouble() * 100,
+            100.0,
+            level.random.nextDouble() * 100,
+            setOf(),
+            target.yRot,
+            target.xRot,
+            false
+        )
+
+        inputItem.set(0, ItemResource.of(ItemStack.EMPTY), 0)
+        val outputStack = ItemStack(ItemLoader.CARTRIDGE, 1)
+        outputStack.optionalUUID = target.uuid
+        outputStack.optionalName = target.plainTextName
+        outputItem.set(0, ItemResource.of(outputStack), 1)
+    }
 }

@@ -4,6 +4,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerLevelAccess
+import net.minecraft.world.inventory.DataSlot
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot
@@ -14,7 +15,8 @@ class SurgeryTableMenu(
     containerId: Int,
     playerInventory: Inventory,
     val inputContainer: SurgeryTableBlockEntity.InputItemHandler,
-    val outputContainer: SurgeryTableBlockEntity.OutputItemHandler
+    val outputContainer: SurgeryTableBlockEntity.OutputItemHandler,
+    private val packetStatus: DataSlot
 ) : AbstractContainerMenu(MenuLoader.SURGERY_TABLE, containerId) {
     companion object {
         fun clearContainer(player: Player, container: ItemStacksResourceHandler) {
@@ -36,17 +38,26 @@ class SurgeryTableMenu(
         return@run ContainerLevelAccess.create(level, be.blockPos)
     }
 
+    private val refusedSlot = DataSlot.standalone()
+    var refused
+        get() = refusedSlot.get() != 0
+        set(value) { refusedSlot.set(if (value) 1 else 0) }
+    val handlingPacket get() = packetStatus.get() != 0
+
     constructor(id: Int, inv: Inventory) : this(
         id,
         inv,
         SurgeryTableBlockEntity.InputItemHandler(),
-        SurgeryTableBlockEntity.OutputItemHandler()
+        SurgeryTableBlockEntity.OutputItemHandler(),
+        DataSlot.standalone()
     )
 
     init {
         addSlot(ResourceHandlerSlot(inputContainer, inputContainer::set, 0, 44, 20))
         addSlot(ResourceHandlerSlot(outputContainer, outputContainer::set, 0, 116, 20))
         addStandardInventorySlots(playerInventory, 8, 51)
+        addDataSlot(packetStatus)
+        addDataSlot(refusedSlot)
     }
 
     override fun quickMoveStack(

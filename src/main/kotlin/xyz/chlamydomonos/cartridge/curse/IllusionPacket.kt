@@ -6,19 +6,15 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.network.handling.IPayloadContext
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
-class IllusionPacket : CustomPacketPayload {
-    companion object {
-        val type = CustomPacketPayload.Type<IllusionPacket>(RLUtil.of("illusion"))
-        val INSTANCE = IllusionPacket()
-        val codec = StreamCodec.unit<RegistryFriendlyByteBuf, IllusionPacket>(INSTANCE)
+object IllusionPacket : CustomPacketPayload {
+    val type = CustomPacketPayload.Type<IllusionPacket>(RLUtil.of("illusion"))
+    val codec = StreamCodec.unit<RegistryFriendlyByteBuf, IllusionPacket>(this)
 
-        fun handle(@Suppress("unused") packet: IllusionPacket, context: IPayloadContext) {
-            context.enqueueWork {
-                IllusionHandler.addGhosts()
-            }
+    fun handle(@Suppress("unused") packet: IllusionPacket, context: IPayloadContext) {
+        context.enqueueWork {
+            IllusionHandler.addGhosts()
         }
     }
 
-    private constructor()
     override fun type() = type
 }

@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.client.network.ClientPacketDistributor
+import xyz.chlamydomonos.cartridge.utils.ColorUtil
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 class SurgeryTableScreen(
@@ -34,7 +35,7 @@ class SurgeryTableScreen(
         .Builder(
             Component.translatable("gui.cartridge.create_cartridge"),
             {
-                ClientPacketDistributor.sendToServer(CartridgeCreationRequestPacket.INSTANCE)
+                ClientPacketDistributor.sendToServer(CartridgeCreationRequestPacket)
             }
         )
         .size(32, 16)
@@ -66,5 +67,28 @@ class SurgeryTableScreen(
             256,
             256
         )
+    }
+
+    override fun extractContents(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
+        super.extractContents(graphics, mouseX, mouseY, a)
+        val x = (width - imageWidth) / 2
+        val y = (height - imageHeight) / 2
+        if (menu.handlingPacket) {
+            graphics.centeredText(
+                font,
+                Component.translatable("gui.cartridge.pending"),
+                x + 69 + 16,
+                y + 8,
+                ColorUtil.rgbAsInt(0x808080)
+            )
+        } else if (menu.refused) {
+            graphics.centeredText(
+                font,
+                Component.translatable("gui.cartridge.refused"),
+                x + 69 + 16,
+                y + 8,
+                ColorUtil.rgbAsInt(0x902020)
+            )
+        }
     }
 }

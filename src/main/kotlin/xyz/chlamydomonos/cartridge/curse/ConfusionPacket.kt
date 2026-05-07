@@ -6,19 +6,15 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.network.handling.IPayloadContext
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
-class ConfusionPacket : CustomPacketPayload {
-    companion object {
-        val type = CustomPacketPayload.Type<ConfusionPacket>(RLUtil.of("confusion"))
-        val INSTANCE = ConfusionPacket()
-        val codec = StreamCodec.unit<RegistryFriendlyByteBuf, ConfusionPacket>(INSTANCE)
+object ConfusionPacket : CustomPacketPayload {
+    val type = CustomPacketPayload.Type<ConfusionPacket>(RLUtil.of("confusion"))
+    val codec = StreamCodec.unit<RegistryFriendlyByteBuf, ConfusionPacket>(this)
 
-        fun handle(@Suppress("unused") packet: ConfusionPacket, context: IPayloadContext) {
-            context.enqueueWork {
-                CurseClientHandler.ConfusionHandler.confusionTime = 100
-            }
+    fun handle(@Suppress("unused") packet: ConfusionPacket, context: IPayloadContext) {
+        context.enqueueWork {
+            CurseClientHandler.ConfusionHandler.confusionTime = 100
         }
     }
 
-    private constructor()
     override fun type() = type
 }

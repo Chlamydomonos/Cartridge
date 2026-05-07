@@ -13,13 +13,19 @@ public abstract class LivingEntityMixin {
 
     @Inject(
             method = "getBedOrientation",
-            at = @At(value = "HEAD"),
+            at = @At("HEAD"),
             cancellable = true
     )
     void injectGetBedOrientation(CallbackInfoReturnable<Direction> cir) {
-        var returnValue = LivingEntityMixinImpl.INSTANCE.injectGetBedOrientation((LivingEntity)(Object)this);
-        if (returnValue != null) {
-            cir.setReturnValue(returnValue);
-        }
+        LivingEntityMixinImpl.INSTANCE.injectGetBedOrientation((LivingEntity)(Object)this, cir);
+    }
+
+    @Inject(
+            method = "isInWall",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    void injectIsInWall(CallbackInfoReturnable<Boolean> cir) {
+        LivingEntityMixinImpl.INSTANCE.injectIsInWall((LivingEntity)(Object)this, cir);
     }
 }

@@ -27,5 +27,8 @@
     "gui.cartridge.create_cartridge": "制作弹药包",
     "gui.catridge.creation_confirm": "%1$s想要把你做成弹药包。",
     "gui.cartridge.accept": "接受",
-    "gui.cartridge.refuse": "拒绝"
+    "gui.cartridge.refuse": "拒绝",
+    "gui.cartridge.pending": "等待确认...",
+    "gui.cartridge.refused": "已被拒绝",
+    "gui.cartridge.suicide": "结束自己的生命"
 }

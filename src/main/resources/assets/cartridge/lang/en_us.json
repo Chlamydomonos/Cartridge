@@ -27,5 +27,8 @@
     "gui.cartridge.create_cartridge": "Create Cartridge",
     "gui.catridge.creation_confirm": "%1$s is trying to make you Cartridge.",
     "gui.cartridge.accept": "Accept",
-    "gui.cartridge.refuse": "Refuse"
+    "gui.cartridge.refuse": "Refuse",
+    "gui.cartridge.pending": "Waiting for confirming...",
+    "gui.cartridge.refused": "Refused",
+    "gui.cartridge.suicide": "Suicide"
 }

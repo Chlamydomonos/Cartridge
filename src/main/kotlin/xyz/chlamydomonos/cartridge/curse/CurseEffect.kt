@@ -59,7 +59,7 @@ class CurseEffect : MobEffect(
                 }
                 3 -> {
                     mob.causeFoodExhaustion(2f)
-                    PacketDistributor.sendToPlayer(mob, IllusionPacket.INSTANCE)
+                    PacketDistributor.sendToPlayer(mob, IllusionPacket)
                 }
                 4 -> {
                     val level = mob.level()
@@ -73,7 +73,7 @@ class CurseEffect : MobEffect(
                     PacketDistributor.sendToPlayersTrackingEntityAndSelf(mob, packet)
                 }
                 5 -> {
-                    PacketDistributor.sendToPlayer(mob, ConfusionPacket.INSTANCE)
+                    PacketDistributor.sendToPlayer(mob, ConfusionPacket)
                 }
                 6 -> {
                     val packet = ExplosionPacket(mob.uuid)
