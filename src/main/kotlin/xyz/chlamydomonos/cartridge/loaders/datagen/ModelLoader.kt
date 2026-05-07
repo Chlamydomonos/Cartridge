@@ -5,6 +5,7 @@ import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.client.data.models.ModelProvider
 import net.minecraft.client.data.models.model.ModelTemplates
 import net.minecraft.world.item.Item
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
@@ -12,7 +13,7 @@ import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlock
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 
-@EventBusSubscriber
+@EventBusSubscriber(value = [Dist.CLIENT])
 object ModelLoader {
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {

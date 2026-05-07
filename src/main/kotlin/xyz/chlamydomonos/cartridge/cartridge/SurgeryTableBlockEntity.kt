@@ -2,6 +2,7 @@ package xyz.chlamydomonos.cartridge.cartridge
 
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -18,8 +19,8 @@ class SurgeryTableBlockEntity(
     worldPosition: BlockPos,
     blockState: BlockState
 ) : BlockEntity(BlockEntityLoader.SURGERY_TABLE, worldPosition, blockState), MenuProvider {
-    var playerOn: Player? = null
-    var playerUsing: Player? = null
+    var playerOn: ServerPlayer? = null
+    var playerUsing: ServerPlayer? = null
     var handlingPacket = false
 
     class InputItemHandler(
