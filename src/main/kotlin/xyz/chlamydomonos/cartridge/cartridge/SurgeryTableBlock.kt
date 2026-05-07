@@ -7,6 +7,7 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch
 import net.minecraft.client.renderer.block.dispatch.Variant
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.RandomSource
 import net.minecraft.util.random.WeightedList
 import net.minecraft.world.InteractionResult
@@ -165,6 +166,10 @@ class SurgeryTableBlock(properties: Properties) : BaseEntityBlock(
     }
 
     private fun lieOn(player: Player, pos: BlockPos, blockEntity: SurgeryTableBlockEntity) {
+        if (player !is ServerPlayer) {
+            throw RuntimeException("Trying to lie on surgery table in client")
+        }
+
         player.pose = Pose.SLEEPING
         player.setPos(pos.x + 0.5, pos.y + 0.6875, pos.z + 0.5)
         player.setSleepingPos(pos)

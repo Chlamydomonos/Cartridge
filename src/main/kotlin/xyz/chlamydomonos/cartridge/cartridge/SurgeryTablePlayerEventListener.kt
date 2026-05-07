@@ -27,6 +27,7 @@ object SurgeryTablePlayerEventListener {
             throw RuntimeException("Trying to access SurgeryTableBlockEntity without surgery table")
         }
         be.playerOn = null
+        be.handlingPacket = false
     }
 
     @SubscribeEvent

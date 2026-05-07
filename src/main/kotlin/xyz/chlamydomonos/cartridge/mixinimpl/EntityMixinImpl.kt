@@ -6,10 +6,12 @@ import net.minecraft.world.phys.AABB
 import xyz.chlamydomonos.cartridge.utils.hollowEntity
 
 object EntityMixinImpl {
+    const val C = 10000.0
+
     fun injectMakeBoundingBox(self: Entity): AABB? {
         @Suppress("SENSELESS_COMPARISON")
         if (self is ServerPlayer && self.connection != null && self.hollowEntity != null) {
-            return AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            return AABB(C, C, C, C, C, C)
         }
 
         return null

@@ -3,9 +3,11 @@ package xyz.chlamydomonos.cartridge.cartridge
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerLevelAccess
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot
+import xyz.chlamydomonos.cartridge.loaders.BlockLoader
 import xyz.chlamydomonos.cartridge.loaders.MenuLoader
 
 class SurgeryTableMenu(
@@ -24,6 +26,14 @@ class SurgeryTableMenu(
                 dropOrPlaceInInventory(player, stack)
             }
         }
+    }
+
+    val levelAccess: ContainerLevelAccess = Unit.run {
+        val be = inputContainer.blockEntity ?: return@run ContainerLevelAccess.NULL
+
+        val level = be.level ?: return@run ContainerLevelAccess.NULL
+
+        return@run ContainerLevelAccess.create(level, be.blockPos)
     }
 
     constructor(id: Int, inv: Inventory) : this(
@@ -47,7 +57,12 @@ class SurgeryTableMenu(
     }
 
     override fun stillValid(player: Player): Boolean {
-        return true // TODO
+        if (!stillValid(levelAccess, player, BlockLoader.SURGERY_TABLE)) {
+            return false
+        }
+
+        val be = inputContainer.blockEntity ?: return true
+        return be.playerOn != null
     }
 
     override fun removed(player: Player) {
@@ -59,6 +74,7 @@ class SurgeryTableMenu(
 
         val be = inputContainer.blockEntity ?: throw RuntimeException("Trying to access null SurgeryTableBlockEntity")
         be.playerUsing = null
+        be.handlingPacket = false
 
         clearContainer(player, inputContainer)
         clearContainer(player, outputContainer)

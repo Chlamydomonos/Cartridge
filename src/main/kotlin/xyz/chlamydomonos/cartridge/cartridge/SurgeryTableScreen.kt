@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
+import net.neoforged.neoforge.client.network.ClientPacketDistributor
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 class SurgeryTableScreen(
@@ -32,7 +33,9 @@ class SurgeryTableScreen(
     private val button = Button
         .Builder(
             Component.translatable("gui.cartridge.create_cartridge"),
-            {}
+            {
+                ClientPacketDistributor.sendToServer(CartridgeCreationRequestPacket.INSTANCE)
+            }
         )
         .size(32, 16)
         .build()
