@@ -2,7 +2,7 @@
     "fml.menu.mods.info.description.cartridge": "Add Cartridge (and the curse) from Made in Abyss to Minecraft",
     "effect.cartridge.curse": "Curse",
     "death.attack.cartridge.curse": "%1$s died of curse of Abyss",
-    "death.attack.caatridge.curse.player": "%1$s died of curse of Abyss while trying to escape %2$s",
+    "death.attack.cartridge.curse.player": "%1$s died of curse of Abyss while trying to escape %2$s",
     "entity.cartridge.hollow": "Hollow",
     "tab.cartridge": "Made in Abyss: Cartridge",
     "item.cartridge.abyss_create_1": "Abyss Creator 1",
@@ -30,5 +30,7 @@
     "gui.cartridge.refuse": "Refuse",
     "gui.cartridge.pending": "Waiting for confirming...",
     "gui.cartridge.refused": "Refused",
-    "gui.cartridge.suicide": "Suicide"
+    "gui.cartridge.suicide": "Suicide",
+    "death.attack.cartridge.cartridge": "%1$s suicided as Cartridge",
+    "death.attack.cartridge.cartridge.player": "%1$s died when blocking curse for %2$s"
 }

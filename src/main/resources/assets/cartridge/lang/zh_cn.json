@@ -2,7 +2,7 @@
     "fml.menu.mods.info.description.cartridge": "将《来自深渊》中臭名昭著（不）的弹药包（以及上升诅咒系统）加入Minecraft",
     "effect.cartridge.curse": "上升诅咒",
     "death.attack.cartridge.curse": "%1$s死于阿庇斯的诅咒",
-    "death.attack.caatridge.curse.player": "%1$s在试图逃离%2$s时死于阿庇斯的诅咒",
+    "death.attack.cartridge.curse.player": "%1$s在试图逃离%2$s时死于阿庇斯的诅咒",
     "entity.cartridge.hollow": "生骸",
     "tab.cartridge": "来自深渊：弹药包",
     "item.cartridge.abyss_create_1": "深渊创建工具-等级1",
@@ -30,5 +30,7 @@
     "gui.cartridge.refuse": "拒绝",
     "gui.cartridge.pending": "等待确认...",
     "gui.cartridge.refused": "已被拒绝",
-    "gui.cartridge.suicide": "结束自己的生命"
+    "gui.cartridge.suicide": "结束自己的生命",
+    "death.attack.cartridge.cartridge": "%1$s作为弹药包结束了自己的生命",
+    "death.attack.cartridge.cartridge.player": "%1$s为%2$s抵挡诅咒而死"
 }

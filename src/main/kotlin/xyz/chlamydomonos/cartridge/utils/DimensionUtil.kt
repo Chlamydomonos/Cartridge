@@ -7,8 +7,7 @@ import net.minecraft.server.level.ServerLevel
 private val key = ResourceKey.create(Registries.DIMENSION, RLUtil.of("cartridge"))
 
 val ServerLevel.cartridgeDimension: ServerLevel get() {
-    val dimensionHolder = holderLookup(Registries.DIMENSION)
-    val dimension = dimensionHolder.getOrThrow(key).value()
+    val dimension = server.getLevel(key)
     if (dimension !is ServerLevel) {
         throw RuntimeException("WTF")
     }

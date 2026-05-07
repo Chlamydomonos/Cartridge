@@ -185,7 +185,7 @@ class SurgeryTableBlock(properties: Properties) : BaseEntityBlock(
         player: Player,
         hitResult: BlockHitResult
     ): InteractionResult {
-        if (level.isClientSide) {
+        if (level.isClientSide || player !is ServerPlayer) {
             return InteractionResult.CONSUME
         }
 
@@ -202,6 +202,7 @@ class SurgeryTableBlock(properties: Properties) : BaseEntityBlock(
         }
 
         player.openMenu(getMenuProvider(headState, level, headPos))
+        be.playerUsing = player
         return InteractionResult.SUCCESS
     }
 }

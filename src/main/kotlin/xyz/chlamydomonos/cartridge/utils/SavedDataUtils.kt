@@ -13,5 +13,7 @@ val MinecraftServer.cartridgeManager get() = dataStorage.computeIfAbsent(Cartrid
 val ServerLevel.cartridgeManager get() = server.cartridgeManager
 
 var ServerPlayer.cartridgeStatus
-    get() = level().cartridgeManager.get(uuid)
-    set(value) { level().cartridgeManager.set(uuid, value) }
+    get() = level().cartridgeManager.get(uuid).status
+    set(value) { level().cartridgeManager.setStatus(uuid, value) }
+
+val ServerPlayer.isCartridge get() = cartridgeStatus == CartridgeManager.CartridgeStatus.FREE || cartridgeStatus == CartridgeManager.CartridgeStatus.EQUIPPED

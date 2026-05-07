@@ -12,6 +12,7 @@ object BecomeCartridgePacket : CustomPacketPayload {
     val codec = StreamCodec.unit<RegistryFriendlyByteBuf, BecomeCartridgePacket>(this)
     fun handle(@Suppress("unused") packet: BecomeCartridgePacket, context: IPayloadContext) {
         context.enqueueWork {
+            CartridgePlayerClientEventListener.isCartridge = true
             ScreenOpenWrapper.openCartridgeScreen()
         }
     }

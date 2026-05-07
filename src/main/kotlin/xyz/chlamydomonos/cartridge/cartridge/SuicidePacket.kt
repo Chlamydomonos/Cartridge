@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.neoforged.neoforge.network.handling.IPayloadContext
 import xyz.chlamydomonos.cartridge.loaders.datagen.DamageTypeLoader
 import xyz.chlamydomonos.cartridge.utils.RLUtil
+import xyz.chlamydomonos.cartridge.utils.cartridgeStatus
 
 object SuicidePacket : CustomPacketPayload {
     val type = CustomPacketPayload.Type<SuicidePacket>(RLUtil.of("suicide"))
@@ -25,6 +26,7 @@ object SuicidePacket : CustomPacketPayload {
                 level.damageSources().source(DamageTypeLoader.CARTRIDGE),
                 Float.MAX_VALUE
             )
+            player.cartridgeStatus = CartridgeManager.CartridgeStatus.NONE
         }
     }
 
