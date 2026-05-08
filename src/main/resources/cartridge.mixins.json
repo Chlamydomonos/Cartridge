@@ -3,5 +3,9 @@
     "mixins": [
         "EntityMixin",
         "LivingEntityMixin"
+    ],
+    "client": [
+        "ModListScreenMixin",
+        "ModListWidgetModEntryMixin"
     ]
 }
