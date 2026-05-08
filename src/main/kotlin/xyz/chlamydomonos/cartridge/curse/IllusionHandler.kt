@@ -121,7 +121,7 @@ object IllusionHandler {
                 vertexConsumer,
                 15728880,
                 OverlayTexture.NO_OVERLAY,
-                ColorUtil.rgbaAsInt(0xffffff80)
+                ColorUtil.rgba(0xffffff80)
             )
 
             poseStack.popPose()

@@ -5,10 +5,14 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import xyz.chlamydomonos.cartridge.utils.cartridgeDurability
 import xyz.chlamydomonos.cartridge.utils.optionalName
+import xyz.chlamydomonos.cartridge.utils.optionalUUID
 import java.util.*
+import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -35,16 +39,31 @@ class CartridgeItem(id: ResourceKey<Item>) : Item(
         }
     }
 
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun appendHoverText(
+        itemStack: ItemStack,
+        context: TooltipContext,
+        display: TooltipDisplay,
+        builder: Consumer<Component>,
+        tooltipFlag: TooltipFlag
+    ) {
+        itemStack.optionalUUID ?: return
+        val durability = itemStack.cartridgeDurability
+        if (durability > 0) {
+            builder.accept(Component.translatable("tooltip.cartridge.cartridge.durability", durability))
+        }
+    }
+
     override fun isBarVisible(stack: ItemStack): Boolean {
         return stack.cartridgeDurability in 1..<MAX_DURABILITY
     }
 
     override fun getBarWidth(stack: ItemStack): Int {
-        return Mth.clamp((13.0f - stack.cartridgeDurability * 13.0f / MAX_DURABILITY).roundToInt(), 0, 13)
+        return Mth.clamp((stack.cartridgeDurability * 13.0f / MAX_DURABILITY).roundToInt(), 0, 13)
     }
 
     override fun getBarColor(stack: ItemStack): Int {
-        val healthPercentage = max(0.0f, (MAX_DURABILITY.toFloat() - stack.cartridgeDurability) / MAX_DURABILITY)
+        val healthPercentage = max(0.0f, stack.cartridgeDurability.toFloat() / MAX_DURABILITY)
         return Mth.hsvToRgb(healthPercentage / 3.0f, 1.0f, 1.0f)
     }
 }

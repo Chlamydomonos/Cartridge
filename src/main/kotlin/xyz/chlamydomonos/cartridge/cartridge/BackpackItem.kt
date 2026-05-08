@@ -27,7 +27,7 @@ class BackpackItem(id: ResourceKey<Item>) : Item(
 
             player.openMenu(
                 SimpleMenuProvider(
-                    { id, inventory, player ->
+                    { id, inventory, _ ->
                         BackpackMenu(id, inventory, stack)
                     },
                     stack.itemName

@@ -3,7 +3,7 @@ name: Generate Data
 on:
   push:
     branches:
-      - main
+      - release
 
 jobs:
   build:
@@ -27,23 +27,23 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Switch to generated branch
+      - name: Switch to main branch
         run: |
-          git checkout generated
-          git pull origin generated
+          git checkout main
+          git pull origin main
 
-      - name: Merge main into generated
+      - name: Merge release into main
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git merge main -s ours
+          git merge release -s ours
           git branch temp
-          git reset --hard main
+          git reset --hard release
           git checkout temp -- src/generated
           git reset --soft temp
-          git commit --amend -m "${{ env.LAST_COMMIT_MESSAGE }}: merge main into generated"
+          git commit --amend -m "${{ env.LAST_COMMIT_MESSAGE }}: merge release into main"
           git branch -D temp
-          git diff HEAD main
+          git diff HEAD release
 
       - name: Run Gradle task
         run: |
@@ -56,7 +56,7 @@ jobs:
           STATUS_OUTPUT=$(git status --porcelain)
           STATUS_OUTPUT_LENGTH=${#STATUS_OUTPUT}
           if [[ $STATUS_OUTPUT_LENGTH -gt 0 ]]; then
-            git commit -m "${{ env.LAST_COMMIT_MESSAGE }}: update generated files from main branch"
+            git commit -m "${{ env.LAST_COMMIT_MESSAGE }}: update generated files from release branch"
           else
             echo "No changes to commit."
           fi
@@ -65,4 +65,38 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: generated
+          branch: main
+
+      - name: Check for Release
+        id: check_release
+        run: |
+          FIRST_LINE=$(echo "${{ env.LAST_COMMIT_MESSAGE }}" | head -n 1)
+          if [[ "$FIRST_LINE" =~ ^v([0-9]+(\.[0-9]+)*)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            echo "version=$VERSION" >> $GITHUB_ENV
+            echo "create_release=true" >> $GITHUB_ENV
+          else
+            echo "create_release=false" >> $GITHUB_ENV
+          fi
+
+      - name: Run Gradle jar
+        if: env.create_release == 'true'
+        run: |
+          chmod +x ./gradlew
+          ./gradlew jar
+
+      - name: Create and push tag
+        if: env.create_release == 'true'
+        run: |
+          git tag v${{ env.version }}
+          git push origin v${{ env.version }}
+
+      - name: Create GitHub Release
+        if: env.create_release == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "v${{ env.version }}"
+          name: "Release v${{ env.version }}"
+          files: build/libs/cartridge-${{ env.version }}.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

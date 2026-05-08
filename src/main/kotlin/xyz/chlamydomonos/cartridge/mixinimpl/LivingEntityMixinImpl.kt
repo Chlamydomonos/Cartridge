@@ -5,10 +5,9 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
-import xyz.chlamydomonos.cartridge.cartridge.CartridgeManager
 import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlock
 import xyz.chlamydomonos.cartridge.loaders.BlockLoader
-import xyz.chlamydomonos.cartridge.utils.cartridgeStatus
+import xyz.chlamydomonos.cartridge.utils.isCartridge
 import xyz.chlamydomonos.cartridge.utils.surgeryTablePos
 
 object LivingEntityMixinImpl {
@@ -25,7 +24,7 @@ object LivingEntityMixinImpl {
     }
 
     fun injectIsInWall(self: LivingEntity, context: CallbackInfoReturnable<Boolean>) {
-        if (self is ServerPlayer && self.cartridgeStatus == CartridgeManager.CartridgeStatus.FREE) {
+        if (self is ServerPlayer && self.isCartridge) {
             context.returnValue = false
         }
     }

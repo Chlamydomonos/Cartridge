@@ -17,3 +17,7 @@ var ServerPlayer.cartridgeStatus
     set(value) { level().cartridgeManager.setStatus(uuid, value) }
 
 val ServerPlayer.isCartridge get() = cartridgeStatus == CartridgeManager.CartridgeStatus.FREE || cartridgeStatus == CartridgeManager.CartridgeStatus.EQUIPPED
+
+val ServerPlayer.equipper get() = level().cartridgeManager.get(uuid).equipper?.let {
+    level().server.playerList.getPlayer(it)
+}

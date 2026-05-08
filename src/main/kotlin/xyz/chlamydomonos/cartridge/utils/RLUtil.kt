@@ -7,4 +7,8 @@ object RLUtil {
     fun of(name: String): Identifier {
         return Identifier.fromNamespaceAndPath(Cartridge.ID, name)
     }
+
+    fun mc(name: String): Identifier {
+        return Identifier.withDefaultNamespace(name)
+    }
 }

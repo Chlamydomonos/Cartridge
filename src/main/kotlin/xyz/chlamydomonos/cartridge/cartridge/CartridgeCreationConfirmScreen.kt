@@ -36,10 +36,10 @@ class CartridgeCreationConfirmScreen(val name: String) : Screen(Component.empty(
 
         graphics.centeredText(
             font,
-            Component.translatable("gui.catridge.creation_confirm", name),
+            Component.translatable("gui.cartridge.creation_confirm", name),
             centerX,
             centerY - 32,
-            ColorUtil.rgbAsInt(0xffffff)
+            ColorUtil.rgb(0xffffff)
         )
     }
 
