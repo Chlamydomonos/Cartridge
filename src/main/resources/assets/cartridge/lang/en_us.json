@@ -33,5 +33,6 @@
     "gui.cartridge.suicide": "Suicide",
     "death.attack.cartridge.cartridge": "%1$s suicided as Cartridge",
     "death.attack.cartridge.cartridge.player": "%1$s died when blocking curse for %2$s",
-    "tooltip.cartridge.cartridge.durability": "Durability remaining: %1$d"
+    "tooltip.cartridge.cartridge.durability": "Durability remaining: %1$d",
+    "chlamydomonos.fml.menu.mods.info.name.cartridge": "Cartridge"
 }
