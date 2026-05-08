@@ -3,11 +3,9 @@ package xyz.chlamydomonos.cartridge.cartridge
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.event.GatherSkippedAttributeTooltipsEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import top.theillusivec4.curios.api.event.CurioChangeEvent
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
-import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 @EventBusSubscriber
 object BackpackEventListener {
@@ -42,14 +40,5 @@ object BackpackEventListener {
         CartridgeHandler.iterateCartridges(backpack) {
             CartridgeHandler.onUnequip(player, it)
         }
-    }
-
-    @SubscribeEvent
-    fun onGatherSkippedAttributeTooltipsEvent(event: GatherSkippedAttributeTooltipsEvent) {
-        val stack = event.stack
-        if (!(stack.`is`(ItemLoader.BACKPACK))) {
-            return
-        }
-        event.skipId(RLUtil.mc("container"))
     }
 }

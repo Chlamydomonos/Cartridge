@@ -19,7 +19,10 @@ jobs:
 
       - name: Get Last Commit Message
         id: get_commit_message
-        run: echo "LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+        run: |
+          echo "LAST_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          git log -1 --pretty=%B >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -41,7 +44,8 @@ jobs:
           git reset --hard release
           git checkout temp -- src/generated
           git reset --soft temp
-          git commit --amend -m "${{ env.LAST_COMMIT_MESSAGE }}: merge release into main"
+          NEW_MSG=$(echo "$LAST_COMMIT_MESSAGE" | sed '1s/$/: merge release into main/')
+          git commit --amend -m "$NEW_MSG"
           git branch -D temp
           git diff HEAD release
 
@@ -56,7 +60,8 @@ jobs:
           STATUS_OUTPUT=$(git status --porcelain)
           STATUS_OUTPUT_LENGTH=${#STATUS_OUTPUT}
           if [[ $STATUS_OUTPUT_LENGTH -gt 0 ]]; then
-            git commit -m "${{ env.LAST_COMMIT_MESSAGE }}: update generated files from release branch"
+            NEW_MSG=$(echo "$LAST_COMMIT_MESSAGE" | sed '1s/$/: update generated files from release branch/')
+            git commit -m "$NEW_MSG"
           else
             echo "No changes to commit."
           fi
@@ -70,7 +75,7 @@ jobs:
       - name: Check for Release
         id: check_release
         run: |
-          FIRST_LINE=$(echo "${{ env.LAST_COMMIT_MESSAGE }}" | head -n 1)
+          FIRST_LINE=$(echo "$LAST_COMMIT_MESSAGE" | head -n 1)
           if [[ "$FIRST_LINE" =~ ^v([0-9]+(\.[0-9]+)*)$ ]]; then
             VERSION="${BASH_REMATCH[1]}"
             echo "version=$VERSION" >> $GITHUB_ENV
