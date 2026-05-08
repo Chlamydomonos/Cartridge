@@ -16,7 +16,7 @@ public class ModListWidgetModEntryMixin {
     private ModContainer container;
 
     @ModifyArg(
-            method = "Lnet/neoforged/neoforge/client/gui/widget/ModListWidget$ModEntry;extractContent(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIZF)V",
+            method = "extractContent(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIZF)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/neoforged/neoforge/client/gui/widget/ModListWidget;stripControlCodes(Ljava/lang/String;)Ljava/lang/String;",
