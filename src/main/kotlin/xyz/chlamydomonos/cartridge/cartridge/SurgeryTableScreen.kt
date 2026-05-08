@@ -3,12 +3,12 @@ package xyz.chlamydomonos.cartridge.cartridge
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
-import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.client.network.ClientPacketDistributor
 import xyz.chlamydomonos.cartridge.utils.ColorUtil
 import xyz.chlamydomonos.cartridge.utils.RLUtil
+import xyz.chlamydomonos.cartridge.utils.renderImageBackground
 
 class SurgeryTableScreen(
     menu: SurgeryTableMenu,
@@ -22,7 +22,7 @@ class SurgeryTableScreen(
     TEXTURE_HEIGHT
 ) {
     companion object {
-        val BACKGROUND = RLUtil.of("textures/gui/surgery_table.png")
+        val background = RLUtil.of("textures/gui/surgery_table.png")
         const val TEXTURE_WIDTH = 176
         const val TEXTURE_HEIGHT = 133
     }
@@ -52,21 +52,7 @@ class SurgeryTableScreen(
 
     override fun extractBackground(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
         super.extractBackground(graphics, mouseX, mouseY, a)
-
-        val x = (width - imageWidth) / 2
-        val y = (height - imageHeight) / 2
-        graphics.blit(
-            RenderPipelines.GUI_TEXTURED,
-            BACKGROUND,
-            x,
-            y,
-            0f,
-            0f,
-            imageWidth,
-            imageHeight,
-            256,
-            256
-        )
+        renderImageBackground(graphics, background)
     }
 
     override fun extractContents(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {

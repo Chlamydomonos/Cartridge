@@ -1,5 +1,6 @@
 package xyz.chlamydomonos.cartridge.utils
 
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
 import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import java.util.*
@@ -20,3 +21,7 @@ var ItemStack.optionalName
 var ItemStack.cartridgeDurability
     get() = get(DataComponentLoader.CARTRIDGE_DURABILITY) ?: -1
     set(value) { set(DataComponentLoader.CARTRIDGE_DURABILITY, value) }
+
+var ItemStack.container
+    get() = get(DataComponents.CONTAINER)
+    set(value) { set(DataComponents.CONTAINER, value) }
