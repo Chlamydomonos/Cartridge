@@ -1,12 +1,16 @@
 //file:noinspection GroovyAssignabilityCheck
+import org.jetbrains.gradle.ext.settings
+import org.jetbrains.gradle.ext.taskTriggers
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("java-library")
-    id("idea")
-    id("maven-publish")
+    `gen-gitignore`
+    `java-library`
+    idea
+    `maven-publish`
     id("net.neoforged.moddev") version "2.0.141"
     id("org.jetbrains.kotlin.jvm") version "2.3.0"
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.7"
 }
 
 val modVersion: String by project
@@ -189,4 +193,9 @@ idea {
         isDownloadSources = true
         isDownloadJavadoc = true
     }
+
+    project.settings.taskTriggers {
+        beforeSync("genGitignore")
+    }
 }
+
