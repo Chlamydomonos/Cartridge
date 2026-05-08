@@ -44,18 +44,18 @@ class AbyssEditToolItem(
             builder.accept(
                 Component
                     .translatable("tooltip.cartridge.abyss_edit.start")
-                    .withColor(ColorUtil.rgbAsInt(0x808080))
+                    .withColor(ColorUtil.rgb(0x808080))
             )
         } else {
             builder.accept(
                 Component
                     .translatable("tooltip.cartridge.abyss_edit.end1")
-                    .withColor(ColorUtil.rgbAsInt(0x808080))
+                    .withColor(ColorUtil.rgb(0x808080))
             )
             builder.accept(
                 Component
                     .translatable("tooltip.cartridge.abyss_edit.end2")
-                    .withColor(ColorUtil.rgbAsInt(0x808080))
+                    .withColor(ColorUtil.rgb(0x808080))
             )
         }
     }

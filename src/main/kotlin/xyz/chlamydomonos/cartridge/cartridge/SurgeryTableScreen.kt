@@ -65,7 +65,7 @@ class SurgeryTableScreen(
                 Component.translatable("gui.cartridge.pending"),
                 x + 69 + 16,
                 y + 8,
-                ColorUtil.rgbAsInt(0x808080)
+                ColorUtil.rgb(0x808080)
             )
         } else if (menu.refused) {
             graphics.centeredText(
@@ -73,7 +73,7 @@ class SurgeryTableScreen(
                 Component.translatable("gui.cartridge.refused"),
                 x + 69 + 16,
                 y + 8,
-                ColorUtil.rgbAsInt(0x902020)
+                ColorUtil.rgb(0x902020)
             )
         }
     }

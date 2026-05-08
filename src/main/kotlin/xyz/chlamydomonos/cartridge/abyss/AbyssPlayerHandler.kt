@@ -35,7 +35,7 @@ object AbyssPlayerHandler {
             return
         }
 
-        onPlayerMove(player as ServerPlayer, level as ServerLevel, pos)
+        onPlayerMove(player, level as ServerLevel, pos)
         player.lastPos = pos
     }
 

@@ -43,23 +43,23 @@ object BackpackHud : GuiLayer {
                 32,
                 32,
                 if (durability == 0) {
-                    ColorUtil.rgbAsInt(0x404040)
+                    ColorUtil.rgb(0x404040)
                 } else {
-                    ColorUtil.rgbAsInt(0xffffff)
+                    ColorUtil.rgb(0xffffff)
                 }
             )
 
             if (durability > 0) {
                 val barWidth = Mth.clamp((durability * 14f / CartridgeItem.MAX_DURABILITY).toInt(), 0, 14)
                 val healthPercentage = max(0f, durability.toFloat() / CartridgeItem.MAX_DURABILITY)
-                val color = ColorUtil.rgbAsInt(Mth.hsvToRgb(healthPercentage / 3f, 1f, 1f))
+                val color = ColorUtil.rgb(Mth.hsvToRgb(healthPercentage / 3f, 1f, 1f))
 
                 guiGraphics.fill(
                     xStart - 1,
                     yOffset + 13,
                     xStart + 13,
                     yOffset + 15,
-                    ColorUtil.rgbAsInt(0)
+                    ColorUtil.rgb(0)
                 )
                 guiGraphics.fill(
                     xStart - 1,

@@ -40,7 +40,7 @@ object AbyssRenderer {
             -cameraPos.x,
             -cameraPos.y,
             -cameraPos.z,
-            ColorUtil.rgbAsInt(color),
+            ColorUtil.rgb(color),
             4f
         )
 
@@ -123,7 +123,7 @@ object AbyssRenderer {
         val abyssShape = root.getVoxelShape(player.blockPosition(), 100, abyssLevel.toByte())
         val cameraPos = event.levelRenderState.cameraRenderState.pos
         renderVoxelShape(abyssShape, cameraPos, event.poseStack, 0xffffff)
-        renderTransparentShape(abyssShape, cameraPos, event.poseStack, ColorUtil.rgbaAsInt(0xffffff, 0x80))
+        renderTransparentShape(abyssShape, cameraPos, event.poseStack, ColorUtil.rgba(0xffffff, 0x80))
 
         val chosenPos = stack.optionalBlockPos ?: return
         val hitResult = Minecraft.getInstance().hitResult ?: return
@@ -141,6 +141,6 @@ object AbyssRenderer {
 
         val tempShape = Shapes.create(AABB(minX, minY, minZ, maxX, maxY, maxZ))
         renderVoxelShape(tempShape, cameraPos, event.poseStack, color)
-        renderTransparentShape(tempShape, cameraPos, event.poseStack, ColorUtil.rgbaAsInt(color, 0x80))
+        renderTransparentShape(tempShape, cameraPos, event.poseStack, ColorUtil.rgba(color, 0x80))
     }
 }

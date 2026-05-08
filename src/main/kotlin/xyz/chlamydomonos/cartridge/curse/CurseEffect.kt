@@ -18,7 +18,7 @@ import xyz.chlamydomonos.cartridge.utils.hollowUUID
 
 class CurseEffect : MobEffect(
     MobEffectCategory.HARMFUL,
-    ColorUtil.rgbAsInt(0xf371ff)
+    ColorUtil.rgb(0xf371ff)
 ) {
     companion object {
         fun apply(player: ServerPlayer, time: Int, level: Int) {
