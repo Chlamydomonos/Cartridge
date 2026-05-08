@@ -24,6 +24,7 @@ class AbyssEditToolItem(
 ) : Item(
     Properties()
         .setId(id)
+        .stacksTo(1)
         .component(DataComponentLoader.OPTIONAL_BLOCK_POS, Optional.empty())
 ) {
     enum class Operation {

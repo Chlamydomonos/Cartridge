@@ -2,10 +2,12 @@ package xyz.chlamydomonos.cartridge.hollow
 
 import net.minecraft.network.protocol.game.ClientboundSetCameraPacket
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.util.TriState
 import net.minecraft.world.entity.Entity
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.entity.EntityMountEvent
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import xyz.chlamydomonos.cartridge.utils.hollowEntity
@@ -94,6 +96,14 @@ object HollowPlayerEventListener {
         val player = event.entity
         if (player is ServerPlayer) {
             player.isDeadHollow = false
+        }
+    }
+
+    @SubscribeEvent
+    fun onItemEntityPickup(event: ItemEntityPickupEvent.Pre) {
+        val player = event.player
+        if (player is ServerPlayer && player.hollowUUID != null) {
+            event.setCanPickup(TriState.FALSE)
         }
     }
 }

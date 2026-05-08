@@ -115,7 +115,9 @@ class HollowEntity(type: EntityType<HollowEntity>, level: Level) : HollowEntityB
             player.abilities.invulnerable = false
             player.onUpdateAbilities()
             player.hurtServer(level as ServerLevel, damageSource, Float.MAX_VALUE)
-            player.isDeadHollow = true
+            if (player.isDeadOrDying) {
+                player.isDeadHollow = true
+            }
         }
     }
 }

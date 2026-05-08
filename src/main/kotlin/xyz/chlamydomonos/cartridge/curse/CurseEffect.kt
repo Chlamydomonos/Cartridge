@@ -89,6 +89,7 @@ class CurseEffect : MobEffect(
                     } else {
                         val hollow = HollowEntity.create(mob)
                         if (hollow != null) {
+                            mob.dropAllDeathLoot(level, level.damageSources().source(DamageTypeLoader.CURSE))
                             mob.removeEffect(EffectLoader.CURSE)
                         }
                     }
