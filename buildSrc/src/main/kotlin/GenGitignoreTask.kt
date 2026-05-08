@@ -87,10 +87,13 @@ abstract class GenGitignoreTask @Inject constructor(
 
         println("记录操作...")
         val marker = markerFile.asFile.get()
-        val createdMarkerParent = marker.parentFile.mkdirs()
-        if (!createdMarkerParent) {
-            println("记录操作失败")
-            return
+        val markerParent = marker.parentFile
+        if (!markerParent.exists()) {
+            val createdMarkerParent = markerParent.mkdirs()
+            if (!createdMarkerParent) {
+                println("记录操作失败")
+                return
+            }
         }
         marker.writeText("Initialized at ${Date()}")
         println("已完成Git项目初始化")

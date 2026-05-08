@@ -4,7 +4,7 @@ import org.jetbrains.gradle.ext.taskTriggers
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    `gen-gitignore`
+    `custom-build`
     `java-library`
     idea
     `maven-publish`
