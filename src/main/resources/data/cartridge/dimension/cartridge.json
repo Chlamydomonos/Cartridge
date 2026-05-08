@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:overworld",
+  "generator": {
+    "type": "flat",
+    "settings": {
+      "layers": [
+        {
+          "height": 256,
+          "block": "minecraft:bedrock"
+        }
+      ]
+    }
+  }
+}

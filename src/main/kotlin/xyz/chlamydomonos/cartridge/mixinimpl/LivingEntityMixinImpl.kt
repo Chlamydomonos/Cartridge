@@ -1,23 +1,32 @@
 package xyz.chlamydomonos.cartridge.mixinimpl
 
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
+import xyz.chlamydomonos.cartridge.cartridge.CartridgeManager
 import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlock
 import xyz.chlamydomonos.cartridge.loaders.BlockLoader
+import xyz.chlamydomonos.cartridge.utils.cartridgeStatus
 import xyz.chlamydomonos.cartridge.utils.surgeryTablePos
 
 object LivingEntityMixinImpl {
-    fun injectGetBedOrientation(self: LivingEntity): Direction? {
+    fun injectGetBedOrientation(self: LivingEntity, context: CallbackInfoReturnable<Direction>) {
         if (self !is Player) {
-            return null
+            return
         }
 
-        val pos = self.surgeryTablePos ?: return null
+        val pos = self.surgeryTablePos ?: return
         val state = self.level().getBlockState(pos)
         if (state.`is`(BlockLoader.SURGERY_TABLE)) {
-            return state.getValue(SurgeryTableBlock.FACING)
+            context.returnValue = state.getValue(SurgeryTableBlock.FACING)
         }
-        return null
+    }
+
+    fun injectIsInWall(self: LivingEntity, context: CallbackInfoReturnable<Boolean>) {
+        if (self is ServerPlayer && self.cartridgeStatus == CartridgeManager.CartridgeStatus.FREE) {
+            context.returnValue = false
+        }
     }
 }

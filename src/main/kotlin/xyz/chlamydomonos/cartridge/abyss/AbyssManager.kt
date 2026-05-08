@@ -28,12 +28,11 @@ class AbyssManager(
     }
 
     companion object {
-        val codec = RecordCodecBuilder.create {
-            it.group(
-                OctreeNode.codec.fieldOf("root").forGetter(AbyssManager::root)
-            ).apply(it, ::AbyssManager)
-        }!!
+        val codec = RecordCodecBuilder.create { it
+            .group(OctreeNode.codec.fieldOf("root").forGetter(AbyssManager::root))
+            .apply(it, ::AbyssManager)
+        }
 
-        val type = SavedDataType<AbyssManager>(RLUtil.of("abyss_manager"), ::AbyssManager, codec)
+        val type = SavedDataType(RLUtil.of("abyss_manager"), ::AbyssManager, codec)
     }
 }

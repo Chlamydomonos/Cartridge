@@ -17,6 +17,7 @@ import xyz.chlamydomonos.cartridge.utils.RLUtil
 @EventBusSubscriber
 object DamageTypeLoader {
     val CURSE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("curse"))
+    val CARTRIDGE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("cartridge"))
 
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
@@ -28,15 +29,27 @@ object DamageTypeLoader {
                         DamageScaling.NEVER,
                         0.3f
                     ))
+                    it.register(CARTRIDGE, DamageType(
+                        "${Cartridge.ID}.cartridge",
+                        DamageScaling.NEVER,
+                        0f
+                    ))
                 }
         )
 
         event.createProvider { output, lp ->
             object : DamageTypeTagsProvider(output, lp, Cartridge.ID) {
                 override fun addTags(registries: HolderLookup.Provider) {
-                    tag(DamageTypeTags.NO_KNOCKBACK).add(CURSE)
-                    tag(DamageTypeTags.BYPASSES_ARMOR).add(CURSE)
-                    tag(DamageTypeTags.BYPASSES_INVULNERABILITY).add(CURSE)
+                    tag(DamageTypeTags.NO_KNOCKBACK)
+                        .add(CURSE)
+
+                    tag(DamageTypeTags.BYPASSES_ARMOR)
+                        .add(CURSE)
+                        .add(CARTRIDGE)
+
+                    tag(DamageTypeTags.BYPASSES_INVULNERABILITY)
+                        .add(CURSE)
+                        .add(CARTRIDGE)
                 }
             }
         }

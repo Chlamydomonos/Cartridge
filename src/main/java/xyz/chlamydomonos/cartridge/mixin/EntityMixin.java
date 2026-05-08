@@ -10,11 +10,12 @@ import xyz.chlamydomonos.cartridge.mixinimpl.EntityMixinImpl;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Inject(method = "makeBoundingBox(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/AABB;", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = "makeBoundingBox(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/AABB;",
+            at = @At("HEAD"),
+            cancellable = true
+    )
     protected void injectMakeBoundingBox(CallbackInfoReturnable<AABB> cir) {
-        var returnValue = EntityMixinImpl.INSTANCE.injectMakeBoundingBox((Entity)(Object)this);
-        if (returnValue != null) {
-            cir.setReturnValue(returnValue);
-        }
+        EntityMixinImpl.INSTANCE.injectMakeBoundingBox((Entity)(Object)this, cir);
     }
 }
