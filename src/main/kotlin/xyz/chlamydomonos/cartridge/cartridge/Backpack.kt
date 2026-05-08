@@ -11,6 +11,19 @@ import xyz.chlamydomonos.cartridge.utils.container
 class Backpack(
     val trackingStack: ItemStack? = null
 ) : ItemStacksResourceHandler(6) {
+    private var initializing = true
+    init {
+        if (trackingStack != null) {
+            val container = trackingStack.container ?: throw RuntimeException("Trying to open backpack without item")
+            for (i in 0..<container.slots) {
+                val stack = container.getStackInSlot(i)
+                val resource = ItemResource.of(stack)
+                set(i, resource, stack.count)
+            }
+        }
+        initializing = false
+    }
+
     override fun isValid(index: Int, resource: ItemResource): Boolean {
         if (!(resource.`is`(ItemLoader.CARTRIDGE))) {
             return false
@@ -21,7 +34,7 @@ class Backpack(
     }
 
     override fun onContentsChanged(index: Int, previousContents: ItemStack) {
-        if (trackingStack == null) {
+        if (trackingStack == null || initializing) {
             return
         }
 

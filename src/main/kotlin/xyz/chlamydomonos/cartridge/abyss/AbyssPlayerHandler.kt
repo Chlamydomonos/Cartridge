@@ -6,24 +6,32 @@ import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
+import xyz.chlamydomonos.cartridge.cartridge.CartridgeHandler
 import xyz.chlamydomonos.cartridge.curse.CurseEffect
-import xyz.chlamydomonos.cartridge.utils.abyssManager
-import xyz.chlamydomonos.cartridge.utils.lastPos
-import xyz.chlamydomonos.cartridge.utils.maxAbyssLevel
-import xyz.chlamydomonos.cartridge.utils.maxDepth
+import xyz.chlamydomonos.cartridge.utils.*
 
 @EventBusSubscriber
 object AbyssPlayerHandler {
+    fun applyCurse(player: ServerPlayer, time: Int, curseLevel: Int) {
+        if (!CartridgeHandler.tryUseCartridge(player, time, curseLevel)) {
+            CurseEffect.apply(player, time, curseLevel)
+        }
+    }
+
     @SubscribeEvent
     fun onPlayerTick(event: PlayerTickEvent.Post) {
         val player = event.entity
         val level = player.level()
-        if (level.isClientSide || player.isCreative || player.isSpectator) {
+        if (level.isClientSide || player.isCreative || player.isSpectator || player !is ServerPlayer) {
             return
         }
 
         val pos = player.blockPosition()
         if (player.lastPos == pos) {
+            return
+        }
+
+        if (player.isCartridge) {
             return
         }
 
@@ -44,7 +52,7 @@ object AbyssPlayerHandler {
             }
 
             if (currentY > minY) {
-                CurseEffect.apply(player, currentY - minY, maxAbyssLevel)
+                applyCurse(player, currentY - minY, maxAbyssLevel)
             }
 
             player.maxAbyssLevel = 0
@@ -71,13 +79,13 @@ object AbyssPlayerHandler {
                 return
             }
 
-            CurseEffect.apply(player, currentY - minY, maxAbyssLevel)
+            applyCurse(player, currentY - minY, maxAbyssLevel)
             player.maxDepth = currentY
             return
         }
 
         if (currentY >= minY + 10) {
-            CurseEffect.apply(player, currentY - minY, maxAbyssLevel)
+            applyCurse(player, currentY - minY, maxAbyssLevel)
             player.maxDepth = currentY
         }
     }

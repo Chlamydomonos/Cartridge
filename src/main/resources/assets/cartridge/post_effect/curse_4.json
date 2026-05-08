@@ -57,7 +57,7 @@
         },
         {
             "vertex_shader": "minecraft:core/screenquad",
-            "fragment_shader": "catridge:color",
+            "fragment_shader": "cartridge:color",
             "inputs": [
                 {
                     "sampler_name": "In",

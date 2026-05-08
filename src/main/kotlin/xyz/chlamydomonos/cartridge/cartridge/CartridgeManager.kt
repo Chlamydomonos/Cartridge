@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.UUIDUtil
 import net.minecraft.world.level.saveddata.SavedData
 import net.minecraft.world.level.saveddata.SavedDataType
+import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -45,6 +46,7 @@ class CartridgeManager(
 
     fun get(key: UUID): CartridgeData {
         if (data[key] == null) {
+            Cartridge.logger.debug("Get: Created cartridge data for {}", key)
             data[key] = CartridgeData()
             setDirty()
         }
@@ -52,6 +54,9 @@ class CartridgeManager(
     }
 
     fun set(key: UUID, value: CartridgeData) {
+        if (data[key] == null) {
+            Cartridge.logger.debug("Set: Created cartridge data for {}", key)
+        }
         data[key] = value
         setDirty()
     }

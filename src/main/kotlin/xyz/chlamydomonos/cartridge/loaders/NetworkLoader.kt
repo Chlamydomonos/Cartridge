@@ -28,5 +28,6 @@ object NetworkLoader {
         registrar.playToServer(SuicidePacket.type, SuicidePacket.codec, SuicidePacket::handle)
         registrar.playToServer(IsCartridgeRequestPacket.type, IsCartridgeRequestPacket.codec, IsCartridgeRequestPacket::handle)
         registrar.playToClient(IsCartridgeResponsePacket.type, IsCartridgeResponsePacket.codec, IsCartridgeResponsePacket::handle)
+        registrar.playToClient(CartridgeUsePacket.type, CartridgeUsePacket.codec, CartridgeUsePacket::handle)
     }
 }

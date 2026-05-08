@@ -25,12 +25,13 @@
     "item.cartridge.cartridge.dead": "%1$s (Dead)",
     "block.cartridge.surgery_table": "Surgery Table",
     "gui.cartridge.create_cartridge": "Create Cartridge",
-    "gui.catridge.creation_confirm": "%1$s is trying to make you Cartridge.",
+    "gui.cartridge.creation_confirm": "%1$s is trying to make you Cartridge.",
     "gui.cartridge.accept": "Accept",
     "gui.cartridge.refuse": "Refuse",
     "gui.cartridge.pending": "Waiting for confirming...",
     "gui.cartridge.refused": "Refused",
     "gui.cartridge.suicide": "Suicide",
     "death.attack.cartridge.cartridge": "%1$s suicided as Cartridge",
-    "death.attack.cartridge.cartridge.player": "%1$s died when blocking curse for %2$s"
+    "death.attack.cartridge.cartridge.player": "%1$s died when blocking curse for %2$s",
+    "tooltip.cartridge.cartridge.durability": "Durability remaining: %1$d"
 }

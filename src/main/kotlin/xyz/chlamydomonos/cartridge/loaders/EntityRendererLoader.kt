@@ -1,6 +1,7 @@
 package xyz.chlamydomonos.cartridge.loaders
 
 import com.geckolib.renderer.base.GeoRenderState
+import net.minecraft.client.renderer.entity.NoopRenderer
 import net.minecraft.client.renderer.entity.state.EntityRenderState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
@@ -17,5 +18,6 @@ object EntityRendererLoader {
         event.registerEntityRenderer(EntityLoader.HOLLOW) {
             HollowRenderer<TypeHelper>(it, EntityLoader.HOLLOW)
         }
+        event.registerEntityRenderer(EntityLoader.CARTRIDGE) { NoopRenderer(it) }
     }
 }
