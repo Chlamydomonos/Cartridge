@@ -12,7 +12,7 @@ import xyz.chlamydomonos.cartridge.mixinimpl.ModListScreenMixinImpl;
 @Mixin(ModListScreen.class)
 public abstract class ModListScreenMixin {
     @ModifyArg(
-            method = "Lnet/neoforged/neoforge/client/gui/ModListScreen;updateCache()V",
+            method = "updateCache()V",
             at = @At(
                     value = "INVOKE",
                     target = "Ljava/util/List;add(Ljava/lang/Object;)Z",
