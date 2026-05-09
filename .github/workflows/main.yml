@@ -76,7 +76,9 @@ jobs:
         id: check_release
         run: |
           FIRST_LINE=$(echo "$LAST_COMMIT_MESSAGE" | head -n 1)
-          if [[ "$FIRST_LINE" =~ ^v([0-9]+(\.[0-9]+)*)$ ]]; then
+          if echo "$LAST_COMMIT_MESSAGE" | grep -q "^- noRelease$"; then
+            echo "create_release=false" >> $GITHUB_ENV
+          elif [[ "$FIRST_LINE" =~ ^v([0-9]+(\.[0-9]+)*)$ ]]; then
             VERSION="${BASH_REMATCH[1]}"
             echo "version=$VERSION" >> $GITHUB_ENV
             echo "create_release=true" >> $GITHUB_ENV
