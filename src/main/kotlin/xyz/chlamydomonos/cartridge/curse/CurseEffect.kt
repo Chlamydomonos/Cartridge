@@ -15,6 +15,7 @@ import xyz.chlamydomonos.cartridge.loaders.datagen.DamageTypeLoader
 import xyz.chlamydomonos.cartridge.utils.ColorUtil
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 import xyz.chlamydomonos.cartridge.utils.hollowUUID
+import kotlin.math.ln
 
 class CurseEffect : MobEffect(
     MobEffectCategory.HARMFUL,
@@ -73,6 +74,15 @@ class CurseEffect : MobEffect(
                     PacketDistributor.sendToPlayersTrackingEntityAndSelf(mob, packet)
                 }
                 5 -> {
+                    val level = mob.level()
+                    if (level.random.nextBoolean()) {
+                        mob.hurtServer(
+                            level,
+                            level.damageSources().source(DamageTypeLoader.CURSE_SIDE_EFFECT),
+                            -ln(level.random.nextFloat())
+                        )
+                    }
+
                     PacketDistributor.sendToPlayer(mob, ConfusionPacket)
                 }
                 6 -> {

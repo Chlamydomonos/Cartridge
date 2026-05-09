@@ -18,6 +18,7 @@ import xyz.chlamydomonos.cartridge.utils.RLUtil
 object DamageTypeLoader {
     val CURSE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("curse"))
     val CARTRIDGE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("cartridge"))
+    val CURSE_SIDE_EFFECT = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("curse_side_effect"))
 
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
@@ -33,6 +34,11 @@ object DamageTypeLoader {
                         "${Cartridge.ID}.cartridge",
                         DamageScaling.NEVER,
                         0f
+                    ))
+                    it.register(CURSE_SIDE_EFFECT, DamageType(
+                        "${Cartridge.ID}.curse_side_effect",
+                        DamageScaling.NEVER,
+                        0.3f
                     ))
                 }
         )
