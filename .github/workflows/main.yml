@@ -105,3 +105,30 @@ jobs:
           files: build/libs/cartridge-${{ env.version }}.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload To Curseforge
+        if: env.create_release == 'true'
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          token: "${{ secrets.CURSEFORGE_TOKEN }}"
+          project_id: "1537028"
+          game_endpoint: "minecraft"
+          game_versions: "Minecraft 26.1.2,Java 25,NeoForge"
+          relations: "curios:requiredDependency,geckolib:requiredDependency,kotlin-for-forge:requiredDependency"
+          file_path: "build/libs/cartridge-${{ env.version }}.jar"
+          changelog: "${{ env.LAST_COMMIT_MESSAGE }}"
+
+      - name: Upload to Modrinth
+        if: env.create_release == 'true'
+        uses: RubixDev/modrinth-upload@v1
+        with:
+          token: "${{ secrets.MODRINTH_TOKEN }}"
+          project_id: "BjGfz7Td"
+          name: "Cartridge v${{ env.version }}"
+          version: "${{ env.version }}"
+          game_versions: "26.1"
+          loaders: "neoforge"
+          featured: false
+          relations: "vvuO3ImH:required,ordsPcFz:required,8BmcQJ2H:required"
+          file_path: "build/libs/cartridge-${{ env.version }}.jar"
+          changelog: "${{ env.LAST_COMMIT_MESSAGE }}"
