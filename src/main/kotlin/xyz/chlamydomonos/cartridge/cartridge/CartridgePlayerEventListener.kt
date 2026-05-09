@@ -103,6 +103,18 @@ object CartridgePlayerEventListener {
             if (hurt) {
                 player.cartridgeStatus = CartridgeManager.CartridgeStatus.NONE
             }
+
+            return
+        }
+
+        if (player.cartridgeStatus == CartridgeManager.CartridgeStatus.NONE) {
+            if (level.isCartridgeDimension) {
+                player.hurtServer(
+                    level,
+                    level.damageSources().source(DamageTypeLoader.CARTRIDGE, player.equipper),
+                    Float.MAX_VALUE
+                )
+            }
         }
     }
 
