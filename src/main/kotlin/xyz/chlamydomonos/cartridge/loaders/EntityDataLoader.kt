@@ -60,8 +60,8 @@ object EntityDataLoader {
 
     val HOLLOW_ENTITY_DATA = registry.register("hollow_entity_data") { ->
         AttachmentType
-            .builder(::HollowEntityData)
-            .serialize(HollowEntityData.codec.fieldOf("data"))
+            .builder(HollowEntityData::default)
+            .serialize(HollowEntityData.codec.fieldOf("hollow_data"))
             .sync(HollowEntityData.streamCodec)
             .build()
     }
