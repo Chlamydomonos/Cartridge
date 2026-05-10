@@ -128,7 +128,7 @@ jobs:
           project_id: "BjGfz7Td"
           name: "Cartridge v${{ env.version }}"
           version: "${{ env.version }}"
-          game_versions: "26.1"
+          game_versions: "26.1.2"
           loaders: "neoforge"
           featured: false
           relations: "vvuO3ImH:required,ordsPcFz:required,8BmcQJ2H:required"
