@@ -12,9 +12,8 @@ object Cartridge {
 
     init {
         EffectLoader.bootstrap(MOD_BUS)
-        PlayerDataLoader.bootstrap(MOD_BUS)
-        EntityLoader.bootstrap(MOD_BUS)
         EntityDataLoader.bootstrap(MOD_BUS)
+        EntityLoader.bootstrap(MOD_BUS)
         ItemLoader.bootstrap(MOD_BUS)
         DataComponentLoader.bootstrap(MOD_BUS)
         BlockLoader.bootstrap(MOD_BUS)

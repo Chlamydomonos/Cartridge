@@ -40,6 +40,12 @@ class AbyssEditToolItem(
         builder: Consumer<Component>,
         tooltipFlag: TooltipFlag
     ) {
+        builder.accept(
+            Component
+                .translatable("tooltip.cartridge.only_in_creative")
+                .withColor(ColorUtil.rgb(0x802020))
+        )
+
         val data = itemStack.optionalBlockPos
         if (data == null) {
             builder.accept(

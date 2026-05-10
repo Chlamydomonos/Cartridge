@@ -35,5 +35,8 @@
     "death.attack.cartridge.cartridge.player": "%1$s为%2$s抵挡诅咒而死",
     "tooltip.cartridge.cartridge.durability": "剩余耐久: %1$d",
     "chlamydomonos.fml.menu.mods.info.name.cartridge": "来自深渊：弹药包",
-    "death.attack.cartridge.curse_side_effect": "%1$s死于诅咒带来的意外"
+    "death.attack.cartridge.curse_side_effect": "%1$s死于诅咒带来的意外",
+    "item.cartridge.hollow_randomizer": "生骸随机化工具",
+    "tooltip.cartridge.only_in_creative": "仅能在创造模式获得",
+    "tooltip.cartridge.hollow_randomizer": "只对通过/summon命令召唤的生骸生效"
 }

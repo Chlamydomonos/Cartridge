@@ -35,5 +35,8 @@
     "death.attack.cartridge.cartridge.player": "%1$s died when blocking curse for %2$s",
     "tooltip.cartridge.cartridge.durability": "Durability remaining: %1$d",
     "chlamydomonos.fml.menu.mods.info.name.cartridge": "Cartridge",
-    "death.attack.cartridge.curse_side_effect": "%1$s died because of side effects of curse"
+    "death.attack.cartridge.curse_side_effect": "%1$s died because of side effects of curse",
+    "item.cartridge.hollow_randomizer": "Hollow Randomizer",
+    "tooltip.cartridge.only_in_creative": "Only in creative mode",
+    "tooltip.cartridge.hollow_randomizer": "Can only be used on summoned hollows"
 }

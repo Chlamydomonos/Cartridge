@@ -17,6 +17,7 @@ import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.abyss.AbyssEditToolItem
 import xyz.chlamydomonos.cartridge.cartridge.BackpackItem
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeItem
+import xyz.chlamydomonos.cartridge.hollow.HollowRandomizerItem
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 object ItemLoader {
@@ -71,4 +72,6 @@ object ItemLoader {
 
     val CARTRIDGE by register("cartridge") { CartridgeItem(it) }
     val BACKPACK by register("backpack") { BackpackItem(it) }
+
+    val HOLLOW_RANDOMIZER by register("hollow_randomizer") { HollowRandomizerItem(it) }
 }
