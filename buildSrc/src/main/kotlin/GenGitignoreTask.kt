@@ -65,6 +65,18 @@ abstract class GenGitignoreTask @Inject constructor(
             return
         }
 
+        println("尝试删除main分支...")
+        try {
+            execOperations.exec {
+                workingDir = workDir
+                commandLine("git", "branch", "-D", "main")
+                isIgnoreExitValue = true
+            }
+        } catch (_: Exception) {
+            println("删除失败，取消后续操作")
+            return
+        }
+
         val generated = generatedDir.asFile.get()
         if (generated.exists()) {
             println("删除generated目录...")
