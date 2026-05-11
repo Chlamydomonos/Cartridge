@@ -1,19 +1,18 @@
 package xyz.chlamydomonos.cartridge.cartridge
 
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.util.TriState
 import net.minecraft.world.entity.EntitySpawnReason
 import net.minecraft.world.phys.AABB
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.entity.EntityMountEvent
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.loaders.EntityLoader
 import xyz.chlamydomonos.cartridge.loaders.datagen.DamageTypeLoader
-import xyz.chlamydomonos.cartridge.utils.cartridgeDimension
-import xyz.chlamydomonos.cartridge.utils.cartridgeStatus
-import xyz.chlamydomonos.cartridge.utils.equipper
-import xyz.chlamydomonos.cartridge.utils.isCartridgeDimension
+import xyz.chlamydomonos.cartridge.utils.*
 
 @EventBusSubscriber
 object CartridgePlayerEventListener {
@@ -127,6 +126,18 @@ object CartridgePlayerEventListener {
         val riding = event.entityBeingMounted
         if (riding is CartridgeEntity && !riding.removingSelf) {
             event.isCanceled = true
+        }
+    }
+
+    @SubscribeEvent
+    fun onItemEntityPickup(event: ItemEntityPickupEvent.Pre) {
+        val player = event.player
+        if (player !is ServerPlayer) {
+            return
+        }
+
+        if (player.isCartridge) {
+            event.setCanPickup(TriState.FALSE)
         }
     }
 }

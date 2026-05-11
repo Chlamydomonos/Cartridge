@@ -22,7 +22,7 @@ object EntityLoader {
     }
 
     val HOLLOW by registry.registerEntityType("hollow", ::HollowEntity, MobCategory.MISC) {
-        it.sized(1f, 1f).eyeHeight(0.4f).ridingOffset(-0.75f).noLootTable()
+        it.sized(1f, 0.5f).eyeHeight(0.4f).ridingOffset(-0.75f).noLootTable()
     }
 
     val CARTRIDGE by registry.registerEntityType("cartridge", ::CartridgeEntity, MobCategory.MISC) {

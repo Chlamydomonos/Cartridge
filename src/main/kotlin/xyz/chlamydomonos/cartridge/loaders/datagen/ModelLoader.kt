@@ -20,26 +20,28 @@ object ModelLoader {
         event.createProvider {
             object : ModelProvider(it, Cartridge.ID) {
                 override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
-                    fun simple(item: Item) {
+                    fun simpleItem(item: Item) {
                         itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM)
                     }
 
-                    simple(ItemLoader.ABYSS_CREATE_1)
-                    simple(ItemLoader.ABYSS_REMOVE_1)
-                    simple(ItemLoader.ABYSS_CREATE_2)
-                    simple(ItemLoader.ABYSS_REMOVE_2)
-                    simple(ItemLoader.ABYSS_CREATE_3)
-                    simple(ItemLoader.ABYSS_REMOVE_3)
-                    simple(ItemLoader.ABYSS_CREATE_4)
-                    simple(ItemLoader.ABYSS_REMOVE_4)
-                    simple(ItemLoader.ABYSS_CREATE_5)
-                    simple(ItemLoader.ABYSS_REMOVE_5)
-                    simple(ItemLoader.ABYSS_CREATE_6)
-                    simple(ItemLoader.ABYSS_REMOVE_6)
+                    simpleItem(ItemLoader.ABYSS_CREATE_1)
+                    simpleItem(ItemLoader.ABYSS_REMOVE_1)
+                    simpleItem(ItemLoader.ABYSS_CREATE_2)
+                    simpleItem(ItemLoader.ABYSS_REMOVE_2)
+                    simpleItem(ItemLoader.ABYSS_CREATE_3)
+                    simpleItem(ItemLoader.ABYSS_REMOVE_3)
+                    simpleItem(ItemLoader.ABYSS_CREATE_4)
+                    simpleItem(ItemLoader.ABYSS_REMOVE_4)
+                    simpleItem(ItemLoader.ABYSS_CREATE_5)
+                    simpleItem(ItemLoader.ABYSS_REMOVE_5)
+                    simpleItem(ItemLoader.ABYSS_CREATE_6)
+                    simpleItem(ItemLoader.ABYSS_REMOVE_6)
 
                     itemModels.declareCustomModelItem(ItemLoader.CARTRIDGE)
                     itemModels.declareCustomModelItem(ItemLoader.BACKPACK)
                     SurgeryTableBlock.genModel(blockModels)
+
+                    simpleItem(ItemLoader.HOLLOW_RANDOMIZER)
                 }
             }
         }

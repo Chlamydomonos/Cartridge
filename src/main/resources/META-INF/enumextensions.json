@@ -1,0 +1,13 @@
+{
+    "entries": [
+        {
+            "enum": "net/minecraft/world/damagesource/DeathMessageType",
+            "name": "CARTRIDGE_CARTRIDGE",
+            "constructor": "(Ljava/lang/String;Lnet/neoforged/neoforge/common/damagesource/IDeathMessageProvider;)V",
+            "parameters": {
+                "class": "xyz/chlamydomonos/cartridge/EnumExtensionHandler",
+                "field": "CARTRIDGE_DEATH_MESSAGE_TYPE_PROXY"
+            }
+        }
+    ]
+}
