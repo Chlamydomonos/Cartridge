@@ -115,7 +115,7 @@ jobs:
           token: "${{ secrets.CURSEFORGE_TOKEN }}"
           project_id: "1537028"
           game_endpoint: "minecraft"
-          game_versions: "Minecraft 26.1.2,Java 25,NeoForge"
+          game_versions: "Minecraft 26.1:26.1.2,Java 25,NeoForge"
           relations: "curios:requiredDependency,geckolib:requiredDependency,kotlin-for-forge:requiredDependency"
           file_path: "build/libs/cartridge-${{ env.version }}.jar"
           changelog: "${{ env.LAST_COMMIT_MESSAGE }}"
