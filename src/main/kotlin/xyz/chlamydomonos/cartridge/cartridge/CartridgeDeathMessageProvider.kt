@@ -13,7 +13,7 @@ object CartridgeDeathMessageProvider : IDeathMessageProvider {
         lastEntry: CombatEntry,
         mostSignificantFall: CombatEntry?
     ): Component {
-        val causer = lastEntry.source.entity;
+        val causer = lastEntry.source.entity
         return if (causer == null) {
             Component.translatable(
                 "death.attack.cartridge.cartridge",
