@@ -27,13 +27,15 @@ object SurgeryTablePlayerEventListener {
             throw RuntimeException("Trying to access SurgeryTableBlockEntity without surgery table")
         }
         be.playerOn = null
+        player.surgeryTablePos = null
         be.handlingPacket = false
     }
 
     @SubscribeEvent
     fun onPlayerWakeUp(event: PlayerWakeUpEvent) {
         val player = event.entity
-        if (player !is ServerPlayer) {
+        @Suppress("SENSELESS_COMPARISON")
+        if (player !is ServerPlayer || player.connection == null) {
             return
         }
 

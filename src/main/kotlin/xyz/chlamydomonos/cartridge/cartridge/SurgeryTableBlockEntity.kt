@@ -16,10 +16,7 @@ import xyz.chlamydomonos.cartridge.loaders.BlockEntityLoader
 import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 import xyz.chlamydomonos.cartridge.loaders.datagen.DamageTypeLoader
-import xyz.chlamydomonos.cartridge.utils.cartridgeDimension
-import xyz.chlamydomonos.cartridge.utils.cartridgeStatus
-import xyz.chlamydomonos.cartridge.utils.optionalName
-import xyz.chlamydomonos.cartridge.utils.optionalUUID
+import xyz.chlamydomonos.cartridge.utils.*
 import kotlin.jvm.optionals.getOrNull
 
 class SurgeryTableBlockEntity(
@@ -96,5 +93,17 @@ class SurgeryTableBlockEntity(
         outputStack.optionalUUID = target.uuid
         outputStack.optionalName = target.plainTextName
         outputItem.set(0, ItemResource.of(outputStack), 1)
+    }
+
+    override fun preRemoveSideEffects(pos: BlockPos, state: BlockState) {
+        if (level?.isClientSide ?: true) {
+            return
+        }
+
+        val player = playerOn
+        if (player is ServerPlayer) {
+            player.surgeryTablePos = null
+            player.stopSleeping()
+        }
     }
 }

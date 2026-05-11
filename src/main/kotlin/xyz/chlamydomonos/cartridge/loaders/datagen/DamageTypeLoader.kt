@@ -6,12 +6,14 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.tags.DamageTypeTagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.DamageTypeTags
+import net.minecraft.world.damagesource.DamageEffects
 import net.minecraft.world.damagesource.DamageScaling
 import net.minecraft.world.damagesource.DamageType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import xyz.chlamydomonos.cartridge.Cartridge
+import xyz.chlamydomonos.cartridge.cartridge.CartridgeDeathMessageProvider
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 
 @EventBusSubscriber
@@ -33,7 +35,9 @@ object DamageTypeLoader {
                     it.register(CARTRIDGE, DamageType(
                         "${Cartridge.ID}.cartridge",
                         DamageScaling.NEVER,
-                        0f
+                        0f,
+                        DamageEffects.HURT,
+                        CartridgeDeathMessageProvider.DEATH_MESSAGE_TYPE
                     ))
                     it.register(CURSE_SIDE_EFFECT, DamageType(
                         "${Cartridge.ID}.curse_side_effect",
