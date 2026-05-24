@@ -6,6 +6,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import xyz.chlamydomonos.cartridge.Cartridge
+import xyz.chlamydomonos.cartridge.blessing.BlessingEffect
 import xyz.chlamydomonos.cartridge.curse.CurseEffect
 
 object EffectLoader {
@@ -20,4 +21,5 @@ object EffectLoader {
     }
 
     val CURSE = register("curse", ::CurseEffect)
+    val BLESSING = register("blessing", ::BlessingEffect)
 }

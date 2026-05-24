@@ -39,5 +39,6 @@
     "death.attack.cartridge.curse_side_effect.player": "%1$s died because of side effects of curse while trying to escape %2$s",
     "item.cartridge.hollow_randomizer": "Hollow Randomizer",
     "tooltip.cartridge.only_in_creative": "Only in creative mode",
-    "tooltip.cartridge.hollow_randomizer": "Can only be used on summoned hollows"
+    "tooltip.cartridge.hollow_randomizer": "Can only be used on summoned hollows",
+    "effect.cartridge.blessing": "Blessing"
 }

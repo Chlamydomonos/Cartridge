@@ -12,7 +12,7 @@ import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.hollow.HollowEntityData
 import java.util.*
 
-object EntityDataLoader {
+object DataAttachmentLoader {
     val registry = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Cartridge.ID)
 
     val HOLLOW_UUID = registry.register("hollow_uuid") { ->
