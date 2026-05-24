@@ -12,7 +12,7 @@ object Cartridge {
 
     init {
         EffectLoader.bootstrap(MOD_BUS)
-        EntityDataLoader.bootstrap(MOD_BUS)
+        DataAttachmentLoader.bootstrap(MOD_BUS)
         EntityLoader.bootstrap(MOD_BUS)
         ItemLoader.bootstrap(MOD_BUS)
         DataComponentLoader.bootstrap(MOD_BUS)

@@ -79,7 +79,7 @@ class CurseEffect : MobEffect(
                         mob.hurtServer(
                             level,
                             level.damageSources().source(DamageTypeLoader.CURSE_SIDE_EFFECT),
-                            -ln(level.random.nextFloat())
+                            -ln(level.random.nextFloat()) * 4
                         )
                     }
 

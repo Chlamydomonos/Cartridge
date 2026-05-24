@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.neoforged.neoforge.network.PacketDistributor
 import top.theillusivec4.curios.api.CuriosApi
+import xyz.chlamydomonos.cartridge.blessing.BlessingEffect
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 import xyz.chlamydomonos.cartridge.utils.cartridgeDurability
 import xyz.chlamydomonos.cartridge.utils.cartridgeManager
@@ -46,6 +47,11 @@ object CartridgeHandler {
                 val targetPlayer = player.level().server.playerList.getPlayer(uuid) ?: break
                 PacketDistributor.sendToPlayer(targetPlayer, CartridgeUsePacket)
             }
+
+            if (curseLevel == 6) {
+                BlessingEffect.add(player, yDiff / 2)
+            }
+
             break
         }
 

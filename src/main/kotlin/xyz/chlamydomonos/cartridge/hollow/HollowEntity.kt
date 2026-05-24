@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import xyz.chlamydomonos.cartridge.loaders.EntityDataLoader
+import xyz.chlamydomonos.cartridge.loaders.DataAttachmentLoader
 import xyz.chlamydomonos.cartridge.loaders.EntityLoader
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 import xyz.chlamydomonos.cartridge.utils.hollowUUID
@@ -34,7 +34,7 @@ class HollowEntity(type: EntityType<HollowEntity>, level: Level) : HollowEntityB
 
         operator fun setValue(thisRef: Any?, propertyKey: KProperty<*>, value: T) {
             field.set(instance.data, value)
-            instance.syncData(EntityDataLoader.HOLLOW_ENTITY_DATA)
+            instance.syncData(DataAttachmentLoader.HOLLOW_ENTITY_DATA)
         }
     }
 
@@ -182,9 +182,9 @@ class HollowEntity(type: EntityType<HollowEntity>, level: Level) : HollowEntityB
     }
 
     var data
-        get() = getData(EntityDataLoader.HOLLOW_ENTITY_DATA)
+        get() = getData(DataAttachmentLoader.HOLLOW_ENTITY_DATA)
         set(value) {
-            setData(EntityDataLoader.HOLLOW_ENTITY_DATA, value)
+            setData(DataAttachmentLoader.HOLLOW_ENTITY_DATA, value)
         }
 
     fun <T> forData(field: KMutableProperty1<HollowEntityData, T>) = DataDelegate(this, field)
