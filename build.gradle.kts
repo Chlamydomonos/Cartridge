@@ -1,6 +1,4 @@
-//file:noinspection GroovyAssignabilityCheck
-import org.jetbrains.gradle.ext.settings
-import org.jetbrains.gradle.ext.taskTriggers
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -10,7 +8,6 @@ plugins {
     `maven-publish`
     id("net.neoforged.moddev") version "2.0.141"
     id("org.jetbrains.kotlin.jvm") version "2.3.0"
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.7"
 }
 
 val modVersion: String by project
@@ -170,19 +167,7 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
 
 sourceSets.main.get().resources.srcDir(generateModMetadata)
 neoForge.ideSyncTask(generateModMetadata)
-
-publishing {
-    publications {
-        register<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
-    repositories {
-        maven {
-            url = uri("file://${project.projectDir}/repo")
-        }
-    }
-}
+neoForge.ideSyncTask(tasks["genGitignore"])
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
@@ -192,10 +177,6 @@ idea {
     module {
         isDownloadSources = true
         isDownloadJavadoc = true
-    }
-
-    project.settings.taskTriggers {
-        beforeSync("genGitignore")
     }
 }
 
