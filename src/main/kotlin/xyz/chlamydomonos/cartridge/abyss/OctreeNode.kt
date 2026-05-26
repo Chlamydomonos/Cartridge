@@ -20,6 +20,11 @@ class OctreeNode() {
     var value: Byte = 0
     var parent: OctreeNode? = null
 
+    var isCustomRoot = false
+    var customMinX = 0
+    var customMinY = 0
+    var customMinZ = 0
+
     val children = Array<OctreeNode?>(8) { null }
 
     fun serialize(data: MutableList<Byte>): MutableList<Byte> {
@@ -180,6 +185,13 @@ class OctreeNode() {
     private fun getRootBounds(): IntArray {
         var root = this
         while (root.parent != null) root = root.parent!!
+        if (root.isCustomRoot) {
+            val size = 1 shl (MAX_LAYER - root.layer)
+            return intArrayOf(
+                root.customMinX, root.customMinY, root.customMinZ,
+                root.customMinX + size - 1, root.customMinY + size - 1, root.customMinZ + size - 1
+            )
+        }
         val halfSize = 1 shl (MAX_LAYER - 1)
         return intArrayOf(-halfSize, -halfSize, -halfSize, halfSize - 1, halfSize - 1, halfSize - 1)
     }

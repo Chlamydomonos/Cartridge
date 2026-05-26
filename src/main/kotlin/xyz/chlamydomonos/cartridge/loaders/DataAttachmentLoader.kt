@@ -10,10 +10,18 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.hollow.HollowEntityData
+import xyz.chlamydomonos.cartridge.abyss.ChunkAbyssData
 import java.util.*
 
 object DataAttachmentLoader {
     val registry = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Cartridge.ID)
+
+    val CHUNK_ABYSS = registry.register("chunk_abyss") { ->
+        AttachmentType
+            .builder { -> ChunkAbyssData() }
+            .serialize(ChunkAbyssData.codec.fieldOf("abyss"))
+            .build()
+    }
 
     val HOLLOW_UUID = registry.register("hollow_uuid") { ->
         AttachmentType

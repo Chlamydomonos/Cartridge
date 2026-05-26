@@ -17,6 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import org.joml.Matrix4fc
 import xyz.chlamydomonos.cartridge.utils.ColorUtil
+import xyz.chlamydomonos.cartridge.utils.abyssManager
 import xyz.chlamydomonos.cartridge.utils.optionalBlockPos
 import kotlin.math.max
 import kotlin.math.min
@@ -24,7 +25,6 @@ import kotlin.math.min
 
 @EventBusSubscriber(value = [Dist.CLIENT])
 object AbyssRenderer {
-    var root = OctreeNode()
 
     fun renderVoxelShape(shape: VoxelShape, cameraPos: Vec3, poseStack: PoseStack, color: Int) {
         val bufferSource = Minecraft.getInstance().renderBuffers().bufferSource()
@@ -47,6 +47,7 @@ object AbyssRenderer {
         poseStack.popPose()
     }
 
+    @Suppress("DuplicatedCode")
     fun renderTransparentAABB(aabb: AABB, matrix: Matrix4fc, color: Int, builder: VertexConsumer) {
         val minX = aabb.minX.toFloat()
         val minY = aabb.minY.toFloat()
@@ -120,7 +121,7 @@ object AbyssRenderer {
         } else {
             0xff8080
         }
-        val abyssShape = root.getVoxelShape(player.blockPosition(), 100, abyssLevel.toByte())
+        val abyssShape = player.level().abyssManager.getVoxelShape(player.blockPosition(), 100, abyssLevel.toByte())
         val cameraPos = event.levelRenderState.cameraRenderState.pos
         renderVoxelShape(abyssShape, cameraPos, event.poseStack, 0xffffff)
         renderTransparentShape(abyssShape, cameraPos, event.poseStack, ColorUtil.rgba(0xffffff, 0x80))
