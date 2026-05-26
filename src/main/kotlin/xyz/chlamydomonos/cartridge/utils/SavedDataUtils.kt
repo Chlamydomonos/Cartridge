@@ -5,8 +5,9 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import xyz.chlamydomonos.cartridge.abyss.AbyssManager
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeManager
+import net.minecraft.world.level.Level
 
-val ServerLevel.abyssManager get() = dataStorage.computeIfAbsent(AbyssManager.type)
+val Level.abyssManager get() = AbyssManager(this)
 
 val MinecraftServer.cartridgeManager get() = dataStorage.computeIfAbsent(CartridgeManager.type)
 

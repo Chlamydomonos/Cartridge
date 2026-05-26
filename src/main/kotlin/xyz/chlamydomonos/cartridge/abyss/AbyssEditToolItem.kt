@@ -92,8 +92,8 @@ class AbyssEditToolItem(
             if (!level.isClientSide && level is ServerLevel && item is AbyssEditToolItem) {
                 val abyssManager = level.abyssManager
                 when (item.operation) {
-                    Operation.ADD -> abyssManager.setValue(level, data, pos, item.level.toByte())
-                    Operation.REMOVE -> abyssManager.replaceValue(level, data, pos, item.level.toByte(), 0)
+                    Operation.ADD -> abyssManager.setValue(pos, data, item.level.toByte())
+                    Operation.REMOVE -> abyssManager.replaceValue(pos, data, item.level.toByte(), 0)
                 }
                 stack.optionalBlockPos = null
             }

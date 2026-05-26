@@ -9,6 +9,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeHandler
 import xyz.chlamydomonos.cartridge.curse.CurseEffect
 import xyz.chlamydomonos.cartridge.utils.*
+import net.minecraft.world.level.Level
 
 @EventBusSubscriber
 object AbyssPlayerHandler {
@@ -39,7 +40,7 @@ object AbyssPlayerHandler {
         player.lastPos = pos
     }
 
-    fun onPlayerMove(player: ServerPlayer, level: ServerLevel, pos: BlockPos) {
+    fun onPlayerMove(player: ServerPlayer, level: Level, pos: BlockPos) {
         val abyssManager = level.abyssManager
         val currentAbyssLevel = abyssManager.getValue(pos).toInt()
         val currentY = pos.y

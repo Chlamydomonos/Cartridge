@@ -6,6 +6,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.network.handling.IPayloadContext
 import xyz.chlamydomonos.cartridge.utils.RLUtil
+import xyz.chlamydomonos.cartridge.utils.abyssManager
 
 class AbyssUpdatePacket(
     val from: BlockPos,
@@ -30,10 +31,12 @@ class AbyssUpdatePacket(
 
         fun handle(packet: AbyssUpdatePacket, context: IPayloadContext) {
             context.enqueueWork {
+                val level = net.minecraft.client.Minecraft.getInstance().level ?: return@enqueueWork
+                val manager = level.abyssManager
                 if (packet.fromValue.toInt() == -1) {
-                    AbyssRenderer.root.setValue(packet.from, packet.to, packet.toValue)
+                    manager.setValue(packet.from, packet.to, packet.toValue)
                 } else {
-                    AbyssRenderer.root.replaceValue(packet.from, packet.to, packet.fromValue, packet.toValue)
+                    manager.replaceValue(packet.from, packet.to, packet.fromValue, packet.toValue)
                 }
             }
         }
