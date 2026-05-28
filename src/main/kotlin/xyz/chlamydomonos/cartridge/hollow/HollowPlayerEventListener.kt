@@ -11,25 +11,12 @@ import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import xyz.chlamydomonos.cartridge.utils.hollowEntity
+import xyz.chlamydomonos.cartridge.utils.hollowPos
 import xyz.chlamydomonos.cartridge.utils.hollowUUID
 import xyz.chlamydomonos.cartridge.utils.isDeadHollow
 
 @EventBusSubscriber
 object HollowPlayerEventListener {
-    @SubscribeEvent
-    fun onPlayerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
-        val player = event.entity
-        if (player.level().isClientSide) {
-            return
-        }
-
-        if (player.hollowUUID != null) {
-            val oldEntity = player.hollowEntity
-            oldEntity?.remove(Entity.RemovalReason.DISCARDED)
-            HollowEntity.create(player as ServerPlayer, false)
-        }
-    }
-
     @SubscribeEvent
     fun onPlayerLoggedOut(event: PlayerEvent.PlayerLoggedOutEvent) {
         val player = event.entity
@@ -38,7 +25,10 @@ object HollowPlayerEventListener {
         }
 
         val hollowEntity = player.hollowEntity
-        hollowEntity?.remove(Entity.RemovalReason.DISCARDED)
+        if (hollowEntity != null) {
+            player.hollowPos = hollowEntity.position()
+            hollowEntity.remove(Entity.RemovalReason.DISCARDED)
+        }
     }
 
     @SubscribeEvent
@@ -57,7 +47,12 @@ object HollowPlayerEventListener {
         }
 
         if (hollowEntity == null) {
-            HollowEntity.create(player)
+            val entity = HollowEntity.create(player)
+            val pos = player.hollowPos
+            if (entity != null && pos != null) {
+                entity.setPos(pos)
+                player.hollowPos = null
+            }
             return
         }
 

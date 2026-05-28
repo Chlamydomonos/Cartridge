@@ -20,6 +20,10 @@ val Player.hollowEntity: HollowEntity?
         return null
     }
 
+var Player.hollowPos
+    get() = this.getData(DataAttachmentLoader.HOLLOW_POS).getOrNull()
+    set(value) { this.setData(DataAttachmentLoader.HOLLOW_POS, Optional.ofNullable(value)) }
+
 var Player.isDeadHollow
     get() = getData(DataAttachmentLoader.IS_DEAD_HOLLOW)
     set(value) { setData(DataAttachmentLoader.IS_DEAD_HOLLOW, value) }
