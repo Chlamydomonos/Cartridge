@@ -4,13 +4,14 @@ import com.mojang.serialization.Codec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.UUIDUtil
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.attachment.AttachmentType
 import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import xyz.chlamydomonos.cartridge.Cartridge
-import xyz.chlamydomonos.cartridge.hollow.HollowEntityData
 import xyz.chlamydomonos.cartridge.abyss.ChunkAbyssData
+import xyz.chlamydomonos.cartridge.hollow.HollowEntityData
 import java.util.*
 
 object DataAttachmentLoader {
@@ -28,6 +29,13 @@ object DataAttachmentLoader {
             .builder { -> Optional.empty<UUID>() }
             .serialize(UUIDUtil.CODEC.optionalFieldOf("hollow_uuid"))
             .sync(ByteBufCodecs.optional(UUIDUtil.STREAM_CODEC))
+            .build()
+    }
+
+    val HOLLOW_POS = registry.register("hollow_pos") { ->
+        AttachmentType
+            .builder { -> Optional.empty<Vec3>() }
+            .serialize(Vec3.CODEC.optionalFieldOf("hollow_pos"))
             .build()
     }
 

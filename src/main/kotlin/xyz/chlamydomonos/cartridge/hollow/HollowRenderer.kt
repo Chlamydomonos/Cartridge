@@ -6,9 +6,12 @@ import com.geckolib.renderer.GeoEntityRenderer
 import com.geckolib.renderer.base.BoneSnapshots
 import com.geckolib.renderer.base.GeoRenderState
 import com.geckolib.renderer.base.RenderPassInfo
+import com.geckolib.util.ClientUtil
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.state.EntityRenderState
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.scores.Team
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 import xyz.chlamydomonos.cartridge.utils.forData
 
@@ -187,5 +190,55 @@ class HollowRenderer<R>(
         bones.leftEarDownInner.skipRender(true)
         bones.rightEarUpInner.skipRender(true)
         bones.rightEarDownInner.skipRender(true)
+    }
+
+    override fun shouldShowName(animatable: HollowEntity, distToCameraSq: Double): Boolean {
+        if (animatable.isDiscrete) {
+            val nameRenderCutoff = getNameRenderCutoffDistance(animatable)
+
+            if (distToCameraSq >= nameRenderCutoff * nameRenderCutoff) {
+                return false
+            }
+        }
+
+        if (
+            !animatable.shouldShowName() &&
+            (!animatable.hasCustomName() || animatable !== this.entityRenderDispatcher.crosshairPickEntity)
+        ) {
+            return false
+        }
+
+        val minecraft = Minecraft.getInstance()
+        val player = ClientUtil.getClientPlayer()
+        val visibleToClient = player != null && !animatable.isInvisibleTo(player)
+        var entityTeam: Team? = animatable.team
+        if (entityTeam == null) {
+            val teams = animatable.passengers.mapNotNull { it.team }
+            if (teams.isNotEmpty()) {
+                entityTeam = teams[0]
+            }
+        }
+
+        if (player == null || entityTeam == null) {
+            return Minecraft.renderNames() && animatable !== minecraft.cameraEntity && visibleToClient
+        }
+
+        val playerTeam: Team? = ClientUtil.getClientPlayer()!!.team
+
+        return when (entityTeam.nameTagVisibility) {
+            Team.Visibility.ALWAYS -> visibleToClient
+            Team.Visibility.NEVER -> false
+            Team.Visibility.HIDE_FOR_OTHER_TEAMS -> if (playerTeam == null) {
+                visibleToClient
+            } else {
+                entityTeam.isAlliedTo(playerTeam) && (entityTeam.canSeeFriendlyInvisibles() || visibleToClient)
+            }
+
+            Team.Visibility.HIDE_FOR_OWN_TEAM -> if (playerTeam == null) {
+                visibleToClient
+            } else {
+                !entityTeam.isAlliedTo(playerTeam) && visibleToClient
+            }
+        }
     }
 }
