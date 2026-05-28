@@ -29,6 +29,15 @@ class CurseEffect : MobEffect(
 
             player.addEffect(MobEffectInstance(EffectLoader.CURSE, time * 100, level - 1))
         }
+
+        fun turnToHollow(player: ServerPlayer) {
+            val level = player.level()
+            val hollow = HollowEntity.create(player)
+            if (hollow != null) {
+                player.dropAllDeathLoot(level, level.damageSources().source(DamageTypeLoader.CURSE))
+                player.removeEffect(EffectLoader.CURSE)
+            }
+        }
     }
 
     init {
@@ -97,11 +106,7 @@ class CurseEffect : MobEffect(
                         )
                         mob.removeEffect(EffectLoader.CURSE)
                     } else {
-                        val hollow = HollowEntity.create(mob)
-                        if (hollow != null) {
-                            mob.dropAllDeathLoot(level, level.damageSources().source(DamageTypeLoader.CURSE))
-                            mob.removeEffect(EffectLoader.CURSE)
-                        }
+                        turnToHollow(mob)
                     }
                 }
             }

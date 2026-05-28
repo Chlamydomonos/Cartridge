@@ -40,5 +40,10 @@
     "item.cartridge.hollow_randomizer": "Hollow Randomizer",
     "tooltip.cartridge.only_in_creative": "Only in creative mode",
     "tooltip.cartridge.hollow_randomizer": "Can only be used on summoned hollows",
-    "effect.cartridge.blessing": "Blessing"
+    "effect.cartridge.blessing": "Blessing",
+    "error.cartridge.not_player": "Command not sent by player",
+    "command.cartridge.hollow": "Turned yourself to hollow by command",
+    "command.cartridge.hollow.source": "Turned %1$d players to hollow by command",
+    "command.cartridge.hollow.player": "%1$s has turned you to hollow by command",
+    "command.cartridge.hollow.block": "You are turned to hollow by command block"
 }

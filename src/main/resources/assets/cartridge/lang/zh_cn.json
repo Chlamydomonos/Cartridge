@@ -40,5 +40,10 @@
     "item.cartridge.hollow_randomizer": "生骸随机化工具",
     "tooltip.cartridge.only_in_creative": "仅能在创造模式获得",
     "tooltip.cartridge.hollow_randomizer": "只对通过/summon命令召唤的生骸生效",
-    "effect.cartridge.blessing": "祝福"
+    "effect.cartridge.blessing": "祝福",
+    "error.cartridge.not_player": "命令不由玩家发出",
+    "command.cartridge.hollow": "已通过命令将你自己变成生骸",
+    "command.cartridge.hollow.source": "已通过命令将%1$d个玩家变成生骸",
+    "command.cartridge.hollow.player": "%1$s通过命令将你变成了生骸",
+    "command.cartridge.hollow.block": "你被命令方块变成了生骸"
 }
