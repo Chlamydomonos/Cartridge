@@ -1,4 +1,4 @@
-package xyz.chlamydomonos.cartridge.mixinimpl
+package xyz.chlamydomonos.cartridge.mixinimpl.minecraft
 
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerPlayer

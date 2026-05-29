@@ -1,4 +1,4 @@
-package xyz.chlamydomonos.cartridge.mixinimpl
+package xyz.chlamydomonos.cartridge.mixinimpl.minecraft
 
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.i18n.FMLTranslations

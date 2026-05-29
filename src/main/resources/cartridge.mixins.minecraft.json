@@ -1,5 +1,5 @@
 {
-    "package": "xyz.chlamydomonos.cartridge.mixin",
+    "package": "xyz.chlamydomonos.cartridge.mixin.minecraft",
     "mixins": [
         "EntityMixin",
         "LivingEntityMixin"

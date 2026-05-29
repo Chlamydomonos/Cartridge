@@ -43,3 +43,15 @@ var Player.maxAbyssLevel
 var Player.surgeryTablePos
     get() = getData(DataAttachmentLoader.SURGERY_TABLE_POS).getOrNull()
     set(value) { setData(DataAttachmentLoader.SURGERY_TABLE_POS, Optional.ofNullable(value)) }
+
+var Player.hollowCarriedByUUID
+    get() = getData(DataAttachmentLoader.HOLLOW_CARRIED_BY).getOrNull()
+    set(value) { setData(DataAttachmentLoader.HOLLOW_CARRIED_BY, Optional.ofNullable(value)) }
+
+val Player.hollowCarriedBy get() = hollowCarriedByUUID?.let { level().getPlayerByUUID(it) }
+
+var Player.carryingHollowUUID
+    get() = getData(DataAttachmentLoader.CARRYING_HOLLOW_UUID).getOrNull()
+    set(value) { setData(DataAttachmentLoader.CARRYING_HOLLOW_UUID, Optional.ofNullable(value)) }
+
+val Player.carryingHollow get() = carryingHollowUUID?.let { level().getPlayerByUUID(it) }

@@ -33,11 +33,10 @@ class SurgeryTableScreen(
 
     private val button = Button
         .Builder(
-            Component.translatable("gui.cartridge.create_cartridge"),
-            {
-                ClientPacketDistributor.sendToServer(CartridgeCreationRequestPacket)
-            }
-        )
+            Component.translatable("gui.cartridge.create_cartridge")
+        ) {
+            ClientPacketDistributor.sendToServer(CartridgeCreationRequestPacket)
+        }
         .size(32, 16)
         .build()
 

@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.getValue
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.cartridge.CartridgeEntity
+import xyz.chlamydomonos.cartridge.hollow.CarriedHollowEntity
 import xyz.chlamydomonos.cartridge.hollow.HollowEntity
 
 @EventBusSubscriber
@@ -22,11 +23,15 @@ object EntityLoader {
     }
 
     val HOLLOW by registry.registerEntityType("hollow", ::HollowEntity, MobCategory.MISC) {
-        it.sized(1f, 0.5f).eyeHeight(0.4f).ridingOffset(-0.75f).noLootTable()
+        it.sized(1f, 0.5f).eyeHeight(0.4f).noLootTable()
     }
 
     val CARTRIDGE by registry.registerEntityType("cartridge", ::CartridgeEntity, MobCategory.MISC) {
-        it.sized(0f, 0f).ridingOffset(0f).fireImmune().noLootTable().noSummon()
+        it.sized(0f, 0f).fireImmune().noLootTable().noSummon()
+    }
+
+    val CARRIED_HOLLOW by registry.registerEntityType("carried_hollow", ::CarriedHollowEntity, MobCategory.MISC) {
+        it.sized(0f, 0f).fireImmune().noLootTable().noSummon()
     }
 
     @SubscribeEvent

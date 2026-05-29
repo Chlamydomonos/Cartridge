@@ -10,10 +10,7 @@ import net.neoforged.neoforge.event.entity.EntityMountEvent
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
-import xyz.chlamydomonos.cartridge.utils.hollowEntity
-import xyz.chlamydomonos.cartridge.utils.hollowPos
-import xyz.chlamydomonos.cartridge.utils.hollowUUID
-import xyz.chlamydomonos.cartridge.utils.isDeadHollow
+import xyz.chlamydomonos.cartridge.utils.*
 
 @EventBusSubscriber
 object HollowPlayerEventListener {
@@ -21,6 +18,10 @@ object HollowPlayerEventListener {
     fun onPlayerLoggedOut(event: PlayerEvent.PlayerLoggedOutEvent) {
         val player = event.entity
         if (player.level().isClientSide) {
+            return
+        }
+
+        if (player.hollowCarriedByUUID != null) {
             return
         }
 
@@ -35,6 +36,10 @@ object HollowPlayerEventListener {
     fun onPlayerTick(event: PlayerTickEvent.Post) {
         val player = event.entity
         if (player.level().isClientSide || player.hollowUUID == null || player !is ServerPlayer) {
+            return
+        }
+
+        if (player.hollowCarriedByUUID != null) {
             return
         }
 
@@ -75,6 +80,12 @@ object HollowPlayerEventListener {
 
         val rider = event.entityMounting
         val riding = event.entityBeingMounted
+
+        if (riding is CarriedHollowEntity) {
+            event.isCanceled = true
+            return
+        }
+
         if (riding is HollowEntity && rider is ServerPlayer) {
             if (riding.isDeadOrDying || rider.isDeadOrDying) {
                 return

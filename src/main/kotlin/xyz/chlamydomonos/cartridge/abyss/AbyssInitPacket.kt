@@ -19,7 +19,7 @@ class AbyssInitPacket(
             AbyssInitPacket::chunkX,
             ByteBufCodecs.INT,
             AbyssInitPacket::chunkZ,
-            ByteBufCodecs.map({ HashMap<Int, OctreeNode>(it) }, ByteBufCodecs.INT, OctreeNode.streamCodec),
+            ByteBufCodecs.map({ HashMap(it) }, ByteBufCodecs.INT, OctreeNode.streamCodec),
             AbyssInitPacket::regions,
             ::AbyssInitPacket
         )

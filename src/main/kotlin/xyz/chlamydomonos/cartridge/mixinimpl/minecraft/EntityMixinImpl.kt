@@ -1,4 +1,4 @@
-package xyz.chlamydomonos.cartridge.mixinimpl
+package xyz.chlamydomonos.cartridge.mixinimpl.minecraft
 
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity

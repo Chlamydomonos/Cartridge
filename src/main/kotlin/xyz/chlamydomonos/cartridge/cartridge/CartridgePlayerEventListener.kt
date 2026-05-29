@@ -3,6 +3,7 @@ package xyz.chlamydomonos.cartridge.cartridge
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.TriState
 import net.minecraft.world.entity.EntitySpawnReason
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.phys.AABB
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -16,6 +17,40 @@ import xyz.chlamydomonos.cartridge.utils.*
 
 @EventBusSubscriber
 object CartridgePlayerEventListener {
+    fun <T : PlayerTrackEntity> trackPlayer(rider: ServerPlayer, target: ServerPlayer, entityType: EntityType<T>): T? {
+        if (rider.level().dimension() != target.level().dimension()) {
+            rider.teleportTo(
+                target.level(),
+                target.x,
+                target.y,
+                target.z,
+                setOf(),
+                rider.yRot,
+                rider.xRot,
+                false
+            )
+            return null
+        }
+
+        val level = target.level()
+        val entity = entityType.create(level, EntitySpawnReason.EVENT) ?: return null
+        entity.trackedPlayer = target
+        if (!level.addFreshEntity(entity)) {
+            Cartridge.logger.warn("Failed to add player track entity")
+            return entity
+        }
+
+        rider.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        rider.abilities.invulnerable = true
+        rider.onUpdateAbilities()
+        rider.setCamera(target)
+        val rideSuccess = rider.startRiding(entity, true, true)
+        if (!rideSuccess) {
+            Cartridge.logger.warn("Ride failed")
+        }
+        return entity
+    }
+
     @SubscribeEvent
     fun onPlayerTick(event: PlayerTickEvent.Post) {
         val player = event.entity
@@ -52,39 +87,7 @@ object CartridgePlayerEventListener {
             }
 
             val equipper = player.equipper ?: return
-            if (player.level().dimension() != equipper.level().dimension()) {
-                player.teleportTo(
-                    equipper.level(),
-                    equipper.x,
-                    equipper.y,
-                    equipper.z,
-                    setOf(),
-                    player.yRot,
-                    player.xRot,
-                    false
-                )
-                return
-            }
-
-            val entity = EntityLoader.CARTRIDGE.create(equipper.level(), EntitySpawnReason.EVENT) ?: return
-            entity.trackedPlayer = equipper
-            if (!level.addFreshEntity(entity)) {
-                return
-            }
-
-            player.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-            player.abilities.invulnerable = true
-            player.onUpdateAbilities()
-            player.setCamera(equipper)
-            val rideSuccess = player.startRiding(entity, true, true)
-            if (!rideSuccess) {
-                Cartridge.logger.warn("Ride failed")
-            }
-            Cartridge.logger.debug(
-                "Spawned cartridge entity, passengers: {}, tracked: {}",
-                entity.passengers.size,
-                entity.trackedPlayer
-            )
+            trackPlayer(player, equipper, EntityLoader.CARTRIDGE)
             return
         }
 
