@@ -32,12 +32,12 @@ class CartridgeManager(
         var equipper: UUID? = null
     ) {
         companion object {
-            val codec = RecordCodecBuilder.create { it
+            val codec = RecordCodecBuilder.create { builder -> builder
                 .group(
                     CartridgeStatus.codec.fieldOf("status").forGetter(CartridgeData::status),
                     UUIDUtil.CODEC.optionalFieldOf("equipper").forGetter { Optional.ofNullable(it.equipper) }
                 )
-                .apply(it) { status, equipper ->
+                .apply(builder) { status, equipper ->
                     CartridgeData(status, equipper.getOrNull())
                 }
             }

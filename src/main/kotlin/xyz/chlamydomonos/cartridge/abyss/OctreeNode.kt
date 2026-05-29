@@ -130,10 +130,10 @@ class OctreeNode() {
             var mask = 0
             for (i in 0..7) {
                 val cv = children[i]!!.value.toInt()
-                if (cv < 0) {
-                    mask = mask or (cv and 0x7F)
+                mask = if (cv < 0) {
+                    mask or (cv and 0x7F)
                 } else {
-                    mask = mask or (1 shl cv)
+                    mask or (1 shl cv)
                 }
             }
             value = (mask or 0x80).toByte()

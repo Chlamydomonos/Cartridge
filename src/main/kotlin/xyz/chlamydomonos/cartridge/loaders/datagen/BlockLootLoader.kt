@@ -16,9 +16,9 @@ import xyz.chlamydomonos.cartridge.loaders.BlockLoader
 object BlockLootLoader {
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
-        event.createProvider {
+        event.createProvider { output ->
             LootTableProvider(
-                it,
+                output,
                 setOf(),
                 listOf(
                     LootTableProvider.SubProviderEntry(
