@@ -26,6 +26,6 @@ public abstract class CarriedObjectRenderMixin {
         boolean firstPerson,
         CallbackInfo ci
     ) {
-        CarriedObjectRenderMixinImpl.INSTANCE.injectDrawEntity(player, ci);
+        CarriedObjectRenderMixinImpl.INSTANCE.injectDrawEntity(player, firstPerson, ci);
     }
 }

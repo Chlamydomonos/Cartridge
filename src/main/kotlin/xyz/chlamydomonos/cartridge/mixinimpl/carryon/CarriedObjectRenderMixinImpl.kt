@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import xyz.chlamydomonos.cartridge.utils.hollowCarriedBy
 
 object CarriedObjectRenderMixinImpl {
-    fun injectDrawEntity(player: Player, callback: CallbackInfo) {
+    fun injectDrawEntity(player: Player, firstPerson: Boolean, callback: CallbackInfo) {
         val self = Minecraft.getInstance().player ?: return
-        if (player == self.hollowCarriedBy) {
+        if (player == self.hollowCarriedBy && firstPerson) {
             callback.cancel()
         }
     }
