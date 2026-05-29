@@ -1,0 +1,12 @@
+{
+    "package": "xyz.chlamydomonos.cartridge.mixin.carryon",
+    "plugin": "xyz.chlamydomonos.cartridge.mixinimpl.carryon.CarryOnMixinPlugin",
+    "mixins": [
+        "CarryOnDataManagerMixin",
+        "PickupHandlerMixin",
+        "PlacementHandlerMixin"
+    ],
+    "client": [
+        "CarriedObjectRenderMixin"
+    ]
+}

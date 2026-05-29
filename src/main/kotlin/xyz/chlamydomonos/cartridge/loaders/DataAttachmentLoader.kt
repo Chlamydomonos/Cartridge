@@ -82,6 +82,19 @@ object DataAttachmentLoader {
             .build()
     }
 
+    val HOLLOW_CARRIED_BY = registry.register("hollow_carried_by") { ->
+        AttachmentType
+            .builder { -> Optional.empty<UUID>() }
+            .sync(ByteBufCodecs.optional(UUIDUtil.STREAM_CODEC))
+            .build()
+    }
+
+    val CARRYING_HOLLOW_UUID = registry.register("carrying_hollow_uuid") { ->
+        AttachmentType
+            .builder { -> Optional.empty<UUID>() }
+            .build()
+    }
+
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)
     }

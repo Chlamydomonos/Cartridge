@@ -11,8 +11,12 @@ credits="Thanks to thedarkcolour and all the contributors for making Kotlin for 
 authors="${mod_authors}"
 description='''${mod_description}'''
 enumExtensions="META-INF/enumextensions.json"
+
 [[mixins]]
-config="cartridge.mixins.json"
+config="cartridge.mixins.minecraft.json"
+[[mixins]]
+config="cartridge.mixins.carryon.json"
+
 [[dependencies."${mod_id}"]]
     modId="neoforge"
     type="required"
@@ -36,6 +40,12 @@ config="cartridge.mixins.json"
     type="required"
     versionRange="[${geckolib_version},)"
     ordering="NONE"
+    side="BOTH"
+[[Dependencies."${mod_id}"]]
+    modId="carryon"
+    type="optional"
+    versionRange="[${carryon_version},)"
+    ordering="AFTER"
     side="BOTH"
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares

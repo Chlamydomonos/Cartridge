@@ -19,5 +19,6 @@ object EntityRendererLoader {
             HollowRenderer<TypeHelper>(it, EntityLoader.HOLLOW)
         }
         event.registerEntityRenderer(EntityLoader.CARTRIDGE) { NoopRenderer(it) }
+        event.registerEntityRenderer(EntityLoader.CARRIED_HOLLOW) { NoopRenderer(it) }
     }
 }

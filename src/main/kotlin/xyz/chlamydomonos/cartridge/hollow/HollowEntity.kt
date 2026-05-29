@@ -158,27 +158,35 @@ class HollowEntity(type: EntityType<HollowEntity>, level: Level) : HollowEntityB
                 return null
             }
 
-            entity.data = genData(player.uuid)
-            player.hollowUUID = entity.uuid
-            entity.customName = player.displayName
-            entity.isCustomNameVisible = true
-
-            if (!mount) {
-                return entity
+            if (!entity.bind(player, mount)) {
+                return null
             }
-
-            player.setCamera(entity)
-
-            if (!player.startRiding(entity, true, true)) {
-                return  null
-            }
-
-            player.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-            player.abilities.invulnerable = true
-            player.onUpdateAbilities()
 
             return entity
         }
+    }
+
+    fun bind(player: ServerPlayer, mount: Boolean = true): Boolean {
+        data = genData(player.uuid)
+        player.hollowUUID = this.uuid
+        this.customName = player.displayName
+        this.isCustomNameVisible = true
+
+        if (!mount) {
+            return true
+        }
+
+        player.setCamera(this)
+
+        if (!player.startRiding(this, true, true)) {
+            return false
+        }
+
+        player.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        player.abilities.invulnerable = true
+        player.onUpdateAbilities()
+
+        return true
     }
 
     var data

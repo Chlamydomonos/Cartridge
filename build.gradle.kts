@@ -26,6 +26,7 @@ val modDescription: String by project
 val curiosVersion: String by project
 val geckolibVersion: String by project
 val kffVersion: String by project
+val carryOnVersion: String by project
 
 tasks.named<Wrapper>("wrapper") {
     distributionType = Wrapper.DistributionType.BIN
@@ -115,16 +116,6 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                url = uri("https://cursemaven.com")
-            }
-        }
-        filter {
-            includeGroup("curse.maven")
-        }
-    }
-    exclusiveContent {
-        forRepository {
-            maven {
                 name = "GeckoLib"
                 url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
             }
@@ -134,14 +125,16 @@ repositories {
             includeGroupAndSubgroups("com.geckolib")
         }
     }
+    maven {
+        url = uri("https://nexus.bot.leisuretimedock.top/repository/maven-releases/")
+    }
 }
 
 dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:${kffVersion}")
     implementation("top.theillusivec4.curios:curios-neoforge:${curiosVersion}")
     implementation("com.geckolib:geckolib-neoforge-${minecraftVersion}:${geckolibVersion}")
-
-    runtimeOnly("curse.maven:appleskin-248787:7854456")
+    implementation("tschipp.carryon:carryon-neoforge-${minecraftVersion}:${carryOnVersion}")
 }
 
 val generateModMetadata by tasks.registering(ProcessResources::class) {
@@ -157,7 +150,8 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
         "mod_authors" to modAuthors,
         "mod_description" to modDescription,
         "curios_version" to curiosVersion,
-        "geckolib_version" to geckolibVersion
+        "geckolib_version" to geckolibVersion,
+        "carryon_version" to carryOnVersion
     )
     inputs.properties(replaceProperties)
     expand(replaceProperties)
