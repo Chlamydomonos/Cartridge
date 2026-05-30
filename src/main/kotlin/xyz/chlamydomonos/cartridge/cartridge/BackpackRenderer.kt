@@ -13,13 +13,17 @@ import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
-import org.joml.AxisAngle4f
-import org.joml.Quaternionf
+import net.minecraft.world.phys.Vec3
 import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.client.ICurioRenderer
-import kotlin.math.PI
+import xyz.chlamydomonos.cartridge.utils.PoseUtil
 
 class BackpackRenderer : ICurioRenderer {
+    companion object {
+        private val backpackCenter = Vec3(0.0, -2.0 - 1.0 / 32, -5.0 + 1.0 / 32).scale(PoseUtil.PX_SIZE)
+        private val playerBodyCenter = Vec3(0.0, 6.0, 0.0).scale(PoseUtil.PX_SIZE)
+    }
+
     override fun <S : LivingEntityRenderState, M : EntityModel<in S>> render(
         stack: ItemStack,
         slotContext: SlotContext,
@@ -39,10 +43,10 @@ class BackpackRenderer : ICurioRenderer {
 
         ICurioRenderer.setupHumanoidAnimations(parentModel, renderState)
 
-        val renderState = ItemStackRenderState()
+        val itemState = ItemStackRenderState()
 
         context.itemModelResolver.updateForNonLiving(
-            renderState,
+            itemState,
             stack,
             ItemDisplayContext.NONE,
             slotContext.entity
@@ -50,37 +54,14 @@ class BackpackRenderer : ICurioRenderer {
 
         poseStack.pushPose()
 
-        poseStack.rotateAround(
-            Quaternionf(AxisAngle4f(PI.toFloat(), 0f, 0f, 1f)),
-            0f,
-            0f,
-            0f
+        PoseUtil.applyModelPartTransform(
+            backpackCenter,
+            playerBodyCenter,
+            poseStack,
+            parentModel.body
         )
 
-        poseStack.translate(0f, -0.249f, 0.3f)
-
-        poseStack.rotateAround(
-            Quaternionf(AxisAngle4f(-parentModel.body.xRot, 1f, 0f, 0f)),
-            0f,
-            0.15f,
-            0.05f
-        )
-
-        poseStack.rotateAround(
-            Quaternionf(AxisAngle4f(-parentModel.body.yRot, 0f, 1f, 0f)),
-            0f,
-            0f,
-            -0.3f
-        )
-
-        poseStack.rotateAround(
-            Quaternionf(AxisAngle4f(-parentModel.body.zRot, 0f, 0f, 1f)),
-            0f,
-            0.15f,
-            0.05f
-        )
-
-        renderState.submit(
+        itemState.submit(
             poseStack,
             submitNodeCollector,
             packedLight,
