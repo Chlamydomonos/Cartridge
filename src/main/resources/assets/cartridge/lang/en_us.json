@@ -45,5 +45,12 @@
     "command.cartridge.hollow": "Turned yourself to hollow by command",
     "command.cartridge.hollow.source": "Turned %1$d players to hollow by command",
     "command.cartridge.hollow.player": "%1$s has turned you to hollow by command",
-    "command.cartridge.hollow.block": "You are turned to hollow by command block"
+    "command.cartridge.hollow.block": "You are turned to hollow by command block",
+    "key.category.cartridge.category": "Cartridge",
+    "key.cartridge.eject_cartridge": "Eject Cartridge",
+    "key.cartridge.main_hand_attack": "Main Hand Attack (Essence-returning Light)",
+    "key.cartridge.off_hand_attack": "Off Hand Attack (Essence-returning Light)",
+    "key.cartridge.toggle_combat_mode": "Toggle Combat Mode",
+    "item.cartridge.sparagmos": "Essence-returning Light",
+    "item.cartridge.sparagmos.description": "𝔖𝔭𝔞𝔯𝔞𝔤𝔪𝔬𝔰"
 }

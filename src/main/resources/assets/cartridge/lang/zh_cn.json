@@ -45,5 +45,12 @@
     "command.cartridge.hollow": "已通过命令将你自己变成生骸",
     "command.cartridge.hollow.source": "已通过命令将%1$d个玩家变成生骸",
     "command.cartridge.hollow.player": "%1$s通过命令将你变成了生骸",
-    "command.cartridge.hollow.block": "你被命令方块变成了生骸"
+    "command.cartridge.hollow.block": "你被命令方块变成了生骸",
+    "key.category.cartridge.category": "来自深渊：弹药包",
+    "key.cartridge.eject_cartridge": "弹出弹药包",
+    "key.cartridge.main_hand_attack": "主手攻击（枢机回归之光）",
+    "key.cartridge.off_hand_attack": "副手攻击（枢机回归之光）",
+    "key.cartridge.toggle_combat_mode": "切换战斗模式",
+    "item.cartridge.sparagmos": "枢机回归之光",
+    "item.cartridge.sparagmos.description": "𝔖𝔭𝔞𝔯𝔞𝔤𝔪𝔬𝔰"
 }

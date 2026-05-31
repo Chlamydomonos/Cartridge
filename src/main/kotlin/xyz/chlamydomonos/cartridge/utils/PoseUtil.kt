@@ -9,7 +9,21 @@ import org.joml.Quaternionf
 object PoseUtil {
     const val PX_SIZE = 1.0 / 16
 
-    fun applyModelPartTransform(offset: Vec3, partOffset: Vec3, poseStack: PoseStack, part: ModelPart) {
+    class Profile(
+        modelCenter: Vec3,
+        partPos: Vec3,
+        partSize: Vec3,
+        val extraRotation: Quaternionf = Quaternionf()
+    ) {
+        val modelCenterMeters = modelCenter.scale(PX_SIZE)
+        val partCenterMeters = partPos.add(partSize.scale(0.5)).scale(PX_SIZE)
+    }
+
+    fun applyModelPartTransform(
+        poseStack: PoseStack,
+        part: ModelPart,
+        profile: Profile
+    ) {
         poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
 
         poseStack.translate(
@@ -18,16 +32,15 @@ object PoseUtil {
             -part.z * PX_SIZE
         )
 
-        poseStack.mulPose(
-            Quaternionf()
-                .rotateZYX(
-                    -part.zRot,
-                    -part.yRot,
-                    -part.xRot
-                )
-        )
+        poseStack.mulPose(Quaternionf().rotateZYX(
+            part.zRot,
+            -part.yRot,
+            -part.xRot
+        ))
 
-        poseStack.translate(offset.reverse())
-        poseStack.translate(partOffset.reverse())
+        poseStack.translate(profile.partCenterMeters.reverse())
+        poseStack.translate(profile.modelCenterMeters.reverse())
+
+        poseStack.mulPose(profile.extraRotation)
     }
 }

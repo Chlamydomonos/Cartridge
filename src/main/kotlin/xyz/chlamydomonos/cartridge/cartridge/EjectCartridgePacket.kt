@@ -40,9 +40,9 @@ object EjectCartridgePacket : CustomPacketPayload {
                 val direction = player.lookAngle
                 val throwDirection = Vec3(
                     direction.x,
-                    0.1,
+                    -0.1,
                     direction.z
-                ).normalize().scale(5.0)
+                ).normalize().scale(-5.0)
 
                 dropped.addDeltaMovement(throwDirection)
             }

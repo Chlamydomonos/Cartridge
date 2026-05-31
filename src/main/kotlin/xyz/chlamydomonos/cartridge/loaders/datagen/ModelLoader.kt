@@ -42,6 +42,8 @@ object ModelLoader {
                     SurgeryTableBlock.genModel(blockModels)
 
                     simpleItem(ItemLoader.HOLLOW_RANDOMIZER)
+
+                    itemModels.declareCustomModelItem(ItemLoader.SPARAGMOS)
                 }
             }
         }

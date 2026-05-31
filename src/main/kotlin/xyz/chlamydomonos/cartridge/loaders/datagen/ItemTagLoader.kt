@@ -18,6 +18,9 @@ object ItemTagLoader {
                 override fun addTags(registries: HolderLookup.Provider) {
                     getOrCreateRawBuilder(CuriosTags.BACK)
                         .addElement(RLUtil.of("backpack"))
+
+                    getOrCreateRawBuilder(CuriosTags.BRACELET)
+                        .addElement(RLUtil.of("sparagmos"))
                 }
             }
         }
