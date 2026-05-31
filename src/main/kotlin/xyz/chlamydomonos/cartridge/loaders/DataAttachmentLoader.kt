@@ -95,6 +95,12 @@ object DataAttachmentLoader {
             .build()
     }
 
+    val COMBAT_MODE = registry.register("combat_mode") { ->
+        AttachmentType
+            .builder { -> false }
+            .build()
+    }
+
     fun bootstrap(bus: IEventBus) {
         registry.register(bus)
     }

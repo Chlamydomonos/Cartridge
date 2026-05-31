@@ -55,3 +55,7 @@ var Player.carryingHollowUUID
     set(value) { setData(DataAttachmentLoader.CARRYING_HOLLOW_UUID, Optional.ofNullable(value)) }
 
 val Player.carryingHollow get() = carryingHollowUUID?.let { level().getPlayerByUUID(it) }
+
+var Player.inCombatMode
+    get() = getData(DataAttachmentLoader.COMBAT_MODE)
+    set(value) { setData(DataAttachmentLoader.COMBAT_MODE, value) }

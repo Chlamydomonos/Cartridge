@@ -29,5 +29,6 @@ object NetworkLoader {
         registrar.playToServer(IsCartridgeRequestPacket.type, IsCartridgeRequestPacket.codec, IsCartridgeRequestPacket::handle)
         registrar.playToClient(IsCartridgeResponsePacket.type, IsCartridgeResponsePacket.codec, IsCartridgeResponsePacket::handle)
         registrar.playToClient(CartridgeUsePacket.type, CartridgeUsePacket.codec, CartridgeUsePacket::handle)
+        registrar.playToServer(EjectCartridgePacket.type, EjectCartridgePacket.codec, EjectCartridgePacket::handle)
     }
 }
