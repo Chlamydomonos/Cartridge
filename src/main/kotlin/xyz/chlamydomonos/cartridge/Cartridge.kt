@@ -2,6 +2,7 @@ package xyz.chlamydomonos.cartridge
 
 import com.mojang.logging.LogUtils
 import net.neoforged.fml.common.Mod
+import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import xyz.chlamydomonos.cartridge.loaders.*
 
@@ -9,6 +10,7 @@ import xyz.chlamydomonos.cartridge.loaders.*
 object Cartridge {
     const val ID = "cartridge"
     val logger = LogUtils.getLogger()
+    val version = LOADING_CONTEXT.activeContainer.modInfo.version
 
     init {
         EffectLoader.bootstrap(MOD_BUS)

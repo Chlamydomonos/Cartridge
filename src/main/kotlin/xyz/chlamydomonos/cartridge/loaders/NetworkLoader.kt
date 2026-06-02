@@ -15,7 +15,7 @@ import xyz.chlamydomonos.cartridge.sparagmos.SparagmosRenderPacket
 object NetworkLoader {
     @SubscribeEvent
     fun onRegisterPayloadHandlers(event: RegisterPayloadHandlersEvent) {
-        val registrar = event.registrar(Cartridge.ID)
+        val registrar = event.registrar("${Cartridge.ID}v${Cartridge.version}")
         registrar.playToClient(VomitPacket.type, VomitPacket.codec, VomitPacket::handle)
         registrar.playToClient(IllusionPacket.type, IllusionPacket.codec, IllusionPacket::handle)
         registrar.playToClient(BloodPacket.type, BloodPacket.codec, BloodPacket::handle)
