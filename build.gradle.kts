@@ -14,6 +14,7 @@ val modVersion: String by project
 val modGroupId: String by project
 val modId: String by project
 val neoVersion: String by project
+val neoVersionRange: String by project
 val parchmentMappingsVersion: String by project
 val parchmentMinecraftVersion: String by project
 val minecraftVersion: String by project
@@ -142,6 +143,7 @@ val generateModMetadata by tasks.registering(ProcessResources::class) {
         "minecraft_version" to minecraftVersion,
         "minecraft_version_range" to minecraftVersionRange,
         "neo_version" to neoVersion,
+        "neo_version_range" to neoVersionRange,
         "loader_version_range" to loaderVersionRange,
         "mod_id" to modId,
         "mod_name" to modName,
