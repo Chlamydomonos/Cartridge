@@ -7,7 +7,6 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent
 import net.neoforged.neoforge.client.settings.IKeyConflictContext
-import net.neoforged.neoforge.client.settings.KeyConflictContext
 import net.neoforged.neoforge.client.settings.KeyModifier
 import org.lwjgl.glfw.GLFW
 import xyz.chlamydomonos.cartridge.Cartridge
@@ -70,7 +69,7 @@ object CombatModeKeyMappings {
 
     val TOGGLE_COMBAT_MODE by register(
         "toggle_combat_mode",
-        KeyConflictContext.IN_GAME,
+        ToggleCombatModeContext,
         KeyModifier.CONTROL,
         InputConstants.Type.KEYSYM,
         GLFW.GLFW_KEY_R

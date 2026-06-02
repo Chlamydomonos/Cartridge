@@ -14,10 +14,11 @@ object SparagmosHud : GuiLayer {
     const val BAR_HEIGHT = 16
     const val BAR_OFFSET = 12
 
+
+    val centerX get() = Minecraft.getInstance().window.guiScaledWidth / 2
+    val centerY get() = Minecraft.getInstance().window.guiScaledHeight / 2
+
     fun renderBar(guiGraphics: GuiGraphicsExtractor, left: Boolean, value: Int, maxValue: Int) {
-        val minecraft = Minecraft.getInstance()
-        val centerX = minecraft.window.guiScaledWidth / 2
-        val centerY = minecraft.window.guiScaledHeight / 2
         val x = if (left) centerX - BAR_OFFSET - BAR_WIDTH else centerX + BAR_OFFSET
         val y = centerY - BAR_HEIGHT / 2
         val filledHeight = Mth.clamp(value * BAR_HEIGHT / maxValue, 0, BAR_HEIGHT)
@@ -39,6 +40,27 @@ object SparagmosHud : GuiLayer {
                 ColorUtil.rgb(0xffffff)
             )
         }
+    }
+
+    fun renderPlaceholder(guiGraphics: GuiGraphicsExtractor, left: Boolean) {
+        val x = if (left) centerX - BAR_OFFSET - BAR_WIDTH else centerX + BAR_OFFSET
+        val y = centerY - BAR_HEIGHT / 2
+
+        guiGraphics.fill(
+            x,
+            y,
+            x + BAR_WIDTH,
+            y + BAR_WIDTH,
+            ColorUtil.rgba(0xffffff, 0x40)
+        )
+
+        guiGraphics.fill(
+            x,
+            y + BAR_HEIGHT - BAR_WIDTH,
+            x + BAR_WIDTH,
+            y + BAR_HEIGHT,
+            ColorUtil.rgba(0xffffff, 0x40)
+        )
     }
 
     override fun render(guiGraphics: GuiGraphicsExtractor, deltaTracker: DeltaTracker) {
@@ -67,10 +89,14 @@ object SparagmosHud : GuiLayer {
 
         if (hasLeftHand) {
             renderBar(guiGraphics, true, leftHandCoolDown, SparagmosInputHandler.COOLDOWN)
+        } else {
+            renderPlaceholder(guiGraphics, true)
         }
 
         if (hasRightHand) {
             renderBar(guiGraphics, false, rightHandCoolDown, SparagmosInputHandler.COOLDOWN)
+        } else {
+            renderPlaceholder(guiGraphics, false)
         }
     }
 }
