@@ -60,8 +60,10 @@ class SparagmosRenderer : ICurioRenderer {
         yRotation: Float,
         xRotation: Float
     ) {
-        val isRightHand = isFirstStack(slotContext) xor (
+        val isRightHand = !(
+            isFirstStack(slotContext) xor (
                 Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT
+            )
         )
 
         CurioRenderUtil.renderItemStack(

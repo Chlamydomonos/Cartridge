@@ -52,5 +52,7 @@
     "key.cartridge.off_hand_attack": "Off Hand Attack (Essence-returning Light)",
     "key.cartridge.toggle_combat_mode": "Toggle Combat Mode",
     "item.cartridge.sparagmos": "Essence-returning Light",
-    "item.cartridge.sparagmos.description": "𝔖𝔭𝔞𝔯𝔞𝔤𝔪𝔬𝔰"
+    "item.cartridge.sparagmos.description": "𝔖𝔭𝔞𝔯𝔞𝔤𝔪𝔬𝔰",
+    "death.attack.cartridge.sparagmos": "%1$s died of Essence-returning Light",
+    "death.attack.cartridge.sparagmos.player": "%1$s died of Essence-returning Light launched by %2$s"
 }

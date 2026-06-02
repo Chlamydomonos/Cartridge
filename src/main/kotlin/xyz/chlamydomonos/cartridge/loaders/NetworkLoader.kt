@@ -8,6 +8,8 @@ import xyz.chlamydomonos.cartridge.abyss.AbyssInitPacket
 import xyz.chlamydomonos.cartridge.abyss.AbyssUpdatePacket
 import xyz.chlamydomonos.cartridge.cartridge.*
 import xyz.chlamydomonos.cartridge.curse.*
+import xyz.chlamydomonos.cartridge.sparagmos.SparagmosInputPacket
+import xyz.chlamydomonos.cartridge.sparagmos.SparagmosRenderPacket
 
 @EventBusSubscriber
 object NetworkLoader {
@@ -30,5 +32,7 @@ object NetworkLoader {
         registrar.playToClient(IsCartridgeResponsePacket.type, IsCartridgeResponsePacket.codec, IsCartridgeResponsePacket::handle)
         registrar.playToClient(CartridgeUsePacket.type, CartridgeUsePacket.codec, CartridgeUsePacket::handle)
         registrar.playToServer(EjectCartridgePacket.type, EjectCartridgePacket.codec, EjectCartridgePacket::handle)
+        registrar.playToServer(SparagmosInputPacket.type, SparagmosInputPacket.codec, SparagmosInputPacket::handle)
+        registrar.playToClient(SparagmosRenderPacket.type, SparagmosRenderPacket.codec, SparagmosRenderPacket::handle)
     }
 }
