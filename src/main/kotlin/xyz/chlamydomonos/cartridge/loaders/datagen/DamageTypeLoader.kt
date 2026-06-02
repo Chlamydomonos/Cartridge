@@ -21,6 +21,7 @@ object DamageTypeLoader {
     val CURSE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("curse"))
     val CARTRIDGE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("cartridge"))
     val CURSE_SIDE_EFFECT = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("curse_side_effect"))
+    val SPARAGMOS = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("sparagmos"))
 
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
@@ -44,6 +45,13 @@ object DamageTypeLoader {
                         DamageScaling.NEVER,
                         0.3f
                     ))
+                    it.register(SPARAGMOS, DamageType(
+                        "${Cartridge.ID}.sparagmos",
+                        DamageScaling.NEVER,
+                        0f,
+                        DamageEffects.HURT,
+                        CartridgeDeathMessageProvider.DEATH_MESSAGE_TYPE
+                    ))
                 }
         )
 
@@ -56,6 +64,7 @@ object DamageTypeLoader {
                     tag(DamageTypeTags.BYPASSES_ARMOR)
                         .add(CURSE)
                         .add(CARTRIDGE)
+                        .add(SPARAGMOS)
 
                     tag(DamageTypeTags.BYPASSES_INVULNERABILITY)
                         .add(CURSE)

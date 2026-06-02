@@ -7,9 +7,12 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.Level
+import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.type.capability.ICurioItem
+import xyz.chlamydomonos.cartridge.utils.CurioUtil
 
 class BackpackItem(id: ResourceKey<Item>) : Item(
     Properties()
@@ -17,6 +20,14 @@ class BackpackItem(id: ResourceKey<Item>) : Item(
         .stacksTo(1)
         .component(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
 ), ICurioItem {
+    override fun canEquip(context: SlotContext?, stack: ItemStack?): Boolean {
+        if (context == null || stack == null || context.identifier() != "back") {
+            return false
+        }
+
+        return CurioUtil.canEquip(context, stack, 1)
+    }
+
     override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResult {
         if (level.isClientSide) {
             return InteractionResult.PASS

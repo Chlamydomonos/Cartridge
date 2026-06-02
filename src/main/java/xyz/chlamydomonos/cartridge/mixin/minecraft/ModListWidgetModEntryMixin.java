@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import xyz.chlamydomonos.cartridge.mixinimpl.minecraft.ModListWidgetModEntryMixinImpl;
 
 @Mixin(ModListWidget.ModEntry.class)
-public class ModListWidgetModEntryMixin {
+public abstract class ModListWidgetModEntryMixin {
     @Shadow
     @Final
     private ModContainer container;

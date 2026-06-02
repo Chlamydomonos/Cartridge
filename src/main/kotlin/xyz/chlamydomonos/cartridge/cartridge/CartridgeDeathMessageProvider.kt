@@ -16,12 +16,12 @@ object CartridgeDeathMessageProvider : IDeathMessageProvider {
         val causer = lastEntry.source.entity
         return if (causer == null) {
             Component.translatable(
-                "death.attack.cartridge.cartridge",
+                "death.attack.${lastEntry.source.msgId}",
                 entity.displayName
             )
         } else {
             Component.translatable(
-                "death.attack.cartridge.cartridge.player",
+                "death.attack.${lastEntry.source.msgId}.player",
                 entity.displayName,
                 causer.displayName
             )

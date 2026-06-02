@@ -21,6 +21,9 @@ object CurioLoader {
 
                     createSlot("hands")
                         .size(2)
+
+                    createSlot("bracelet")
+                        .size(2)
                 }
             }
         }
