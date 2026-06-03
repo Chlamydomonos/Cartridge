@@ -3,6 +3,7 @@ package xyz.chlamydomonos.cartridge.combat
 import com.mojang.blaze3d.platform.InputConstants
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -116,6 +117,14 @@ object CombatModeInputBlocker {
         val player = Minecraft.getInstance().player ?: return
         while (CombatModeKeyMappings.TOGGLE_COMBAT_MODE.consumeClick()) {
             player.inCombatMode = !player.inCombatMode
+            if (player.inCombatMode) {
+                player.sendOverlayMessage(
+                    Component.translatable(
+                        "message.cartridge.exit_combat_mode",
+                        CombatModeKeyMappings.TOGGLE_COMBAT_MODE.translatedKeyMessage
+                    )
+                )
+            }
         }
     }
 

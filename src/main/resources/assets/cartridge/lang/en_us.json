@@ -56,5 +56,6 @@
     "death.attack.cartridge.sparagmos": "%1$s died of Essence-returning Light",
     "death.attack.cartridge.sparagmos.player": "%1$s died of Essence-returning Light launched by %2$s",
     "item.cartridge.sparagmos.tooltip": "Press %1$s to enter combat mode after equipment",
-    "item.cartridge.sparagmos.description.fallback": "\uD835\uDD16\uD835\uDD2D\uD835\uDD1E\uD835\uDD2F\uD835\uDD1E\uD835\uDD24\uD835\uDD2A\uD835\uDD2C\uD835\uDD30"
+    "item.cartridge.sparagmos.description.fallback": "\uD835\uDD16\uD835\uDD2D\uD835\uDD1E\uD835\uDD2F\uD835\uDD1E\uD835\uDD24\uD835\uDD2A\uD835\uDD2C\uD835\uDD30",
+    "message.cartridge.exit_combat_mode": "Press %1$s again to exit combat mode"
 }
