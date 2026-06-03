@@ -52,7 +52,9 @@
     "key.cartridge.off_hand_attack": "副手攻击（枢机回归之光）",
     "key.cartridge.toggle_combat_mode": "切换战斗模式",
     "item.cartridge.sparagmos": "枢机回归之光",
-    "item.cartridge.sparagmos.description": "𝔖𝔭𝔞𝔯𝔞𝔤𝔪𝔬𝔰",
+    "item.cartridge.sparagmos.description": "\uD835\uDCAE\uD835\uDCC5\uD835\uDCB6\uD835\uDCC7\uD835\uDCB6\uD835\uDC54\uD835\uDCC2\uD835\uDC5C\uD835\uDCC8",
     "death.attack.cartridge.sparagmos": "%1$s被枢机回归之光焚烧得灰飞烟灭",
-    "death.attack.cartridge.sparagmos.player": "%1$s被%2$s发射的枢机回归之光焚烧得灰飞烟灭"
+    "death.attack.cartridge.sparagmos.player": "%1$s被%2$s发射的枢机回归之光焚烧得灰飞烟灭",
+    "item.cartridge.sparagmos.tooltip": "装备后按下%1$s进入战斗模式",
+    "item.cartridge.sparagmos.description.fallback": "\uD835\uDD16\uD835\uDD2D\uD835\uDD1E\uD835\uDD2F\uD835\uDD1E\uD835\uDD24\uD835\uDD2A\uD835\uDD2C\uD835\uDD30"
 }

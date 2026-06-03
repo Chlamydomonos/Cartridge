@@ -34,7 +34,7 @@ class SparagmosRenderPacket(
                         packet.pitch,
                         packet.yaw,
                         0,
-                        5
+                        SparagmosHandler.LIFETIME
                     )
                 )
             }
