@@ -186,7 +186,12 @@ object GangwayHandler {
             beams
         )
 
-        handleAttack(player, listOf(beams), listOf(entity), HEAVY_ATTACK_DAMAGE)
+        handleAttack(
+            player,
+            listOf(beams),
+            entity?.let { listOf(it) } ?: listOf(),
+            HEAVY_ATTACK_DAMAGE
+        )
     }
 
     fun handleAttack(
