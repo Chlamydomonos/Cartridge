@@ -22,6 +22,7 @@ object DamageTypeLoader {
     val CARTRIDGE = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("cartridge"))
     val CURSE_SIDE_EFFECT = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("curse_side_effect"))
     val SPARAGMOS = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("sparagmos"))
+    val GANGWAY = ResourceKey.create(Registries.DAMAGE_TYPE, RLUtil.of("gangway"))
 
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
@@ -52,6 +53,13 @@ object DamageTypeLoader {
                         DamageEffects.HURT,
                         CartridgeDeathMessageProvider.DEATH_MESSAGE_TYPE
                     ))
+                    it.register(GANGWAY, DamageType(
+                        "${Cartridge.ID}.gangway",
+                        DamageScaling.NEVER,
+                        0f,
+                        DamageEffects.HURT,
+                        CartridgeDeathMessageProvider.DEATH_MESSAGE_TYPE
+                    ))
                 }
         )
 
@@ -69,6 +77,24 @@ object DamageTypeLoader {
                     tag(DamageTypeTags.BYPASSES_INVULNERABILITY)
                         .add(CURSE)
                         .add(CARTRIDGE)
+
+                    tag(DamageTypeTags.BYPASSES_COOLDOWN)
+                        .add(GANGWAY)
+
+                    tag(DamageTypeTags.BYPASSES_SHIELD)
+                        .add(SPARAGMOS)
+
+                    tag(DamageTypeTags.BYPASSES_EFFECTS)
+                        .add(SPARAGMOS)
+
+                    tag(DamageTypeTags.BYPASSES_ENCHANTMENTS)
+                        .add(SPARAGMOS)
+
+                    tag(DamageTypeTags.BYPASSES_RESISTANCE)
+                        .add(SPARAGMOS)
+
+                    tag(DamageTypeTags.BYPASSES_WOLF_ARMOR)
+                        .add(SPARAGMOS)
                 }
             }
         }

@@ -95,4 +95,11 @@ object CombatModeKeyMappings {
         InputConstants.Type.MOUSE,
         GLFW.GLFW_MOUSE_BUTTON_RIGHT
     )
+
+    val GANGWAY by register(
+        "gangway",
+        CombatModeContext,
+        InputConstants.Type.MOUSE,
+        GLFW.GLFW_MOUSE_BUTTON_5
+    )
 }

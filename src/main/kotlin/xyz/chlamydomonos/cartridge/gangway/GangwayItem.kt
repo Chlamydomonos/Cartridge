@@ -1,4 +1,4 @@
-package xyz.chlamydomonos.cartridge.sparagmos
+package xyz.chlamydomonos.cartridge.gangway
 
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -14,17 +14,17 @@ import xyz.chlamydomonos.cartridge.utils.CurioUtil
 import xyz.chlamydomonos.cartridge.utils.ModernUIUtil
 import java.util.function.Consumer
 
-class SparagmosItem(id: ResourceKey<Item>) : Item(
+class GangwayItem(id: ResourceKey<Item>) : Item(
     Properties()
         .setId(id)
         .stacksTo(1)
 ), ICurioItem {
     override fun canEquip(context: SlotContext?, stack: ItemStack?): Boolean {
-        if (context == null || stack == null || context.identifier != "bracelet") {
+        if (context == null || stack == null || context.identifier != "head") {
             return false
         }
 
-        return CurioUtil.canEquip(context, stack, 2)
+        return CurioUtil.canEquip(context, stack, 1)
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
@@ -37,17 +37,16 @@ class SparagmosItem(id: ResourceKey<Item>) : Item(
     ) {
         builder.accept(
             Component
-                .translatable(ModernUIUtil.artText("item.cartridge.sparagmos.description"))
+                .translatable(ModernUIUtil.artText("item.cartridge.gangway.description"))
                 .withColor(ColorUtil.rgb(0xffff60))
         )
 
         builder.accept(
             Component
                 .translatable(
-                    "item.cartridge.sparagmos.tooltip",
+                    "item.cartridge.gangway.tooltip",
                     CombatModeKeyMappings.TOGGLE_COMBAT_MODE.translatedKeyMessage,
-                    CombatModeKeyMappings.MAIN_HAND_ATTACK.translatedKeyMessage,
-                    CombatModeKeyMappings.OFF_HAND_ATTACK.translatedKeyMessage
+                    CombatModeKeyMappings.GANGWAY.translatedKeyMessage
                 )
                 .withColor(ColorUtil.rgb(0x808080))
         )

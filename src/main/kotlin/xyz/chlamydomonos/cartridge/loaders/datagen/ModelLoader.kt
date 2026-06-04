@@ -44,6 +44,7 @@ object ModelLoader {
                     simpleItem(ItemLoader.HOLLOW_RANDOMIZER)
 
                     itemModels.declareCustomModelItem(ItemLoader.SPARAGMOS)
+                    itemModels.declareCustomModelItem(ItemLoader.GANGWAY)
                 }
             }
         }

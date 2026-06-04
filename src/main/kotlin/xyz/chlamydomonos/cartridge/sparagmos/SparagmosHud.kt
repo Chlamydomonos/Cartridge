@@ -71,10 +71,10 @@ object SparagmosHud : GuiLayer {
 
         val hasMainHand = SparagmosInputHandler.hasSparagmos(player, true)
         val hasOffHand = SparagmosInputHandler.hasSparagmos(player, false)
-        var hasRightHand: Boolean
-        var hasLeftHand: Boolean
-        var leftHandCoolDown: Int
-        var rightHandCoolDown: Int
+        val hasRightHand: Boolean
+        val hasLeftHand: Boolean
+        val leftHandCoolDown: Int
+        val rightHandCoolDown: Int
         if (player.mainArm == HumanoidArm.LEFT) {
             hasLeftHand = hasMainHand
             hasRightHand = hasOffHand

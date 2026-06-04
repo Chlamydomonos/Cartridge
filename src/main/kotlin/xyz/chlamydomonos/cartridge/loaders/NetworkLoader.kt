@@ -8,6 +8,8 @@ import xyz.chlamydomonos.cartridge.abyss.AbyssInitPacket
 import xyz.chlamydomonos.cartridge.abyss.AbyssUpdatePacket
 import xyz.chlamydomonos.cartridge.cartridge.*
 import xyz.chlamydomonos.cartridge.curse.*
+import xyz.chlamydomonos.cartridge.gangway.GangwayInputPacket
+import xyz.chlamydomonos.cartridge.gangway.GangwayRenderPacket
 import xyz.chlamydomonos.cartridge.sparagmos.SparagmosInputPacket
 import xyz.chlamydomonos.cartridge.sparagmos.SparagmosRenderPacket
 
@@ -34,5 +36,7 @@ object NetworkLoader {
         registrar.playToServer(EjectCartridgePacket.type, EjectCartridgePacket.codec, EjectCartridgePacket::handle)
         registrar.playToServer(SparagmosInputPacket.type, SparagmosInputPacket.codec, SparagmosInputPacket::handle)
         registrar.playToClient(SparagmosRenderPacket.type, SparagmosRenderPacket.codec, SparagmosRenderPacket::handle)
+        registrar.playToServer(GangwayInputPacket.type, GangwayInputPacket.codec, GangwayInputPacket::handle)
+        registrar.playToClient(GangwayRenderPacket.type, GangwayRenderPacket.codec, GangwayRenderPacket::handle)
     }
 }
