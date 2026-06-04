@@ -104,10 +104,11 @@ object SparagmosHandler {
                         return 0f
                     }
 
+                    val entitySize = entity.boundingBox.size
                     val doubleRadius = explosion.radius() * 2.0f
                     val center = explosion.center()
                     val dist = sqrt(entity.distanceToSqr(center)) / doubleRadius
-                    if (dist < 0.4) {
+                    if (dist < 0.4 + entitySize / 2) {
                         return Float.MAX_VALUE
                     }
 

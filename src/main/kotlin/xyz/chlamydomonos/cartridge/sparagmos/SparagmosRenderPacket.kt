@@ -28,8 +28,8 @@ class SparagmosRenderPacket(
 
         fun handle(packet: SparagmosRenderPacket, context: IPayloadContext) {
             context.enqueueWork {
-                SparagmosLaserRenderer.beams.add(
-                    SparagmosLaserRenderer.Beam(
+                SparagmosBeamRenderer.beams.add(
+                    SparagmosBeamRenderer.Beam(
                         Vector3f(packet.pos),
                         packet.pitch,
                         packet.yaw,

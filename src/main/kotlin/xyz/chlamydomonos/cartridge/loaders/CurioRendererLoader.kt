@@ -6,6 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import top.theillusivec4.curios.api.client.ICurioRenderer
 import xyz.chlamydomonos.cartridge.cartridge.BackpackRenderer
+import xyz.chlamydomonos.cartridge.gangway.GangwayRenderer
 import xyz.chlamydomonos.cartridge.sparagmos.SparagmosRenderer
 
 @EventBusSubscriber(value = [Dist.CLIENT])
@@ -15,6 +16,7 @@ object CurioRendererLoader {
         event.enqueueWork {
             ICurioRenderer.register(ItemLoader.BACKPACK, ::BackpackRenderer)
             ICurioRenderer.register(ItemLoader.SPARAGMOS, ::SparagmosRenderer)
+            ICurioRenderer.register(ItemLoader.GANGWAY, ::GangwayRenderer)
         }
     }
 }

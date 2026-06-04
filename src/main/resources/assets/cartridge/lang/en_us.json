@@ -55,7 +55,13 @@
     "item.cartridge.sparagmos.description": "\uD835\uDCAE\uD835\uDCC5\uD835\uDCB6\uD835\uDCC7\uD835\uDCB6\uD835\uDC54\uD835\uDCC2\uD835\uDC5C\uD835\uDCC8",
     "death.attack.cartridge.sparagmos": "%1$s was incinerated by the Essence-returning Light",
     "death.attack.cartridge.sparagmos.player": "%1$s was incinerated by the Essence-returning Light fired by %2$s",
-    "item.cartridge.sparagmos.tooltip": "Press %1$s after equipping to enter Combat Mode",
+    "item.cartridge.sparagmos.tooltip": "Press %1$s after equipping to enter Combat Mode. Keys: %2$s / %3$s",
     "item.cartridge.sparagmos.description.fallback": "\uD835\uDD16\uD835\uDD2D\uD835\uDD1E\uD835\uDD2F\uD835\uDD1E\uD835\uDD24\uD835\uDD2A\uD835\uDD2C\uD835\uDD30",
-    "message.cartridge.exit_combat_mode": "Press %1$s again to exit Combat Mode"
+    "message.cartridge.exit_combat_mode": "Press %1$s again to exit Combat Mode",
+    "item.cartridge.gangway": "Ascend to the Morning Star",
+    "item.cartridge.gangway.description": "\uD835\uDCA2\uD835\uDCB6\uD835\uDCC3\uD835\uDC54\uD835\uDCCC\uD835\uDCB6\uD835\uDCCE",
+    "item.cartridge.gangway.description.fallback": "\uD835\uDD0A\uD835\uDD1E\uD835\uDD2B\uD835\uDD24\uD835\uDD34\uD835\uDD1E\uD835\uDD36",
+    "item.cartridge.gangway.tooltip": "Press %1$s after equipping to enter Combat Mode. Key: %2$s",
+    "death.attack.cartridge.gangway": "%1$s is pierced by the Ascend to the Morning Star",
+    "death.attack.cartridge.gangway.player": "%1$s is pierced by the Ascend to the Morning Star fired by %2$s"
 }

@@ -21,6 +21,9 @@ object ItemTagLoader {
 
                     getOrCreateRawBuilder(CuriosTags.BRACELET)
                         .addElement(RLUtil.of("sparagmos"))
+
+                    getOrCreateRawBuilder(CuriosTags.HEAD)
+                        .addElement(RLUtil.of("gangway"))
                 }
             }
         }
