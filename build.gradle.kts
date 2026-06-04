@@ -28,6 +28,7 @@ val curiosVersion: String by project
 val geckolibVersion: String by project
 val kffVersion: String by project
 val carryOnVersion: String by project
+val touhouLittleMaidCommitHash: String by project
 
 tasks.named<Wrapper>("wrapper") {
     distributionType = Wrapper.DistributionType.BIN
@@ -129,6 +130,9 @@ repositories {
     maven {
         url = uri("https://nexus.bot.leisuretimedock.top/repository/maven-releases/")
     }
+    maven {
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
@@ -136,6 +140,7 @@ dependencies {
     implementation("top.theillusivec4.curios:curios-neoforge:${curiosVersion}")
     implementation("com.geckolib:geckolib-neoforge-${minecraftVersion}:${geckolibVersion}")
     implementation("tschipp.carryon:carryon-neoforge-${minecraftVersion}:${carryOnVersion}")
+    implementation("com.github.TouhouLittleMaid:TouhouLittleMaid-26.1:${touhouLittleMaidCommitHash}")
 }
 
 val generateModMetadata by tasks.registering(ProcessResources::class) {
