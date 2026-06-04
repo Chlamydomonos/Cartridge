@@ -1,0 +1,9 @@
+{
+    "model": {
+        "type": "minecraft:special",
+        "base": "cartridge:item/gangway",
+        "model": {
+            "type": "geckolib:geckolib"
+        }
+    }
+}

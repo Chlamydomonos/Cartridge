@@ -1,5 +1,9 @@
 package xyz.chlamydomonos.cartridge.gangway
 
+import com.geckolib.animatable.GeoItem
+import com.geckolib.animatable.client.GeoRenderProvider
+import com.geckolib.animatable.manager.AnimatableManager
+import com.geckolib.util.GeckoLibUtil
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
@@ -18,7 +22,7 @@ class GangwayItem(id: ResourceKey<Item>) : Item(
     Properties()
         .setId(id)
         .stacksTo(1)
-), ICurioItem {
+), ICurioItem, GeoItem {
     override fun canEquip(context: SlotContext?, stack: ItemStack?): Boolean {
         if (context == null || stack == null || context.identifier != "head") {
             return false
@@ -50,5 +54,18 @@ class GangwayItem(id: ResourceKey<Item>) : Item(
                 )
                 .withColor(ColorUtil.rgb(0x808080))
         )
+    }
+
+    override fun registerControllers(controllers: AnimatableManager.ControllerRegistrar) {}
+
+    val geoCache = GeckoLibUtil.createInstanceCache(this)
+
+    override fun getAnimatableInstanceCache() = geoCache
+
+    override fun createGeoRenderer(consumer: Consumer<GeoRenderProvider>) {
+        consumer.accept(object : GeoRenderProvider {
+            val renderer by lazy(::GangwayItemRenderer)
+            override fun getGeoItemRenderer() = renderer
+        })
     }
 }

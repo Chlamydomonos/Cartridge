@@ -19,6 +19,10 @@ class BlessingEffect : MobEffect(
             val currentAmplifier = player.getEffect(EffectLoader.CURSE)?.amplifier ?: -1
             val amplifier = currentAmplifier + level
 
+            if (currentAmplifier >= 0) {
+                player.removeEffect(EffectLoader.BLESSING)
+            }
+
             player.addEffect(
                 MobEffectInstance(
                     EffectLoader.BLESSING,

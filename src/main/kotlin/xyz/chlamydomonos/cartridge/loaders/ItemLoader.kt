@@ -25,13 +25,13 @@ import xyz.chlamydomonos.cartridge.utils.RLUtil
 object ItemLoader {
     private val registry = DeferredRegister.createItems(Cartridge.ID)
     private val creativeModeTabRegistry = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Cartridge.ID)
-    private val itemsInTab = mutableListOf<DeferredItem<out Item>>()
+    val items = mutableListOf<DeferredItem<out Item>>()
     @Suppress("unused")
     val TAB = creativeModeTabRegistry.register("cartridge") { ->
         CreativeModeTab.builder()
             .title(Component.translatable("tab.${Cartridge.ID}"))
             .displayItems { _, output ->
-                for (holder in itemsInTab) {
+                for (holder in items) {
                     output.accept(holder)
                 }
             }
@@ -43,14 +43,14 @@ object ItemLoader {
         val holder = registry.register(name) { ->
             factory(ResourceKey.create(Registries.ITEM, RLUtil.of(name)))
         }
-        itemsInTab.add(holder)
+        items.add(holder)
         return holder
     }
 
     fun <T : Block> registerBlock(block: Holder<T>): DeferredItem<BlockItem> {
         @Suppress("UNCHECKED_CAST")
         val holder = registry.registerSimpleBlockItem(block as Holder<Block>)
-        itemsInTab.add(holder)
+        items.add(holder)
         return holder
     }
 

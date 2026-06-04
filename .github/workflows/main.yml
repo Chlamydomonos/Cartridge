@@ -56,7 +56,7 @@ jobs:
           git merge release -s ours
           git branch temp
           git reset --hard release
-          git checkout temp -- src/generated
+          git rm -r --ignore-unmatch src/generated
           git reset --soft temp
           NEW_MSG=$(echo "$LAST_COMMIT_MESSAGE" | sed '1s/$/: merge release into main/')
           git commit --amend -m "$NEW_MSG"

@@ -16,7 +16,7 @@ import xyz.chlamydomonos.cartridge.utils.PoseUtil
 class GangwayRenderer : ICurioRenderer {
     companion object {
         val headProfile = PoseUtil.Profile(
-            Vec3(0.0, -3.0, 0.0),
+            Vec3(0.0, 5.0, 0.0),
             Vec3(-4.0, -8.0, -4.0),
             Vec3(8.0, 8.0, 8.0)
         )

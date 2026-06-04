@@ -30,6 +30,7 @@ object GangwayHandler {
     const val LIGHT_ATTACK_DAMAGE = 3f
     const val HEAVY_ATTACK_DAMAGE = 40f
     const val BEAM_VISIBLE_RANGE = 50.0
+    const val MAX_BEAM_STEPS = 100
 
     data class Beam(
         val start: Vector3fc,
@@ -46,98 +47,163 @@ object GangwayHandler {
         }
     }
 
-    fun makeBeams(
+    private data class TraceState(
+        val origin: Vec3,
+        val currentPos: Vec3,
+        val currentDir: Vec3,
+        val remainingLength: Double,
+        val remainingSteps: Int
+    )
+
+    private data class TraceStepResult(
+        val beam: Beam,
+        val hitEntity: Entity? = null,
+        val nextState: TraceState? = null
+    )
+
+    private fun toBeam(
+        start: Vec3,
+        end: Vec3
+    ) = Beam(
+        Vector3f(start.x.toFloat(), start.y.toFloat(), start.z.toFloat()),
+        Vector3f(end.x.toFloat(), end.y.toFloat(), end.z.toFloat())
+    )
+
+    private fun traceNextBeam(
         level: ServerLevel,
-        startPos: Vector3fc,
-        direction: Vector3fc,
-        maxLength: Float,
-        output: MutableList<Beam>
-    ): Entity? {
-        val startVec3 = Vec3(startPos.x().toDouble(), startPos.y().toDouble(), startPos.z().toDouble())
-        var currentPos = startVec3
-        var currentDir = Vec3(direction.x().toDouble(), direction.y().toDouble(), direction.z().toDouble())
-            .normalize()
-        var remainingLength = maxLength.toDouble()
-
-        repeat(100) {
-            if (remainingLength <= 0.0) {
-                return null
-            }
-
-            val endPos = currentPos.add(currentDir.scale(remainingLength))
-            val blockHit = level.clip(
-                ClipContext(
-                    currentPos,
-                    endPos,
-                    ClipContext.Block.COLLIDER,
-                    ClipContext.Fluid.NONE,
-                    CollisionContext.empty()
-                )
-            )
-            val blockHitPos = if (blockHit.type == HitResult.Type.MISS) endPos else blockHit.location
-            val searchBox = AABB(currentPos, blockHitPos).inflate(1.0)
-
-            var closestEntity: Entity? = null
-            var closestHitPos: Vec3? = null
-            var closestDist = Double.MAX_VALUE
-
-            for (entity in level.getEntities(null, searchBox) { true }) {
-                val hitbox = entity.boundingBox.inflate(entity.pickRadius.toDouble())
-                if (hitbox.contains(startVec3)) {
-                    continue
-                }
-
-                val entityHit = hitbox.clip(currentPos, blockHitPos)
-                if (entityHit.isPresent) {
-                    val hitPos = entityHit.get()
-                    val dist = currentPos.distanceToSqr(hitPos)
-                    if (dist > 0.0001 && dist < closestDist) {
-                        closestDist = dist
-                        closestEntity = entity
-                        closestHitPos = hitPos
-                    }
-                }
-            }
-
-            if (closestEntity != null && closestHitPos != null) {
-                output.add(
-                    Beam(
-                        Vector3f(currentPos.x.toFloat(), currentPos.y.toFloat(), currentPos.z.toFloat()),
-                        Vector3f(closestHitPos.x.toFloat(), closestHitPos.y.toFloat(), closestHitPos.z.toFloat())
-                    )
-                )
-                return closestEntity
-            }
-
-            output.add(
-                Beam(
-                    Vector3f(currentPos.x.toFloat(), currentPos.y.toFloat(), currentPos.z.toFloat()),
-                    Vector3f(blockHitPos.x.toFloat(), blockHitPos.y.toFloat(), blockHitPos.z.toFloat())
-                )
-            )
-
-            if (blockHit.type != HitResult.Type.BLOCK) {
-                return null
-            }
-
-            val normal = Vec3(
-                blockHit.direction.stepX.toDouble(),
-                blockHit.direction.stepY.toDouble(),
-                blockHit.direction.stepZ.toDouble()
-            )
-            val traveled = currentPos.distanceTo(blockHitPos)
-            val dot = currentDir.dot(normal)
-            currentDir = currentDir.subtract(normal.scale(2.0 * dot)).normalize()
-            remainingLength -= traveled
-            currentPos = blockHitPos.add(normal.scale(0.001))
+        state: TraceState
+    ): TraceStepResult? {
+        if (state.remainingLength <= 0.0 || state.remainingSteps <= 0) {
+            return null
         }
 
-        return null
+        val endPos = state.currentPos.add(state.currentDir.scale(state.remainingLength))
+        val blockHit = level.clip(
+            ClipContext(
+                state.currentPos,
+                endPos,
+                ClipContext.Block.COLLIDER,
+                ClipContext.Fluid.NONE,
+                CollisionContext.empty()
+            )
+        )
+        val blockHitPos = if (blockHit.type == HitResult.Type.MISS) endPos else blockHit.location
+        val searchBox = AABB(state.currentPos, blockHitPos).inflate(1.0)
+
+        var closestEntity: Entity? = null
+        var closestHitPos: Vec3? = null
+        var closestDist = Double.MAX_VALUE
+
+        for (entity in level.getEntities(null, searchBox) { true }) {
+            val hitbox = entity.boundingBox.inflate(entity.pickRadius.toDouble())
+            if (hitbox.contains(state.origin)) {
+                continue
+            }
+
+            val entityHit = hitbox.clip(state.currentPos, blockHitPos)
+            if (entityHit.isPresent) {
+                val hitPos = entityHit.get()
+                val dist = state.currentPos.distanceToSqr(hitPos)
+                if (dist > 0.0001 && dist < closestDist) {
+                    closestDist = dist
+                    closestEntity = entity
+                    closestHitPos = hitPos
+                }
+            }
+        }
+
+        if (closestEntity != null && closestHitPos != null) {
+            return TraceStepResult(
+                beam = toBeam(state.currentPos, closestHitPos),
+                hitEntity = closestEntity
+            )
+        }
+
+        val beam = toBeam(state.currentPos, blockHitPos)
+        if (blockHit.type != HitResult.Type.BLOCK) {
+            return TraceStepResult(beam = beam)
+        }
+
+        val normal = Vec3(
+            blockHit.direction.stepX.toDouble(),
+            blockHit.direction.stepY.toDouble(),
+            blockHit.direction.stepZ.toDouble()
+        )
+        val traveled = state.currentPos.distanceTo(blockHitPos)
+        val nextRemainingLength = state.remainingLength - traveled
+        if (nextRemainingLength <= 0.0) {
+            return TraceStepResult(beam = beam)
+        }
+
+        val dot = state.currentDir.dot(normal)
+        return TraceStepResult(
+            beam = beam,
+            nextState = TraceState(
+                origin = state.origin,
+                currentPos = blockHitPos.add(normal.scale(0.001)),
+                currentDir = state.currentDir.subtract(normal.scale(2.0 * dot)).normalize(),
+                remainingLength = nextRemainingLength,
+                remainingSteps = state.remainingSteps - 1
+            )
+        )
+    }
+
+    private fun emitBeam(
+        level: ServerLevel,
+        beam: Beam,
+        damage: Float
+    ) {
+        level.playSound(
+            null,
+            beam.start.x().toDouble(),
+            beam.start.y().toDouble(),
+            beam.start.z().toDouble(),
+            SoundEvents.PLAYER_HURT_ON_FIRE,
+            SoundSource.PLAYERS,
+            damage / HEAVY_ATTACK_DAMAGE,
+            5f
+        )
+
+        PacketDistributor.sendToPlayersNear(
+            level,
+            null,
+            beam.start.x().toDouble(),
+            beam.start.y().toDouble(),
+            beam.start.z().toDouble(),
+            BEAM_VISIBLE_RANGE,
+            GangwayRenderPacket(beam)
+        )
+    }
+
+    private fun continueAttack(
+        level: ServerLevel,
+        player: ServerPlayer,
+        state: TraceState,
+        damage: Float
+    ) {
+        val step = traceNextBeam(level, state) ?: return
+        emitBeam(level, step.beam, damage)
+
+        val hitEntity = step.hitEntity
+        if (hitEntity != null) {
+            if (hitEntity != player) {
+                hitEntity.hurtServer(
+                    level,
+                    level.damageSources().source(DamageTypeLoader.GANGWAY, player),
+                    damage
+                )
+            }
+            return
+        }
+
+        val nextState = step.nextState ?: return
+        ServerTickHandler.addTask(1) {
+            continueAttack(level, player, nextState, damage)
+        }
     }
 
     fun lightAttack(player: ServerPlayer, pos: Vector3fc, viewVector: Vector3fc) {
-        val beams = mutableListOf<List<Beam>>()
-        val entities = mutableListOf<Entity?>()
+        val directions = mutableListOf<Vector3fc>()
         val random = player.random
         val baseDirection = Vector3f(viewVector).normalize()
         val helperAxis = if (abs(baseDirection.y()) < 0.999f) {
@@ -160,87 +226,48 @@ object GangwayHandler {
                 .add(Vector3f(bitangent).mul((sinTheta * sin(phi)).toFloat()))
                 .normalize()
 
-            val path = mutableListOf<Beam>()
-            val entity = makeBeams(
-                player.level(),
-                pos,
-                direction,
-                LIGHT_ATTACK_MAX_LENGTH,
-                path
-            )
-            beams.add(path)
-            entities.add(entity)
+            directions.add(direction)
         }
 
-        handleAttack(player, beams, entities, LIGHT_ATTACK_DAMAGE)
+        handleAttack(player, pos, directions, LIGHT_ATTACK_MAX_LENGTH, LIGHT_ATTACK_DAMAGE)
     }
 
     fun heavyAttack(player: ServerPlayer, pos: Vector3fc, viewVector: Vector3fc) {
-        val level = player.level()
-        val beams = mutableListOf<Beam>()
-        val entity = makeBeams(
-            level,
-            pos,
-            viewVector,
-            HEAVY_ATTACK_MAX_LENGTH,
-            beams
-        )
-
         handleAttack(
             player,
-            listOf(beams),
-            entity?.let { listOf(it) } ?: listOf(),
-            HEAVY_ATTACK_DAMAGE
+            pos,
+            listOf(Vector3f(viewVector)),
+            HEAVY_ATTACK_MAX_LENGTH, HEAVY_ATTACK_DAMAGE
         )
     }
 
     fun handleAttack(
         player: ServerPlayer,
-        beams: List<List<Beam>>,
-        entities: List<Entity?>,
+        pos: Vector3fc,
+        directions: List<Vector3fc>,
+        maxLength: Float,
         damage: Float
     ) {
         val level = player.level()
+        val origin = Vec3(pos.x().toDouble(), pos.y().toDouble(), pos.z().toDouble())
 
-        for ((pathIndex, path) in beams.withIndex()) {
-            for ((beamIndex, beam) in path.withIndex()) {
-                ServerTickHandler.addTask(beamIndex) {
-                    level.playSound(
-                        null,
-                        beam.start.x().toDouble(),
-                        beam.start.y().toDouble(),
-                        beam.start.z().toDouble(),
-                        SoundEvents.PLAYER_HURT_ON_FIRE,
-                        SoundSource.PLAYERS,
-                        damage / HEAVY_ATTACK_DAMAGE,
-                        5f
-                    )
+        for (direction in directions) {
+            val normalizedDirection = Vec3(
+                direction.x().toDouble(),
+                direction.y().toDouble(),
+                direction.z().toDouble()
+            ).normalize()
 
-                    PacketDistributor.sendToPlayersNear(
-                        level,
-                        null,
-                        beam.start.x().toDouble(),
-                        beam.start.y().toDouble(),
-                        beam.start.z().toDouble(),
-                        BEAM_VISIBLE_RANGE,
-                        GangwayRenderPacket(beam)
-                    )
+            val state = TraceState(
+                origin = origin,
+                currentPos = origin,
+                currentDir = normalizedDirection,
+                remainingLength = maxLength.toDouble(),
+                remainingSteps = MAX_BEAM_STEPS
+            )
 
-                    if (beamIndex != path.lastIndex) {
-                        return@addTask
-                    }
-
-                    val entity = entities.getOrNull(pathIndex) ?: return@addTask
-                    if (entity == player) {
-                        return@addTask
-                    }
-
-                    entity.hurtServer(
-                        level,
-                        level.damageSources().source(DamageTypeLoader.GANGWAY, player),
-                        damage
-                    )
-                }
+            ServerTickHandler.addTask(0) {
+                continueAttack(level, player, state, damage)
             }
         }
     }

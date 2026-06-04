@@ -63,5 +63,6 @@
     "item.cartridge.gangway.description.fallback": "\uD835\uDD0A\uD835\uDD1E\uD835\uDD2B\uD835\uDD24\uD835\uDD34\uD835\uDD1E\uD835\uDD36",
     "item.cartridge.gangway.tooltip": "装备后按下%1$s进入战斗模式。按键：%2$s",
     "death.attack.cartridge.gangway": "%1$s被登星之梯刺穿而死",
-    "death.attack.cartridge.gangway.player": "%1$s被%2$s发射的登星之梯刺穿而死"
+    "death.attack.cartridge.gangway.player": "%1$s被%2$s发射的登星之梯刺穿而死",
+    "key.cartridge.gangway": "登星之梯"
 }

@@ -5,6 +5,7 @@
         "LivingEntityMixin"
     ],
     "client": [
+        "EffectsInInventoryMixin",
         "ModListScreenMixin",
         "ModListWidgetModEntryMixin",
         "OptionsMixin"
