@@ -34,27 +34,31 @@ object LootLoader {
     class ExtraTable(
         val name: String,
         val key: ResourceKey<LootTable>,
-        val table: LootTable.Builder,
+        val table: () -> LootTable.Builder,
         val target: String
     )
     private val extraTables = mutableListOf<ExtraTable>()
 
     fun register(item: KProperty0<Item>, probability: Float, target: String): ExtraTable {
         val name = item.name.lowercase()
+
         val key = ResourceKey.create(
             Registries.LOOT_TABLE,
             RLUtil.of("extra_tables/add_$name")
         )
-        val table = LootTable.lootTable().withPool(
-            LootPool.lootPool().add(
-                LootItem.lootTableItem(item::get)
-                    .`when`(
-                        LootItemRandomChanceCondition.randomChance(
-                            probability
+
+        val table = {
+            LootTable.lootTable().withPool(
+                LootPool.lootPool().add(
+                    LootItem.lootTableItem(item::get)
+                        .`when`(
+                            LootItemRandomChanceCondition.randomChance(
+                                probability
+                            )
                         )
-                    )
+                )
             )
-        )
+        }
 
         val result = ExtraTable(name, key, table, target)
         extraTables.add(result)
@@ -100,7 +104,7 @@ object LootLoader {
                         { _ ->
                             LootTableSubProvider { output ->
                                 for (table in extraTables) {
-                                    output.accept(table.key, table.table)
+                                    output.accept(table.key, table.table())
                                 }
                             }
                         },
