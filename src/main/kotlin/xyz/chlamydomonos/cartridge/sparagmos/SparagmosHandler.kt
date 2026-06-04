@@ -15,6 +15,7 @@ import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.network.PacketDistributor
 import org.joml.Vector3f
 import xyz.chlamydomonos.cartridge.loaders.datagen.DamageTypeLoader
+import xyz.chlamydomonos.cartridge.utils.ServerTickHandler
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -22,6 +23,8 @@ import kotlin.math.sqrt
 
 object SparagmosHandler {
     const val LENGTH = 30f
+    const val VISIBLE_MULTIPLIER = 5
+    const val LIFETIME = 5
 
     fun calculateViewVector(xRot: Float, yRot: Float): Vector3f {
         val realXRot = xRot * (PI / 180f).toFloat()
@@ -81,6 +84,46 @@ object SparagmosHandler {
         return player.abilities.mayBuild
     }
 
+    private fun explode(level: Level, player: ServerPlayer, hitPos: Vec3) {
+        level.explode(
+            player,
+            level.damageSources().source(DamageTypeLoader.SPARAGMOS, player),
+            object : ExplosionDamageCalculator() {
+                override fun shouldBlockExplode(
+                    explosion: Explosion,
+                    level: BlockGetter,
+                    pos: BlockPos,
+                    state: BlockState,
+                    power: Float
+                ): Boolean {
+                    return canDestroyBlock(player, level, pos)
+                }
+
+                override fun getEntityDamageAmount(explosion: Explosion, entity: Entity, exposure: Float): Float {
+                    if (entity == player) {
+                        return 0f
+                    }
+
+                    val doubleRadius = explosion.radius() * 2.0f
+                    val center = explosion.center()
+                    val dist = sqrt(entity.distanceToSqr(center)) / doubleRadius
+                    if (dist < 0.4) {
+                        return Float.MAX_VALUE
+                    }
+
+                    val pow = (1.0 - dist) * exposure
+                    return ((pow * pow + pow) / 2.0 * 14.0 * doubleRadius + 1.0).toFloat()
+                }
+            },
+            hitPos.x,
+            hitPos.y,
+            hitPos.z,
+            2f,
+            false,
+            Level.ExplosionInteraction.BLOCK
+        )
+    }
+
     fun handle(
         player: ServerPlayer,
         pos: Vector3f,
@@ -88,8 +131,10 @@ object SparagmosHandler {
         yaw: Float,
     ) {
         val hitPositions = getHitPositions(player, pos, pitch, yaw)
-        val level = player.level()
+        val posD = Vec3(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
+        hitPositions.sortBy { it.distanceToSqr(posD) }
 
+        val level = player.level()
         level.playSound(
             null,
             player,
@@ -99,52 +144,23 @@ object SparagmosHandler {
             1f
         )
 
-        for (hitPos in hitPositions) {
-            level.explode(
-                player,
-                level.damageSources().source(DamageTypeLoader.SPARAGMOS, player),
-                object : ExplosionDamageCalculator() {
-                    override fun shouldBlockExplode(
-                        explosion: Explosion,
-                        level: BlockGetter,
-                        pos: BlockPos,
-                        state: BlockState,
-                        power: Float
-                    ): Boolean {
-                        return canDestroyBlock(player, level, pos)
-                    }
-
-                    override fun getEntityDamageAmount(explosion: Explosion, entity: Entity, exposure: Float): Float {
-                        if (entity == player) {
-                            return 0f
-                        }
-
-                        val doubleRadius = explosion.radius() * 2.0f
-                        val center = explosion.center()
-                        val dist = sqrt(entity.distanceToSqr(center)) / doubleRadius
-                        if (dist < 0.4) {
-                            return Float.MAX_VALUE
-                        }
-
-                        val pow = (1.0 - dist) * exposure
-                        return ((pow * pow + pow) / 2.0 * 14.0 * doubleRadius + 1.0).toFloat()
-                    }
-                },
-                hitPos.x,
-                hitPos.y,
-                hitPos.z,
-                2f,
-                false,
-                Level.ExplosionInteraction.BLOCK
-            )
+        val hitCount = hitPositions.size
+        for ((index, hitPos) in hitPositions.withIndex()) {
+            val delay = if (hitCount < LIFETIME) {
+                index
+            } else {
+                index * LIFETIME / hitCount
+            }
+            ServerTickHandler.addTask(delay) { explode(level, player, hitPos) }
         }
+
         PacketDistributor.sendToPlayersNear(
             level,
             null,
-            pos.x.toDouble(),
-            pos.y.toDouble(),
-            pos.z.toDouble(),
-            LENGTH.toDouble(),
+            posD.x,
+            posD.y,
+            posD.z,
+            LENGTH.toDouble() * VISIBLE_MULTIPLIER,
             SparagmosRenderPacket(pos, pitch, yaw)
         )
     }

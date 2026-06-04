@@ -22,13 +22,13 @@ object SkinUtil {
             if (profile == null) {
                 profile = withContext(Dispatchers.IO) {
                     services.sessionService.fetchProfile(uuid, false)?.profile
-                } ?: throw Error()
+                } ?: throw Exception()
             }
 
             val skin = withContext(Dispatchers.IO) {
                 val skinFuture = Minecraft.getInstance().skinManager.get(profile)
                 skinFuture.get().getOrNull()
-            } ?: throw Error()
+            } ?: throw Exception()
 
             return skin.body.texturePath()
         } catch (_: Exception) {

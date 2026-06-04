@@ -8,7 +8,10 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipDisplay
 import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.type.capability.ICurioItem
+import xyz.chlamydomonos.cartridge.combat.CombatModeKeyMappings
+import xyz.chlamydomonos.cartridge.utils.ColorUtil
 import xyz.chlamydomonos.cartridge.utils.CurioUtil
+import xyz.chlamydomonos.cartridge.utils.ModernUIUtil
 import java.util.function.Consumer
 
 class SparagmosItem(id: ResourceKey<Item>) : Item(
@@ -32,6 +35,19 @@ class SparagmosItem(id: ResourceKey<Item>) : Item(
         builder: Consumer<Component>,
         tooltipFlag: TooltipFlag
     ) {
-        builder.accept(Component.translatable("item.cartridge.sparagmos.description"))
+        builder.accept(
+            Component
+                .translatable(ModernUIUtil.artText("item.cartridge.sparagmos.description"))
+                .withColor(ColorUtil.rgb(0xffff60))
+        )
+
+        builder.accept(
+            Component
+                .translatable(
+                    "item.cartridge.sparagmos.tooltip",
+                    CombatModeKeyMappings.TOGGLE_COMBAT_MODE.translatedKeyMessage
+                )
+                .withColor(ColorUtil.rgb(0x808080))
+        )
     }
 }
