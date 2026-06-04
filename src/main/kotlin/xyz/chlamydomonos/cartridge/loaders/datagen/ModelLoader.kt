@@ -4,6 +4,7 @@ import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.client.data.models.ModelProvider
 import net.minecraft.client.data.models.model.ModelTemplates
+import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
@@ -12,6 +13,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 import xyz.chlamydomonos.cartridge.Cartridge
 import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlock
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
+import java.util.stream.Stream
 
 @EventBusSubscriber(value = [Dist.CLIENT])
 object ModelLoader {
@@ -44,7 +46,10 @@ object ModelLoader {
                     simpleItem(ItemLoader.HOLLOW_RANDOMIZER)
 
                     itemModels.declareCustomModelItem(ItemLoader.SPARAGMOS)
-                    itemModels.declareCustomModelItem(ItemLoader.GANGWAY)
+                }
+
+                override fun getKnownItems(): Stream<out Holder<Item>> {
+                    return ItemLoader.items.filter { item -> item.get() != ItemLoader.GANGWAY }.stream()
                 }
             }
         }
