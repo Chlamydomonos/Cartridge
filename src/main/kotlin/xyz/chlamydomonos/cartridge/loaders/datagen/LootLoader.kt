@@ -7,6 +7,7 @@ import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BedPart
 import net.minecraft.world.level.storage.loot.LootPool
@@ -25,13 +26,44 @@ import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlock
 import xyz.chlamydomonos.cartridge.loaders.BlockLoader
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 import xyz.chlamydomonos.cartridge.utils.RLUtil
+import kotlin.reflect.KProperty0
 
+@Suppress("unused")
 @EventBusSubscriber
 object LootLoader {
-    val ADD_SPARAGMOS = ResourceKey.create(
-        Registries.LOOT_TABLE,
-        RLUtil.of("extra_tables/add_sparagmos")
+    class ExtraTable(
+        val name: String,
+        val key: ResourceKey<LootTable>,
+        val table: LootTable.Builder,
+        val target: String
     )
+    private val extraTables = mutableListOf<ExtraTable>()
+
+    fun register(item: KProperty0<Item>, probability: Float, target: String): ExtraTable {
+        val name = item.name.lowercase()
+        val key = ResourceKey.create(
+            Registries.LOOT_TABLE,
+            RLUtil.of("extra_tables/add_$name")
+        )
+        val table = LootTable.lootTable().withPool(
+            LootPool.lootPool().add(
+                LootItem.lootTableItem(item::get)
+                    .`when`(
+                        LootItemRandomChanceCondition.randomChance(
+                            probability
+                        )
+                    )
+            )
+        )
+
+        val result = ExtraTable(name, key, table, target)
+        extraTables.add(result)
+        return result
+    }
+
+    val ADD_SPARAGMOS = register(ItemLoader::SPARAGMOS, 0.01f, "chests/ancient_city")
+
+    val ADD_GANGWAY = register(ItemLoader::GANGWAY, 0.05f, "chests/ancient_city")
 
     @SubscribeEvent
     fun onGatherData(event: GatherDataEvent.Client) {
@@ -67,19 +99,9 @@ object LootLoader {
                     LootTableProvider.SubProviderEntry(
                         { _ ->
                             LootTableSubProvider { output ->
-                                output.accept(
-                                    ADD_SPARAGMOS,
-                                    LootTable.lootTable().withPool(
-                                        LootPool.lootPool().add(
-                                            LootItem.lootTableItem { ItemLoader.SPARAGMOS }
-                                                .`when`(
-                                                    LootItemRandomChanceCondition.randomChance(
-                                                        0.01f
-                                                    )
-                                                )
-                                        )
-                                    )
-                                )
+                                for (table in extraTables) {
+                                    output.accept(table.key, table.table)
+                                }
                             }
                         },
                         LootContextParamSets.CHEST
@@ -92,20 +114,21 @@ object LootLoader {
         event.createProvider { output ->
             object : GlobalLootModifierProvider(output, event.lookupProvider, Cartridge.ID) {
                 override fun start() {
-                    add(
-                        "gen_sparagmos",
-                        AddTableLootModifier(
-                            arrayOf(
-                                LootTableIdCondition.builder(
-                                    Identifier.withDefaultNamespace("chests/ancient_city")
-                                ).build()
-                            ),
-                            0,
-                            ADD_SPARAGMOS
+                    for (table in extraTables) {
+                        add(
+                            table.name,
+                            AddTableLootModifier(
+                                arrayOf(
+                                    LootTableIdCondition.builder(
+                                        Identifier.withDefaultNamespace(table.target)
+                                    ).build()
+                                ),
+                                0,
+                                table.key
+                            )
                         )
-                    )
+                    }
                 }
-
             }
         }
     }
