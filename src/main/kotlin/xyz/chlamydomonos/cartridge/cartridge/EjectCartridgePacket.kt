@@ -4,6 +4,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.phys.Vec3
@@ -42,10 +43,12 @@ object EjectCartridgePacket : CustomPacketPayload {
                     direction.x,
                     -0.1,
                     direction.z
-                ).normalize().scale(-5.0)
+                ).normalize().scale(-2.0)
 
                 dropped.addDeltaMovement(throwDirection)
             }
+
+            player.playSound(SoundEvents.SNOWBALL_THROW)
 
             backpack.container = ItemContainerContents.fromItems(
                 stacks.filter { it.cartridgeDurability != 0 }

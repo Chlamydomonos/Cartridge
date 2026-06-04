@@ -43,11 +43,14 @@ object CartridgePlayerEventListener {
         rider.boundingBox = AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
         rider.abilities.invulnerable = true
         rider.onUpdateAbilities()
-        rider.setCamera(target)
         val rideSuccess = rider.startRiding(entity, true, true)
         if (!rideSuccess) {
             Cartridge.logger.warn("Ride failed")
+            return entity
         }
+
+        rider.setCamera(target)
+
         return entity
     }
 
@@ -75,6 +78,11 @@ object CartridgePlayerEventListener {
 
             if (player.camera != player) {
                 player.setCamera(null)
+            }
+
+            val vehicle = player.vehicle
+            if (vehicle is CartridgeEntity && vehicle.removalReason == null) {
+                vehicle.removeSelf()
             }
 
             return
@@ -116,6 +124,11 @@ object CartridgePlayerEventListener {
                     level.damageSources().source(DamageTypeLoader.CARTRIDGE, player.equipper),
                     Float.MAX_VALUE
                 )
+            }
+
+            val vehicle = player.vehicle
+            if (vehicle is CartridgeEntity && vehicle.removalReason == null) {
+                vehicle.removeSelf()
             }
         }
     }
