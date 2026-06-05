@@ -71,5 +71,6 @@
     "advancement.cartridge.cartridge": "Deep Soul",
     "advancement.cartridge.cartridge.description": "Obtain an empty Cartridge",
     "advancement.cartridge.maid": "Sun of a Breach",
-    "advancement.cartridge.maid.description": "Use a maid to make Cartridge"
+    "advancement.cartridge.maid.description": "Use a maid to make Cartridge",
+    "item.cartridge.cartridge.creative": "Cartridge (Obtained in Creative Mode)"
 }

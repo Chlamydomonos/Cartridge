@@ -71,5 +71,6 @@
     "advancement.cartridge.cartridge": "深沉灵魂",
     "advancement.cartridge.cartridge.description": "获得一个空弹药包",
     "advancement.cartridge.maid": "初升东曦",
-    "advancement.cartridge.maid.description": "把女仆做成弹药包"
+    "advancement.cartridge.maid.description": "把女仆做成弹药包",
+    "item.cartridge.cartridge.creative": "弹药包（由创造模式获得）"
 }
