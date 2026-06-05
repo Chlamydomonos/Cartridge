@@ -17,7 +17,14 @@ object SurgeryTablePlayerEventListener {
             return
         }
 
-        if (player.surgeryTablePos != null) {
+        val surgeryTablePos = player.surgeryTablePos
+        if (surgeryTablePos != null) {
+            val blockEntity = player.level().getBlockEntity(surgeryTablePos)
+            if (blockEntity !is SurgeryTableBlockEntity) {
+                player.surgeryTablePos = null
+                return
+            }
+
             event.setContinueSleeping(true)
         }
     }
