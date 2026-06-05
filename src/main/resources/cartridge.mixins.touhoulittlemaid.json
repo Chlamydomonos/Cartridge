@@ -1,0 +1,10 @@
+{
+    "package": "xyz.chlamydomonos.cartridge.mixin.touhoulittlemaid",
+    "plugin": "xyz.chlamydomonos.cartridge.mixinimpl.touhoulittlemaid.TouhouLittleMaidMixinPlugin",
+    "mixins": [
+        "EntityMaidMixin",
+        "MaidClearSleepTaskMixin"
+    ],
+    "client": [
+    ]
+}

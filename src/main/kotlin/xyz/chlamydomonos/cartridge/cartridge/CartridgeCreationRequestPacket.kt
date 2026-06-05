@@ -25,6 +25,13 @@ object CartridgeCreationRequestPacket : CustomPacketPayload {
             }
 
             val be = menu.inputContainer.blockEntity ?: return@enqueueWork
+
+            val overrideCreateCartridge = be.overrideCreateCartridge
+            if (overrideCreateCartridge != null) {
+                overrideCreateCartridge(be)
+                return@enqueueWork
+            }
+
             val playerOn = be.playerOn ?: return@enqueueWork
             if (!be.handlingPacket) {
                 be.handlingPacket = true

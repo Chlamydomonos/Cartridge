@@ -27,6 +27,9 @@ class SurgeryTableBlockEntity(
     var playerUsing: ServerPlayer? = null
     var handlingPacket = false
 
+    var overrideCreateCartridge: (SurgeryTableBlockEntity.() -> Unit)? = null
+    var overrideOnDestroy: (SurgeryTableBlockEntity.() -> Unit)? = null
+
     class InputItemHandler(
         val blockEntity: SurgeryTableBlockEntity? = null
     ) : ItemStacksResourceHandler(1) {
@@ -35,7 +38,7 @@ class SurgeryTableBlockEntity(
                 return false
             }
 
-            return resource.get(DataComponentLoader.OPTIONAL_UUID)?.getOrNull() == null
+            return resource.get(DataComponentLoader.OPTIONAL_NAME)?.getOrNull() == null
         }
 
         override fun onContentsChanged(index: Int, previousContents: ItemStack) {
@@ -63,6 +66,10 @@ class SurgeryTableBlockEntity(
         outputItem,
         object : DataSlot() {
             override fun get() = if (handlingPacket) 1 else 0
+            override fun set(p0: Int) {}
+        },
+        object : DataSlot() {
+            override fun get() = if (overrideCreateCartridge == null) 0 else 1
             override fun set(p0: Int) {}
         }
     )
@@ -98,6 +105,10 @@ class SurgeryTableBlockEntity(
     override fun preRemoveSideEffects(pos: BlockPos, state: BlockState) {
         if (level?.isClientSide ?: true) {
             return
+        }
+
+        overrideOnDestroy?.let {
+            it(this)
         }
 
         val player = playerOn

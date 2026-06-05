@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
+import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 import xyz.chlamydomonos.cartridge.utils.RLUtil
 import xyz.chlamydomonos.cartridge.utils.SkinUtil
 import xyz.chlamydomonos.cartridge.utils.optionalUUID
@@ -26,6 +27,7 @@ class BackpackScreen(
 ) {
     companion object {
         val background = RLUtil.of("textures/gui/backpack.png")
+        val playerHeadPlaceholder = RLUtil.of("textures/gui/player_head_placeholder.png")
         const val TEXTURE_WIDTH = 176
         const val TEXTURE_HEIGHT = 151
     }
@@ -38,10 +40,33 @@ class BackpackScreen(
 
     fun renderPlayerHead(slotId: Int, graphics: GuiGraphicsExtractor) {
         val itemStack = menu.container.getResource(slotId).toStack()
-        val uuid = itemStack.optionalUUID ?: return
-        val skin = SkinUtil.getSkin(uuid, scope)
+        if (!(itemStack.`is`(ItemLoader.CARTRIDGE))) {
+            return
+        }
+
+        val uuid = itemStack.optionalUUID
         val x = (width - imageWidth) / 2
         val y = (height - imageHeight) / 2
+
+        if (uuid == null) {
+            graphics.blit(
+                RenderPipelines.GUI_TEXTURED,
+                playerHeadPlaceholder,
+                x + 37 + slotId * 18,
+                y + 40,
+                0f,
+                0f,
+                12,
+                12,
+                16,
+                16,
+                16,
+                16
+            )
+            return
+        }
+
+        val skin = SkinUtil.getSkin(uuid, scope)
         graphics.blit(
             RenderPipelines.GUI_TEXTURED,
             skin,

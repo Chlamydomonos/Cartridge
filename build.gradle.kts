@@ -1,5 +1,6 @@
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `custom-build`
@@ -39,7 +40,7 @@ group = modGroupId
 base.archivesName.set(modId)
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(25))
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_25)
 }
 

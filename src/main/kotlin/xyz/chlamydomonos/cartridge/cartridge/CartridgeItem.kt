@@ -10,7 +10,6 @@ import net.minecraft.world.item.component.TooltipDisplay
 import xyz.chlamydomonos.cartridge.loaders.DataComponentLoader
 import xyz.chlamydomonos.cartridge.utils.cartridgeDurability
 import xyz.chlamydomonos.cartridge.utils.optionalName
-import xyz.chlamydomonos.cartridge.utils.optionalUUID
 import java.util.*
 import java.util.function.Consumer
 import kotlin.math.max
@@ -47,7 +46,7 @@ class CartridgeItem(id: ResourceKey<Item>) : Item(
         builder: Consumer<Component>,
         tooltipFlag: TooltipFlag
     ) {
-        itemStack.optionalUUID ?: return
+        itemStack.optionalName ?: return
         val durability = itemStack.cartridgeDurability
         if (durability > 0) {
             builder.accept(Component.translatable("tooltip.cartridge.cartridge.durability", durability))

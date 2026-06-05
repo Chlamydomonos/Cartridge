@@ -30,7 +30,6 @@ object CartridgeHandler {
                 continue
             }
 
-            val uuid = stack.optionalUUID ?: continue
             val durability = stack.cartridgeDurability
             if (durability <= 0) {
                 continue
@@ -41,11 +40,17 @@ object CartridgeHandler {
             val durabilityLoss = yDiff * (if (curseLevel == 6) 120 else curseLevel)
             val newDurability = max(0, durability - durabilityLoss)
             stack.cartridgeDurability = newDurability
-            if (newDurability <= 0) {
-                player.level().cartridgeManager.setStatus(uuid, CartridgeManager.CartridgeStatus.DEAD)
-            } else {
-                val targetPlayer = player.level().server.playerList.getPlayer(uuid) ?: break
-                PacketDistributor.sendToPlayer(targetPlayer, CartridgeUsePacket)
+
+            val uuid = stack.optionalUUID
+            if (uuid != null) {
+                if (newDurability <= 0) {
+                    player.level().cartridgeManager.setStatus(uuid, CartridgeManager.CartridgeStatus.DEAD)
+                } else {
+                    val targetPlayer = player.level().server.playerList.getPlayer(uuid)
+                    if (targetPlayer != null) {
+                        PacketDistributor.sendToPlayer(targetPlayer, CartridgeUsePacket)
+                    }
+                }
             }
 
             if (curseLevel == 6) {

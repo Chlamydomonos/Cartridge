@@ -16,6 +16,8 @@ enumExtensions="META-INF/enumextensions.json"
 config="cartridge.mixins.minecraft.json"
 [[mixins]]
 config="cartridge.mixins.carryon.json"
+[[mixins]]
+config="cartridge.mixins.touhoulittlemaid.json"
 
 [[dependencies."${mod_id}"]]
     modId="neoforge"

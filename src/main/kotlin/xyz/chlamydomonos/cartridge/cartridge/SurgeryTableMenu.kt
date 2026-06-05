@@ -16,7 +16,8 @@ class SurgeryTableMenu(
     playerInventory: Inventory,
     val inputContainer: SurgeryTableBlockEntity.InputItemHandler,
     val outputContainer: SurgeryTableBlockEntity.OutputItemHandler,
-    private val packetStatus: DataSlot
+    private val packetStatus: DataSlot,
+    private val overrideStatus: DataSlot
 ) : AbstractContainerMenu(MenuLoader.SURGERY_TABLE, containerId) {
     companion object {
         fun clearContainer(player: Player, container: ItemStacksResourceHandler) {
@@ -43,12 +44,14 @@ class SurgeryTableMenu(
         get() = refusedSlot.get() != 0
         set(value) { refusedSlot.set(if (value) 1 else 0) }
     val handlingPacket get() = packetStatus.get() != 0
+    val hasOverride get() = overrideStatus.get() != 0
 
     constructor(id: Int, inv: Inventory) : this(
         id,
         inv,
         SurgeryTableBlockEntity.InputItemHandler(),
         SurgeryTableBlockEntity.OutputItemHandler(),
+        DataSlot.standalone(),
         DataSlot.standalone()
     )
 
@@ -73,7 +76,7 @@ class SurgeryTableMenu(
         }
 
         val be = inputContainer.blockEntity ?: return true
-        return be.playerOn != null
+        return hasOverride || be.playerOn != null
     }
 
     override fun removed(player: Player) {

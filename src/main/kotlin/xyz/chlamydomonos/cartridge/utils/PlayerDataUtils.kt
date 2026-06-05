@@ -1,5 +1,6 @@
 package xyz.chlamydomonos.cartridge.utils
 
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import xyz.chlamydomonos.cartridge.hollow.HollowEntity
 import xyz.chlamydomonos.cartridge.loaders.DataAttachmentLoader
@@ -40,7 +41,7 @@ var Player.maxAbyssLevel
     get() = getData(DataAttachmentLoader.MAX_ABYSS_LEVEL)
     set(value) { setData(DataAttachmentLoader.MAX_ABYSS_LEVEL, value) }
 
-var Player.surgeryTablePos
+var LivingEntity.surgeryTablePos
     get() = getData(DataAttachmentLoader.SURGERY_TABLE_POS).getOrNull()
     set(value) { setData(DataAttachmentLoader.SURGERY_TABLE_POS, Optional.ofNullable(value)) }
 

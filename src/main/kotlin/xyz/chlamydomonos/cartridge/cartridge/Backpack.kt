@@ -29,8 +29,8 @@ class Backpack(
             return false
         }
         val durability = resource.get(DataComponentLoader.CARTRIDGE_DURABILITY) ?: return false
-        val player = resource.get(DataComponentLoader.OPTIONAL_UUID) ?: return false
-        return durability > 0 && player.isPresent
+        val name = resource.get(DataComponentLoader.OPTIONAL_NAME) ?: return false
+        return durability > 0 && name.isPresent
     }
 
     override fun onContentsChanged(index: Int, previousContents: ItemStack) {

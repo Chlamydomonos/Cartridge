@@ -196,7 +196,7 @@ class SurgeryTableBlock(properties: Properties) : BaseEntityBlock(
             throw RuntimeException("Trying to access SurgeryTableBlockEntity without surgery table")
         }
 
-        if (be.playerOn == null) {
+        if (be.playerOn == null && be.overrideCreateCartridge == null) {
             lieOn(player, headPos, be)
             return InteractionResult.SUCCESS
         }
