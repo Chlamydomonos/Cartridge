@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "has_cartridge": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "cartridge:optional_name": {}
+            },
+            "items": "cartridge:cartridge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:gui/advancements/backgrounds/stone",
+    "description": {
+      "translate": "advancement.cartridge.cartridge.description"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "cartridge:cartridge"
+    },
+    "title": {
+      "translate": "advancement.cartridge.cartridge"
+    }
+  },
+  "requirements": [
+    [
+      "has_cartridge"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
