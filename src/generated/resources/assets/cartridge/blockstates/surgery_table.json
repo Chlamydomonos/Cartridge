@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,part=foot": {
+      "model": "cartridge:block/surgery_table",
+      "y": 90
+    },
+    "facing=east,part=head": {
+      "model": "cartridge:block/surgery_table_head",
+      "y": 90
+    },
+    "facing=north,part=foot": {
+      "model": "cartridge:block/surgery_table"
+    },
+    "facing=north,part=head": {
+      "model": "cartridge:block/surgery_table_head"
+    },
+    "facing=south,part=foot": {
+      "model": "cartridge:block/surgery_table",
+      "y": 180
+    },
+    "facing=south,part=head": {
+      "model": "cartridge:block/surgery_table_head",
+      "y": 180
+    },
+    "facing=west,part=foot": {
+      "model": "cartridge:block/surgery_table",
+      "y": 270
+    },
+    "facing=west,part=head": {
+      "model": "cartridge:block/surgery_table_head",
+      "y": 270
+    }
+  }
+}

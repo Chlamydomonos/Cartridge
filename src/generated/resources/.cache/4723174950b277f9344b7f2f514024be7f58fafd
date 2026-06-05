@@ -1,0 +1,10 @@
+// 26.1.2	2026-06-05T19:42:21.426687364	Tags for minecraft:damage_type mod id cartridge
+c8e05398b75cb633669a2f9a5e85ab2cda8bcf46 data/minecraft/tags/damage_type/bypasses_armor.json
+85250fa6516de1b2da944590b0806627aae6e89b data/minecraft/tags/damage_type/bypasses_cooldown.json
+3c606893d3fd0bd1b367f76dc1eeb3995cd0594f data/minecraft/tags/damage_type/bypasses_effects.json
+3c606893d3fd0bd1b367f76dc1eeb3995cd0594f data/minecraft/tags/damage_type/bypasses_enchantments.json
+6aa39c5bcdfdb5d3527cb4d84bc9a936f972b26e data/minecraft/tags/damage_type/bypasses_invulnerability.json
+3c606893d3fd0bd1b367f76dc1eeb3995cd0594f data/minecraft/tags/damage_type/bypasses_resistance.json
+3c606893d3fd0bd1b367f76dc1eeb3995cd0594f data/minecraft/tags/damage_type/bypasses_shield.json
+3c606893d3fd0bd1b367f76dc1eeb3995cd0594f data/minecraft/tags/damage_type/bypasses_wolf_armor.json
+77e62c62d293eba0f03207825136c7f6bf54820d data/minecraft/tags/damage_type/no_knockback.json
