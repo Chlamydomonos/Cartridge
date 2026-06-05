@@ -17,8 +17,9 @@ object SurgeryTablePlayerEventListener {
             return
         }
 
-        val oldContinueSleeping = event.mayContinueSleeping()
-        event.setContinueSleeping(if (player.surgeryTablePos != null) true else oldContinueSleeping)
+        if (player.surgeryTablePos != null) {
+            event.setContinueSleeping(true)
+        }
     }
 
     private fun removePlayer(player: ServerPlayer) {
