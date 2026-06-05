@@ -6,6 +6,7 @@ import kotlinx.coroutines.SupervisorJob
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.util.Mth
 import net.neoforged.neoforge.client.gui.GuiLayer
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
@@ -25,29 +26,48 @@ object BackpackHud : GuiLayer {
         val xStart = 10
 
         for (stack in stacks) {
-            val uuid = stack.optionalUUID ?: continue
-            val skin = SkinUtil.getSkin(uuid, scope)
+            val uuid = stack.optionalUUID
             val durability = stack.cartridgeDurability
+            val colorFilter = if (durability == 0) {
+                ColorUtil.rgb(0x404040)
+            } else {
+                ColorUtil.rgb(0xffffff)
+            }
 
-            guiGraphics.blit(
-                net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
-                skin,
-                xStart,
-                yOffset,
-                4f,
-                4f,
-                12,
-                12,
-                4,
-                4,
-                32,
-                32,
-                if (durability == 0) {
-                    ColorUtil.rgb(0x404040)
-                } else {
-                    ColorUtil.rgb(0xffffff)
-                }
-            )
+            if (uuid == null) {
+                guiGraphics.blit(
+                    RenderPipelines.GUI_TEXTURED,
+                    BackpackScreen.playerHeadPlaceholder,
+                    xStart,
+                    yOffset,
+                    0f,
+                    0f,
+                    12,
+                    12,
+                    16,
+                    16,
+                    16,
+                    16,
+                    colorFilter
+                )
+            } else {
+                val skin = SkinUtil.getSkin(uuid, scope)
+                guiGraphics.blit(
+                    RenderPipelines.GUI_TEXTURED,
+                    skin,
+                    xStart,
+                    yOffset,
+                    4f,
+                    4f,
+                    12,
+                    12,
+                    4,
+                    4,
+                    32,
+                    32,
+                    colorFilter
+                )
+            }
 
             if (durability > 0) {
                 val barWidth = Mth.clamp((durability * 14f / CartridgeItem.MAX_DURABILITY).toInt(), 0, 14)

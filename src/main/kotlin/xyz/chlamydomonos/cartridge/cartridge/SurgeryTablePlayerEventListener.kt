@@ -13,7 +13,7 @@ object SurgeryTablePlayerEventListener {
     @SubscribeEvent
     fun onCanContinueSleeping(event: CanContinueSleepingEvent) {
         val player = event.entity
-        if (player !is ServerPlayer) {
+        if (player.level().isClientSide) {
             return
         }
 

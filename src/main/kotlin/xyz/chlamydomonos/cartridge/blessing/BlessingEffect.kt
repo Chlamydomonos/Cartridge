@@ -16,7 +16,7 @@ class BlessingEffect : MobEffect(
 ) {
     companion object {
         fun add(player: ServerPlayer, level: Int) {
-            val currentAmplifier = player.getEffect(EffectLoader.CURSE)?.amplifier ?: -1
+            val currentAmplifier = player.getEffect(EffectLoader.BLESSING)?.amplifier ?: -1
             val amplifier = currentAmplifier + level
 
             if (currentAmplifier >= 0) {

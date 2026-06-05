@@ -21,5 +21,6 @@ object Cartridge {
         BlockLoader.bootstrap(MOD_BUS)
         BlockEntityLoader.bootstrap(MOD_BUS)
         MenuLoader.bootstrap(MOD_BUS)
+        PoiLoader.bootstrap(MOD_BUS)
     }
 }

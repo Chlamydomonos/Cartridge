@@ -1,5 +1,6 @@
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `custom-build`
@@ -28,6 +29,7 @@ val curiosVersion: String by project
 val geckolibVersion: String by project
 val kffVersion: String by project
 val carryOnVersion: String by project
+val touhouLittleMaidCommitHash: String by project
 
 tasks.named<Wrapper>("wrapper") {
     distributionType = Wrapper.DistributionType.BIN
@@ -38,7 +40,7 @@ group = modGroupId
 base.archivesName.set(modId)
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(25))
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_25)
 }
 
@@ -129,6 +131,9 @@ repositories {
     maven {
         url = uri("https://nexus.bot.leisuretimedock.top/repository/maven-releases/")
     }
+    maven {
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
@@ -136,6 +141,7 @@ dependencies {
     implementation("top.theillusivec4.curios:curios-neoforge:${curiosVersion}")
     implementation("com.geckolib:geckolib-neoforge-${minecraftVersion}:${geckolibVersion}")
     implementation("tschipp.carryon:carryon-neoforge-${minecraftVersion}:${carryOnVersion}")
+    implementation("com.github.TouhouLittleMaid:TouhouLittleMaid-26.1:${touhouLittleMaidCommitHash}")
 }
 
 val generateModMetadata by tasks.registering(ProcessResources::class) {

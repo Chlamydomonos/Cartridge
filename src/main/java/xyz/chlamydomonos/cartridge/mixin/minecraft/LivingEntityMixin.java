@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.chlamydomonos.cartridge.mixinimpl.minecraft.LivingEntityMixinImpl;
 
@@ -27,5 +28,13 @@ public abstract class LivingEntityMixin {
     )
     void injectIsInWall(CallbackInfoReturnable<Boolean> cir) {
         LivingEntityMixinImpl.INSTANCE.injectIsInWall((LivingEntity)(Object)this, cir);
+    }
+
+    @Inject(
+        method = "stopSleeping",
+        at = @At("HEAD")
+    )
+    void injectStopSleeping(CallbackInfo ci) {
+        LivingEntityMixinImpl.INSTANCE.injectStopSleeping((LivingEntity)(Object)this);
     }
 }

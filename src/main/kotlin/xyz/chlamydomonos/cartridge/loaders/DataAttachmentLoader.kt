@@ -1,6 +1,7 @@
 package xyz.chlamydomonos.cartridge.loaders
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.UUIDUtil
 import net.minecraft.network.codec.ByteBufCodecs
@@ -71,6 +72,7 @@ object DataAttachmentLoader {
         AttachmentType
             .builder { -> Optional.empty<BlockPos>() }
             .sync(ByteBufCodecs.optional(BlockPos.STREAM_CODEC))
+            .serialize(MapCodec.unit { Optional.empty() })
             .build()
     }
 
