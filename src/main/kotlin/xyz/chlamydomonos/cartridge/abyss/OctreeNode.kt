@@ -10,7 +10,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import java.nio.ByteBuffer
 
 class OctreeNode() {
-    // 该节点的层级。0为最高层，MAX_LAYER为最低层。每个最低层节点代表一个方块。第0层节点则代表长宽高为16777216的立方体
+    // 该节点的层级。0为最高层，MAX_LAYER为最低层。每个最低层节点代表一个方块
     // 每个节点代表的具体区域由layer以及x，y，z隐式确定。layer为0的节点代表一个中心位于坐标原点的立方体，其他节点的坐标依此类推
     var layer: Byte = 0
     var x = false
@@ -310,7 +310,7 @@ class OctreeNode() {
     }
 
     companion object {
-        const val MAX_LAYER = 24
+        const val MAX_LAYER = 4
 
         val codec = RecordCodecBuilder.create {
             it.group(

@@ -9,7 +9,6 @@ class ChunkAbyssData(
     fun getRegion(cx: Int, sy: Int, cz: Int): OctreeNode {
         val node = regions.getOrPut(sy) {
             val node = OctreeNode()
-            node.layer = (OctreeNode.MAX_LAYER - 4).toByte()
             node
         }
         if (!node.isCustomRoot) {

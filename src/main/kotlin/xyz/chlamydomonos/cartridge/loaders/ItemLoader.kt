@@ -21,6 +21,7 @@ import xyz.chlamydomonos.cartridge.gangway.GangwayItem
 import xyz.chlamydomonos.cartridge.hollow.HollowRandomizerItem
 import xyz.chlamydomonos.cartridge.sparagmos.SparagmosItem
 import xyz.chlamydomonos.cartridge.utils.RLUtil
+import xyz.chlamydomonos.cartridge.utils.optionalName
 
 object ItemLoader {
     private val registry = DeferredRegister.createItems(Cartridge.ID)
@@ -34,6 +35,10 @@ object ItemLoader {
                 for (holder in items) {
                     output.accept(holder)
                 }
+
+                val creativeCartridge = ItemStack(CARTRIDGE)
+                creativeCartridge.optionalName = Component.translatable("item.cartridge.cartridge.creative").string
+                output.accept(creativeCartridge)
             }
             .icon { ItemStack(CARTRIDGE) }
             .build()
