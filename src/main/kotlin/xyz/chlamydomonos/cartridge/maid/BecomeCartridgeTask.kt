@@ -17,6 +17,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiManager
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.transfer.item.ItemResource
 import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableBlockEntity
+import xyz.chlamydomonos.cartridge.cartridge.SurgeryTableMenu
 import xyz.chlamydomonos.cartridge.loaders.ItemLoader
 import xyz.chlamydomonos.cartridge.loaders.PoiLoader
 import xyz.chlamydomonos.cartridge.utils.RLUtil
@@ -126,25 +127,34 @@ object BecomeCartridgeTask : IMaidTask {
                         blockEntity.overrideCreateCartridge = {
                             val playerUsing = this.playerUsing
                             if (playerUsing != null) {
-                                inputItem.set(0, ItemResource.of(ItemStack.EMPTY), 0)
-                                val outputStack = ItemStack(ItemLoader.CARTRIDGE, 1)
-                                outputStack.optionalName = maid.plainTextName
-                                outputItem.set(0, ItemResource.of(outputStack), 1)
+                                if (playerUsing != maid.owner) {
+                                    val menu = playerUsing.containerMenu
+                                    if (menu is SurgeryTableMenu) {
+                                        menu.refused = true
+                                    }
+                                } else {
+                                    inputItem.set(0, ItemResource.of(ItemStack.EMPTY), 0)
+                                    val outputStack = ItemStack(ItemLoader.CARTRIDGE, 1)
+                                    outputStack.optionalName = maid.plainTextName
+                                    outputItem.set(0, ItemResource.of(outputStack), 1)
 
-                                val inventory = maid.allInv
-                                for (i in 0..<inventory.size()) {
-                                    val item = inventory.getResource(i)
-                                    maid.drop(item.toStack(), true, false)
+                                    val inventory = maid.allInv
+                                    for (i in 0..<inventory.size()) {
+                                        val item = inventory.getResource(i)
+                                        maid.drop(item.toStack(), true, false)
+                                    }
+
+                                    maid.remove(Entity.RemovalReason.DISCARDED)
+                                    overrideCreateCartridge = null
+                                    overrideOnDestroy = null
+                                    val advancement = level
+                                        .server
+                                        .advancements
+                                        .get(RLUtil.of("maid")) ?: throw RuntimeException(
+                                            "Cannot load advancements"
+                                        )
+                                    playerUsing.advancements.award(advancement, "code_trigger")
                                 }
-
-                                maid.remove(Entity.RemovalReason.DISCARDED)
-                                overrideCreateCartridge = null
-                                overrideOnDestroy = null
-                                val advancement = level
-                                    .server
-                                    .advancements
-                                    .get(RLUtil.of("maid")) ?: throw RuntimeException("Cannot load advancements")
-                                playerUsing.advancements.award(advancement, "code_trigger")
                             }
                         }
 
