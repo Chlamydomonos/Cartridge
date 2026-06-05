@@ -69,8 +69,7 @@ class OctreeNode() {
     }
 
     fun deserialize(data: ByteBuffer) {
-        layer = data[0]
-        deserialize(data, 1, layer)
+        deserialize(data, 1, 0)
     }
 
     fun fromArray(data: ByteArray): OctreeNode {
@@ -192,7 +191,8 @@ class OctreeNode() {
                 root.customMinX + size - 1, root.customMinY + size - 1, root.customMinZ + size - 1
             )
         }
-        val halfSize = 1 shl (MAX_LAYER - 1)
+        if (root.layer >= MAX_LAYER) return intArrayOf(0, 0, 0, 0, 0, 0)
+        val halfSize = 1 shl (MAX_LAYER - root.layer - 1)
         return intArrayOf(-halfSize, -halfSize, -halfSize, halfSize - 1, halfSize - 1, halfSize - 1)
     }
 
