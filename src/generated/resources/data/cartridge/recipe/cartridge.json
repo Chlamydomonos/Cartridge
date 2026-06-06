@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:netherite_ingot",
+    "B": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "ABA",
+    "A A",
+    "AAA"
+  ],
+  "result": {
+    "id": "cartridge:cartridge"
+  }
+}

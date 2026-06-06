@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:leather",
+    "B": "minecraft:hopper",
+    "C": "minecraft:iron_ingot",
+    "D": "minecraft:netherite_block",
+    "E": "minecraft:iron_block"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "CEC"
+  ],
+  "result": {
+    "id": "cartridge:backpack"
+  }
+}
