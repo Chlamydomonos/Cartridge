@@ -30,6 +30,8 @@ class SurgeryTableBlockEntity(
     var overrideCreateCartridge: (SurgeryTableBlockEntity.() -> Unit)? = null
     var overrideOnDestroy: (SurgeryTableBlockEntity.() -> Unit)? = null
 
+    var justUsed = false
+
     class InputItemHandler(
         val blockEntity: SurgeryTableBlockEntity? = null
     ) : ItemStacksResourceHandler(1) {
@@ -71,6 +73,10 @@ class SurgeryTableBlockEntity(
         object : DataSlot() {
             override fun get() = if (overrideCreateCartridge == null) 0 else 1
             override fun set(p0: Int) {}
+        },
+        object : DataSlot() {
+            override fun get() = if (justUsed) 1 else 0
+            override fun set(p0: Int) {}
         }
     )
 
@@ -100,6 +106,7 @@ class SurgeryTableBlockEntity(
         outputStack.optionalUUID = target.uuid
         outputStack.optionalName = target.plainTextName
         outputItem.set(0, ItemResource.of(outputStack), 1)
+        justUsed = true
     }
 
     override fun preRemoveSideEffects(pos: BlockPos, state: BlockState) {

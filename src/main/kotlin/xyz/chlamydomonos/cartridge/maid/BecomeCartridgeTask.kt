@@ -147,6 +147,8 @@ object BecomeCartridgeTask : IMaidTask {
                                     maid.remove(Entity.RemovalReason.DISCARDED)
                                     overrideCreateCartridge = null
                                     overrideOnDestroy = null
+                                    justUsed = true
+
                                     val advancement = level
                                         .server
                                         .advancements
