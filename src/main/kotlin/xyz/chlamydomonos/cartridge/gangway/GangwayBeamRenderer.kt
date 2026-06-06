@@ -44,7 +44,7 @@ object GangwayBeamRenderer {
     }
 
     @SubscribeEvent
-    fun onRenderLevel(event: RenderLevelStageEvent.AfterTranslucentFeatures) {
+    fun onRenderLevel(event: RenderLevelStageEvent.AfterTranslucentBlocks) {
         val poseStack = event.poseStack
         val cameraPos = event.levelRenderState.cameraRenderState.pos
         val consumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(renderType)

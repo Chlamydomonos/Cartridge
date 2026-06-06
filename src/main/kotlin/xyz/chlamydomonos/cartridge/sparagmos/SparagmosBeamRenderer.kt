@@ -48,7 +48,7 @@ object SparagmosBeamRenderer {
     }
 
     @SubscribeEvent
-    fun onRenderLevel(event: RenderLevelStageEvent.AfterTranslucentFeatures) {
+    fun onRenderLevel(event: RenderLevelStageEvent.AfterTranslucentBlocks) {
         val poseStack = event.poseStack
         val cameraPos = event.levelRenderState.cameraRenderState.pos
 
