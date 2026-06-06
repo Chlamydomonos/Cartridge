@@ -33,7 +33,7 @@ object BecomeCartridgeTask : IMaidTask {
     override fun getIcon() = ItemStack(ItemLoader.CARTRIDGE)
     override fun getAmbientSound(maid: EntityMaid) = null
     override fun isEnable(maid: EntityMaid) = maid.favorability >= 384
-    override fun getConditionDescription(maid: EntityMaid) = listOf(
+    override fun getEnableConditionDesc(maid: EntityMaid) = listOf(
         Pair(
             "need_favorability",
             Predicate<EntityMaid> { it.favorability >= 384 }

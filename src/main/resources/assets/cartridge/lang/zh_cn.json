@@ -67,7 +67,7 @@
     "key.cartridge.gangway": "登星之梯",
     "task.cartridge.become_cartridge": "见 证 黎 明",
     "task.cartridge.become_cartridge.desc": "女仆会寻找手术台并且成为弹药包",
-    "task.cartridge.become_cartridge.condition.need_favorability": "需要至少384的好感度",
+    "task.cartridge.become_cartridge.enable_condition.need_favorability": "需要至少384的好感度",
     "advancement.cartridge.cartridge": "深沉灵魂",
     "advancement.cartridge.cartridge.description": "获得一个空弹药包",
     "advancement.cartridge.maid": "初升东曦",

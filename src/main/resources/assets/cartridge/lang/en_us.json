@@ -67,7 +67,7 @@
     "key.cartridge.gangway": "Ascend to the Morning Star",
     "task.cartridge.become_cartridge": "SEE THE DAWN",
     "task.cartridge.become_cartridge.desc": "The maid will find a surgery table and become a Cartridge",
-    "task.cartridge.become_cartridge.condition.need_favorability": "Need a favorability level at least 384",
+    "task.cartridge.become_cartridge.enable_condition.need_favorability": "Need a favorability level at least 384",
     "advancement.cartridge.cartridge": "Deep Soul",
     "advancement.cartridge.cartridge.description": "Obtain an empty Cartridge",
     "advancement.cartridge.maid": "Sun of a Breach",
