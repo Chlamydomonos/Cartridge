@@ -30,11 +30,37 @@ class BackpackMenu(
         addStandardInventorySlots(playerInventory, 8, 69)
     }
 
+    // AI生成
     override fun quickMoveStack(
         player: Player,
         slotIndex: Int
     ): ItemStack {
-        return ItemStack.EMPTY // TODO
+        var stack = ItemStack.EMPTY
+        val slot = slots[slotIndex]
+        if (slot.hasItem()) {
+            val stack1 = slot.item
+            stack = stack1.copy()
+            if (slotIndex < 6) {
+                if (!moveItemStackTo(stack1, 6, 42, true)) {
+                    return ItemStack.EMPTY
+                }
+            } else if (!moveItemStackTo(stack1, 0, 6, false)) {
+                return ItemStack.EMPTY
+            }
+
+            if (stack1.isEmpty) {
+                slot.set(ItemStack.EMPTY)
+            } else {
+                slot.setChanged()
+            }
+
+            if (stack1.count == stack.count) {
+                return ItemStack.EMPTY
+            }
+            
+            slot.onTake(player, stack1)
+        }
+        return stack
     }
 
     override fun stillValid(player: Player): Boolean {

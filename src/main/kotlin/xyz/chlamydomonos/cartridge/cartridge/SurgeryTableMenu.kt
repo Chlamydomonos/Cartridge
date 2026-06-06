@@ -17,7 +17,8 @@ class SurgeryTableMenu(
     val inputContainer: SurgeryTableBlockEntity.InputItemHandler,
     val outputContainer: SurgeryTableBlockEntity.OutputItemHandler,
     private val packetStatus: DataSlot,
-    private val overrideStatus: DataSlot
+    private val overrideStatus: DataSlot,
+    private val usedStatus: DataSlot
 ) : AbstractContainerMenu(MenuLoader.SURGERY_TABLE, containerId) {
     companion object {
         fun clearContainer(player: Player, container: ItemStacksResourceHandler) {
@@ -45,12 +46,14 @@ class SurgeryTableMenu(
         set(value) { refusedSlot.set(if (value) 1 else 0) }
     val handlingPacket get() = packetStatus.get() != 0
     val hasOverride get() = overrideStatus.get() != 0
+    val justUsed get() = usedStatus.get() != 0
 
     constructor(id: Int, inv: Inventory) : this(
         id,
         inv,
         SurgeryTableBlockEntity.InputItemHandler(),
         SurgeryTableBlockEntity.OutputItemHandler(),
+        DataSlot.standalone(),
         DataSlot.standalone(),
         DataSlot.standalone()
     )
@@ -61,18 +64,61 @@ class SurgeryTableMenu(
         addStandardInventorySlots(playerInventory, 8, 51)
         addDataSlot(packetStatus)
         addDataSlot(refusedSlot)
+        addDataSlot(overrideStatus)
+        addDataSlot(usedStatus)
     }
 
+    // AI生成
     override fun quickMoveStack(
         player: Player,
         slotIndex: Int
     ): ItemStack {
-        return ItemStack.EMPTY // TODO
+        var stack = ItemStack.EMPTY
+        val slot = slots[slotIndex]
+        if (slot.hasItem()) {
+            val stack1 = slot.item
+            stack = stack1.copy()
+            if (slotIndex == 1) {
+                if (!moveItemStackTo(stack1, 2, 38, true)) {
+                    return ItemStack.EMPTY
+                }
+                slot.onQuickCraft(stack1, stack)
+            } else if (slotIndex != 0) {
+                if (!moveItemStackTo(stack1, 0, 1, false)) {
+                    if (slotIndex in 2..<29) {
+                        if (!moveItemStackTo(stack1, 29, 38, false)) {
+                            return ItemStack.EMPTY
+                        }
+                    } else if (slotIndex in 29..<38 && !moveItemStackTo(stack1, 2, 29, false)) {
+                        return ItemStack.EMPTY
+                    }
+                }
+            } else if (!moveItemStackTo(stack1, 2, 38, false)) {
+                return ItemStack.EMPTY
+            }
+
+            if (stack1.isEmpty) {
+                slot.set(ItemStack.EMPTY)
+            } else {
+                slot.setChanged()
+            }
+
+            if (stack1.count == stack.count) {
+                return ItemStack.EMPTY
+            }
+
+            slot.onTake(player, stack1)
+        }
+        return stack
     }
 
     override fun stillValid(player: Player): Boolean {
         if (!stillValid(levelAccess, player, BlockLoader.SURGERY_TABLE)) {
             return false
+        }
+
+        if (justUsed) {
+            return true
         }
 
         val be = inputContainer.blockEntity ?: return true
@@ -89,6 +135,7 @@ class SurgeryTableMenu(
         val be = inputContainer.blockEntity ?: throw RuntimeException("Trying to access null SurgeryTableBlockEntity")
         be.playerUsing = null
         be.handlingPacket = false
+        be.justUsed = false
 
         clearContainer(player, inputContainer)
         clearContainer(player, outputContainer)
